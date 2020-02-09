@@ -81,6 +81,36 @@ class _HomeScreen extends State<HomeScreen> {
       ),
     ),
     body: SafeArea(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: <Widget>[
+            Container(
+              color: Colors.amber,
+              height: 200,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text('Browse Categories', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+                        Spacer(),
+                        FlatButton(
+                          child: Text('See all'),
+                        )
+                      ],
+                    ),
+                  ),
+
+                ],
+              ),
+            )
+          ],
+        ),
+
+      ),
 
     ),);
   }
