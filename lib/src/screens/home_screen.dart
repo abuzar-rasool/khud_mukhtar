@@ -324,29 +324,29 @@ class _HomeScreen extends State<HomeScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            'All Services',
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                          Spacer(),
-                          FlatButton(
-                            child: Text('See all'),
-                          )
-                        ],
-                      ),
+                    Text(
+                      'All Services',
+                      style: TextStyle(
+                          fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GridView.count(crossAxisCount: 2,
-                        children: <Widget>[
-
-                        ],),
+                          children: List.generate(20, (index) {
+                            return Center (
+                              child: Card(
+                                child: Container(
+                                  height: 300,
+                                  width: 200,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                elevation: 5.0,
+                              ),
+                            );
+                          }),
+                        ),
                       ),
                     )
                   ],
