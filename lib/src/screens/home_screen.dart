@@ -324,10 +324,13 @@ class _HomeScreen extends State<HomeScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: <Widget>[
-                    Text(
-                      'All Services',
-                      style: TextStyle(
-                          fontSize: 25, fontWeight: FontWeight.bold),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'All Services',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Expanded(
                       child: Padding(
