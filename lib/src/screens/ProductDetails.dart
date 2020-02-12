@@ -14,14 +14,10 @@ class _ProductDetails extends State<ProductDetails> {
   //  AssetImage logo = AssetImage('assets/logo.png');
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(backgroundColor: Color.fromRGBO(240, 98, 146, 1), leading: Icon(Icons.arrow_back), actions: Icon(),),
-      body: SingleChildScrollView(
-        child: Column(children: <Widget>[
-          Container(
-            width:MediaQuery
-          )
-        ],)
-      )
+      appBar: AppBar(backgroundColor: Color.fromRGBO(240, 98, 146, 1), leading: Icon(Icons.arrow_back), actions: <Widget>[ Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Icon(Icons.save),
+      ),],),
       backgroundColor: Colors.white,
      );
   }
