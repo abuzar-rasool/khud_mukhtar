@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/screens/home_screen.dart';
 import 'package:khud_mukhtar/src/screens/profile_screen.dart';
+import 'package:khud_mukhtar/src/screens/profile_seller.dart';
 import 'package:khud_mukhtar/src/screens/rating.dart';
 import 'package:khud_mukhtar/src/screens/service_details.dart';
 import 'package:khud_mukhtar/src/screens/service_single.dart';
@@ -16,7 +17,7 @@ void main() {
       },
       title: 'Splash',
       debugShowCheckedModeBanner: false,
-      home: ServiceSinglePage(),
+      home: Profile(),
     )
   );
 
