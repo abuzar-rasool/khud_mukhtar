@@ -13,7 +13,7 @@ class _HomeScreen extends State<HomeScreen> {
     // TODO: implement build
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(130.0),
+        preferredSize: Size.fromHeight(100.0),
         child: AppBar(
           bottom: AppBar(
             backgroundColor: Color.fromRGBO(240, 98, 146, 1),
@@ -27,7 +27,7 @@ class _HomeScreen extends State<HomeScreen> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
                       Container(
                         padding: EdgeInsets.all(5.0),
@@ -49,7 +49,7 @@ class _HomeScreen extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 50,
                       )
                     ],
                   )),
