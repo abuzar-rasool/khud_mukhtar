@@ -173,7 +173,7 @@ class _ProfileSeller extends State<ProfileSeller> {
                 Padding(
                   padding: const EdgeInsets.only(top:20),
                   child: Container(
-                    height: double.infinity,
+                    height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: <Widget>[

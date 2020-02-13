@@ -47,6 +47,12 @@ flutter:
     - assets/quran.jpg
     - assets/quranforkidssample.jpg
     - assets/momina.jpg
+    - assets/images/greg.jpg
+    - assets/images/olivia.jpg
+    - assets/images/john.jpg
+    - assets/images/greg.jpg
+    - assets/images/james.jpg
+    - assets/images/sophia.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

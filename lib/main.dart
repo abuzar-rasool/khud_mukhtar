@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/screens/home_screen.dart';
+import 'package:khud_mukhtar/src/screens/home_screen_chat.dart';
 import 'package:khud_mukhtar/src/screens/profile_screen.dart';
 import 'package:khud_mukhtar/src/screens/profile_seller.dart';
 import 'package:khud_mukhtar/src/screens/rating.dart';
@@ -17,7 +18,7 @@ void main() {
       },
       title: 'Splash',
       debugShowCheckedModeBanner: false,
-      home: Profile(),
+      home: HomeScreenChat(),
     )
   );
 
