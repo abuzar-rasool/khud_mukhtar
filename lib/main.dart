@@ -19,7 +19,7 @@ void main() {
       },
       title: 'Splash',
       debugShowCheckedModeBanner: false,
-      home: ServiceSinglePage(),
+      home: HomeScreen(),
 
       // HomeScreenChat() chat screen
       //ServiceSinglePage2() teaching page
