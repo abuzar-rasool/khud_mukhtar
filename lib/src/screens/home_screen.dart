@@ -737,7 +737,6 @@ class _HomeScreen extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(15.0)),
                               elevation: 5.0,
                             ),
-
                           ],
                         ),
                       ),
