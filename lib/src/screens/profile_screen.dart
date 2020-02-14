@@ -8,17 +8,20 @@ class Profile extends StatefulWidget {
 }
 
 class _Profile extends State<Profile> {
-  AssetImage profileimage = AssetImage('assets/momina.jpg') , sampleimage = AssetImage('assets/quranforkidssample.jpg');
-
+  AssetImage profileimage = AssetImage('assets/momina.jpg'),
+      sampleimage = AssetImage('assets/quranforkidssample.jpg');
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add, color: Colors.white,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         backgroundColor: Color.fromRGBO(240, 98, 146, 1),
-        onPressed: (){},
+        onPressed: () {},
       ),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -32,7 +35,7 @@ class _Profile extends State<Profile> {
                       bottomRight: Radius.circular(40.0),
                       bottomLeft: Radius.circular(40.0)),
                   child: Container(
-                      height: 235.0,
+                      height: 250.0,
                       width: double.infinity,
                       color: Color.fromRGBO(240, 98, 146, 1),
                       child: Padding(
@@ -171,13 +174,12 @@ class _Profile extends State<Profile> {
               overflow: Overflow.visible,
             ),
             Padding(
-              padding: const EdgeInsets.only(top:20),
+              padding: const EdgeInsets.only(top: 20),
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: <Widget>[
-
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -186,51 +188,81 @@ class _Profile extends State<Profile> {
                           children: List.generate(20, (index) {
                             return Center(
                               child: Card(
-
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     height: double.infinity,
                                     width: double.infinity,
-                                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Flexible(
-                                          child: Container(width: MediaQuery.of(context).size.width,
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                             height: 100,
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 fit: BoxFit.fill,
                                                 image: sampleimage,
                                               ),
-                                            ),),
+                                            ),
+                                          ),
                                           flex: 4,
                                         ),
                                         Flexible(
                                           child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Stack(
                                                 children: <Widget>[
-                                                  Container( child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      Text('Quran classes for kids'),
-                                                      Text('RS 10,000', style: TextStyle(fontWeight: FontWeight.bold),)
-                                                    ],
-                                                  ),
+                                                  Container(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        Text(
+                                                            'Quran classes for kids'),
+                                                        Text(
+                                                          'RS 10,000',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
                                                   Positioned(
                                                     left: 100,
                                                     child: Row(
                                                       children: <Widget>[
-                                                        Icon(Icons.favorite,color: Colors.red,),
-                                                        Text('716',style: TextStyle(color:Color.fromRGBO(240, 98, 146, 1) ),)
+                                                        Icon(
+                                                          Icons.favorite,
+                                                          color: Colors.red,
+                                                        ),
+                                                        Text(
+                                                          '716',
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      240,
+                                                                      98,
+                                                                      146,
+                                                                      1)),
+                                                        )
                                                       ],
                                                     ),
                                                   )
                                                 ],
-                                                alignment: Alignment.bottomLeft,)
-                                          ),
+                                                alignment: Alignment.bottomLeft,
+                                              )),
                                           flex: 2,
                                         )
                                       ],
@@ -246,7 +278,6 @@ class _Profile extends State<Profile> {
                         ),
                       ),
                     )
-
                   ],
                 ),
               ),

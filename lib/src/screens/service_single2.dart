@@ -104,7 +104,7 @@ class bottomAppBar extends StatelessWidget {
 }
 
 
-class ServiceSinglePage extends StatelessWidget {
+class ServiceSinglePage2 extends StatelessWidget {
   static final String path = "lib/src/pages/food/recipe_single.dart";
   final Color icon = pink300;
   final Color color1 = pink500;
@@ -174,7 +174,7 @@ class ServiceSinglePage extends StatelessWidget {
 
                       SizedBox(height: 20.0),
                       Text(
-                        "Logo\nDesigning".toUpperCase(),
+                        "O/A Levels Tution\nFor Women".toUpperCase(),
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -263,9 +263,8 @@ class ServiceSinglePage extends StatelessWidget {
                   BoxShadow(color: Colors.black38, blurRadius: 30.0)
                 ]),
                 child: SizedBox(
-
                   height: 350,
-                  child: Image.asset(('assets/logodesigning.png'), fit: BoxFit.cover),
+                  child: Image.asset(('assets/teaching.jpeg'), fit: BoxFit.cover),
                 ),
               ),
               Positioned(

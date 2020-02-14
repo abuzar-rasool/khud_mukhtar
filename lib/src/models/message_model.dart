@@ -21,44 +21,44 @@ class Message {
 final User currentUser = User(
   id: 0,
   name: 'Current User',
-  imageUrl: 'assets/images/greg.jpg',
+  imageUrl: 'assets/profile.jpg',
 );
 
 // USERS
 final User greg = User(
   id: 1,
   name: 'Greg',
-  imageUrl: 'assets/images/greg.jpg',
+  imageUrl: 'assets/profile.jpg',
 );
 final User james = User(
   id: 2,
-  name: 'James',
-  imageUrl: 'assets/images/james.jpg',
+  name: 'Aleena Zahid',
+  imageUrl: 'assets/profile.jpg',
 );
 final User john = User(
   id: 3,
-  name: 'John',
-  imageUrl: 'assets/images/john.jpg',
+  name: 'Fatima Moin',
+  imageUrl: 'assets/momina.jpg',
 );
 final User olivia = User(
   id: 4,
-  name: 'Olivia',
-  imageUrl: 'assets/images/olivia.jpg',
+  name: 'Anum Khan',
+  imageUrl: 'assets/profile.jpg',
 );
 final User sam = User(
   id: 5,
-  name: 'Sam',
-  imageUrl: 'assets/images/sam.jpg',
+  name: 'Yusra Shaikh',
+  imageUrl: 'assets/profile.jpg',
 );
 final User sophia = User(
   id: 6,
-  name: 'Sophia',
-  imageUrl: 'assets/images/sophia.jpg',
+  name: 'Yusra Ali',
+  imageUrl: 'assets/profile.jpg',
 );
 final User steven = User(
   id: 7,
-  name: 'Steven',
-  imageUrl: 'assets/images/steven.jpg',
+  name: 'Fatima Arshad',
+  imageUrl: 'assets/profile.jpg',
 );
 
 // FAVORITE CONTACTS
