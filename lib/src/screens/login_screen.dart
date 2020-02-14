@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khud_mukhtar/src/screens/home_screen.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -75,7 +76,14 @@ class _Login extends State<Login> {
                     child: Container(
                       height: 50.0,
                       child: RaisedButton(
-                        onPressed: () {},
+
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return HomeScreen();
+                            }
+                          ));
+                        },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(80.0)),
                         padding: EdgeInsets.all(0.0),
