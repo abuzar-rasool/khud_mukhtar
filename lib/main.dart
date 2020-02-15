@@ -16,6 +16,7 @@ void main() {
       routes: <String, WidgetBuilder>{
         '/services_details': (BuildContext context) => new ServiceDetailsPage(),
         '/rating':(BuildContext context)=> new Rating(),
+        '/home_screen': (BuildContext context) => new HomeScreen(),
       },
       title: 'Splash',
       debugShowCheckedModeBanner: false,
