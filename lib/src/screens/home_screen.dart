@@ -3,8 +3,6 @@ import 'package:khud_mukhtar/src/screens/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   bool searchEnabled=false;
-
-
   @override
   _HomeScreen createState() => _HomeScreen();
 }
