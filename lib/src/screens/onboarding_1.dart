@@ -43,90 +43,90 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   image: 'assets/onboardings/onboarding1.png',
                   title: 'This is where your journey starts. ',
                   body:
-                      'Welcome to Khud Mukhtar - a platform for you to connect, empower, and be empowered.'),
+                  'Welcome to Khud Mukhtar - a platform for you to connect, empower, and be empowered.'),
               _buildPageContent(
                   image: 'assets/onboardings/onboarding2.png',
                   title: 'Earn your financial independence.',
                   body:
-                      'Add your service and earn from the comfort of your home.'),
+                  'Add your service and earn from the comfort of your home.'),
               _buildPageContent(
                   image: 'assets/onboardings/onboarding3.png',
                   title: 'Save time - Search what you need.',
                   body:
-                      'Want to find someone who can teach you and is available in your area? Search by category, service type, location, and much more.'),
+                  'Want to find someone who can teach you and is available in your area? Search by category, service type, location, and much more.'),
               _buildPageContent(
                   image: 'assets/onboardings/onboarding4.png',
                   title: 'Get Connected',
                   body:
-                      'Its time to get connected with your fellow women and get more information. ')
+                  'Its time to get connected with your fellow women and get more information. ')
             ],
           ),
         ),
       ),
       bottomSheet: _currentPage != 3
           ? Container(
-              margin: EdgeInsets.symmetric(vertical: 16),
+        margin: EdgeInsets.symmetric(vertical: 16),
 
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FlatButton(
-                    onPressed: () {
-                      _pageController.animateToPage(3,
-                          duration: Duration(milliseconds: 400),
-                          curve: Curves.linear);
-                      setState(() {});
-                    },
-                    splashColor: Color.fromRGBO(240,96,146,1),
-                    child: Text(
-                      'SKIP',
-                      style: TextStyle(
-                        fontSize: 15,
-                          color: Color.fromRGBO(240,96,146,1),
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    child: Row(children: [
-                      for (int i = 0; i < _totalPages; i++)
-                        i == _currentPage
-                            ? _buildPageIndicator(true)
-                            : _buildPageIndicator(false)
-                    ]),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      _pageController.animateToPage(_currentPage + 1,
-                          duration: Duration(milliseconds: 400),
-                          curve: Curves.linear);
-                      setState(() {});
-                    },
-                    splashColor: Colors.blue[50],
-                    child: Text(
-                      'NEXT',
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromRGBO(240,96,146,1),
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-
-                ],
-              ),
-            )
-          : RaisedButton(
-              onPressed: () {},
-        child: Container(
-                height: Platform.isIOS ? 70 : 60,
-                color: Color.fromRGBO(240,96,146,1),
-                alignment: Alignment.center,
-                child: Text(
-                  'GET STARTED NOW',
-                  style: TextStyle(
-                      color: Colors.white, fontSize: 15,fontWeight: FontWeight.bold),
-                ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            FlatButton(
+              onPressed: () {
+                _pageController.animateToPage(3,
+                    duration: Duration(milliseconds: 400),
+                    curve: Curves.linear);
+                setState(() {});
+              },
+              splashColor: Color.fromRGBO(240,96,146,1),
+              child: Text(
+                'SKIP',
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Color.fromRGBO(240,96,146,1),
+                    fontWeight: FontWeight.bold),
               ),
             ),
+            Container(
+              child: Row(children: [
+                for (int i = 0; i < _totalPages; i++)
+                  i == _currentPage
+                      ? _buildPageIndicator(true)
+                      : _buildPageIndicator(false)
+              ]),
+            ),
+            FlatButton(
+              onPressed: () {
+                _pageController.animateToPage(_currentPage + 1,
+                    duration: Duration(milliseconds: 400),
+                    curve: Curves.linear);
+                setState(() {});
+              },
+              splashColor: Colors.blue[50],
+              child: Text(
+                'NEXT',
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Color.fromRGBO(240,96,146,1),
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+
+          ],
+        ),
+      )
+          : RaisedButton(
+        onPressed: () {},
+        child: Container(
+          height: Platform.isIOS ? 70 : 60,
+          color: Color.fromRGBO(240,96,146,1),
+          alignment: Alignment.center,
+          child: Text(
+            'GET STARTED NOW',
+            style: TextStyle(
+                color: Colors.white, fontSize: 15,fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
     );
   }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class Service {
   const Service(this.name);
   final String name;
-
 }
 
 var  selectedType;
@@ -114,6 +113,7 @@ class _AddService extends State<AddService> {
               padding: EdgeInsets.only(left:20, right: 20, bottom: 12),
 
               child: TextField(
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),

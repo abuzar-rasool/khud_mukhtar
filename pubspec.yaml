@@ -1,5 +1,5 @@
 name: khud_mukhtar
-description: Flutter App Prototype for Digital Pakistan 
+description: Flutter App Prototype for Digital Pakistan
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   font_awesome_flutter: ^8.5.0
   flutter_rating_bar: ^3.0.1+1
+  image_picker: ^0.6.1+11
 dev_dependencies:
   flutter_test:
     sdk: flutter
