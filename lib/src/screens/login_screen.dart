@@ -16,7 +16,9 @@ class _Login extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
