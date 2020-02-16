@@ -10,6 +10,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   double preferredSize=60;
+  static int none=2;
   List<Widget> bottomSearchBar= <Widget>[
     SizedBox(
       height: 10,

@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   double preferredSize=60;
+  static int none=2;
   Future navigateToSubPage(context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
   }
