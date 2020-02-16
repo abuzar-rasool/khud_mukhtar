@@ -23,7 +23,7 @@ void main() {
       },
       title: 'Splash',
       debugShowCheckedModeBanner: false,
-      home: AddService(),
+      home: HomeScreen(),
 
 
       // HomeScreenChat() chat screen
