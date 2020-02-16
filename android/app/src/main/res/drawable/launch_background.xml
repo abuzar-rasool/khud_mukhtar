@@ -10,10 +10,7 @@
             android:src="@mipmap/splash_logo"
 
             />
-<!--         android:src="@mipmap/splash_logo"-->
-<!--         android:gravity="center"-->
-<!--         android:width="150dp"-->
-<!--         android:height="150dp"/>-->
+
 
     </item>
 </layer-list>
