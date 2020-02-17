@@ -19,7 +19,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       height: isCurrentPage ? 10.0 : 6.0,
       width: isCurrentPage ? 10.0 : 6.0,
       decoration: BoxDecoration(
-        color: isCurrentPage ? Colors.grey : Colors.grey[300],
+        color: isCurrentPage ?  Color.fromRGBO(240, 98, 146, 1) : Color.fromRGBO(247,166,194,1),
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
     );

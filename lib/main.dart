@@ -23,8 +23,9 @@ void main() {
         '/rating':(BuildContext context)=> new Rating(),
       },
       title: 'Splash',
+      theme: ThemeData(fontFamily: 'Poppins'),
       debugShowCheckedModeBanner: false,
-      home:AddService(),
+      home:Verification(),
 
 
       // HomeScreenChat() chat screen
