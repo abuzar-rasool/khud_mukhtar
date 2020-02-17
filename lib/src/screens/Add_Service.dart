@@ -68,27 +68,31 @@ class _AddService extends State<AddService> {
                    Padding(
                      padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
                      child: Align( alignment: Alignment.centerLeft,
-                       child : Text('Service Name',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
+                       child : Text('Service Name',  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
                      ),
 
                    ),
                    Padding(padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
-                   child:TextField(
-                     decoration: InputDecoration(
-                       border: OutlineInputBorder(
-                         borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
-                       ),
-                       focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
-                       prefixIcon: Icon(
-                         Icons.business_center,
-                         color: Color.fromRGBO(240, 98, 146, 1),
-                       ),
+                   child:SizedBox(
+                     height: 50,
+                     child:TextField(
+                       decoration: InputDecoration(
+                         border: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(20.0),
+                           borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
+                         ),
+                         focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
+                         prefixIcon: Icon(
+                           Icons.business_center,
+                           color: Color.fromRGBO(240, 98, 146, 1),
+                         ),
 
-                       labelText: "eg. Tutions - O Levels",
-                       hintStyle: TextStyle(color: Colors.grey, fontSize: 15.0),
-                       labelStyle: TextStyle(color: Colors.grey),
+                         labelText: "eg. Tutions - O Levels",
+                         hintStyle: TextStyle(color: Colors.grey, fontSize: 9),
+                         labelStyle: TextStyle(color: Colors.grey),
+                       ),
                      ),
-                   ),),
+                   )),
                  ],
                ),
              ),//service name
@@ -99,7 +103,7 @@ class _AddService extends State<AddService> {
                        Padding(
                          padding: const EdgeInsets.only(left:20, right: 20,),
                          child: Align( alignment: Alignment.centerLeft,
-                           child : Text('Main Image',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
+                           child : Text('Main Image',  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
                          ),
 
                        ),
@@ -134,7 +138,7 @@ class _AddService extends State<AddService> {
                    Padding(
                      padding: const EdgeInsets.only(left:20, right: 20,),
                      child: Align( alignment: Alignment.centerLeft,
-                       child : Text('Other Images',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
+                       child : Text('Other Images',  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
                      ),
 
                    ),
@@ -214,31 +218,35 @@ class _AddService extends State<AddService> {
                   Padding(
                     padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
                     child: Align( alignment: Alignment.centerLeft,
-                      child : Text('Price',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
+                      child : Text('Price',  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
                     ),
 
                   ),
          Padding(
            padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
            child:
+           SizedBox(
+             height:50,child:
            TextField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
-                      ),
-                      focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
-                      prefixIcon: Icon(
-                        Icons.attach_money,
-                        color: Color.fromRGBO(240, 98, 146, 1),
-                      ),
-                      prefixText: "PKR ",
-                      prefixStyle: TextStyle(color: Colors.black),
-                      labelText: "eg. 5000",
-                      hintStyle: TextStyle(color: Colors.grey, fontSize: 15.0),
-                      labelStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),),
+             keyboardType: TextInputType.number,
+             decoration: InputDecoration(
+               border: OutlineInputBorder(
+                 borderRadius: BorderRadius.circular(20.0),
+                 borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
+               ),
+               focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
+               prefixIcon: Icon(
+                 Icons.attach_money,
+                 color: Color.fromRGBO(240, 98, 146, 1),
+               ),
+               prefixText: "PKR ",
+               prefixStyle: TextStyle(color: Colors.black),
+               labelText: "eg. 5000",
+               hintStyle: TextStyle(color: Colors.grey, fontSize: 9.0),
+               labelStyle: TextStyle(color: Colors.grey),
+             ),
+           ),
+           )),
                 ],
                   ),
             ), //price
@@ -250,7 +258,7 @@ class _AddService extends State<AddService> {
                      padding: const EdgeInsets.only(left:20.0, right:20,bottom:3),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child:Text('Category', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
+                      child:Text('Category', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
                     ),
                    ),
                    Padding(
@@ -276,7 +284,7 @@ class _AddService extends State<AddService> {
                          isExpanded: false,
                          hint: Text(
                            'Choose Category Type',
-                           style: TextStyle(color:  Colors.black),
+                           style: TextStyle(color:  Colors.black, fontSize: 15),
                          ),
                        ),
                        ),
@@ -294,7 +302,7 @@ class _AddService extends State<AddService> {
                      padding: const EdgeInsets.only(left:20.0, right: 20.0, bottom: 7),
                      child: Align(
                        alignment: Alignment.centerLeft,
-                       child: Text('Service Type', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
+                       child: Text('Service Type', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
 
                      )
                    ),
@@ -329,7 +337,7 @@ class _AddService extends State<AddService> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child:  Text('Description', textAlign: TextAlign.right, style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold,  color: Color.fromRGBO(240, 98, 146, 1)),
+                              fontSize: 17, fontWeight: FontWeight.bold,  color: Color.fromRGBO(240, 98, 146, 1)),
                           ),
                         ),
                   ),
@@ -337,22 +345,26 @@ class _AddService extends State<AddService> {
                      child:
                      Padding(
                        padding: const EdgeInsets.only(left:20.0, right: 20, bottom:12),
-                       child: TextField(
+                       child: SizedBox(
+                         height:50,
+                         child:TextField(
 
-                         decoration: InputDecoration(
-                           border: OutlineInputBorder(
-                             borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
+                           decoration: InputDecoration(
+                             border: OutlineInputBorder(
+                               borderRadius: BorderRadius.circular(20.0),
+                               borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
+                             ),
+                             focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
+
+                             hintText: "Tutions from 8am-5pm.",
+                             labelText: "Add Description here",
+                             hintStyle: TextStyle(color: Colors.grey, fontSize: 9),
+                             labelStyle: TextStyle(color: Colors.grey),
                            ),
-                           focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
+                           keyboardType:  TextInputType.multiline,
+                           maxLines: null,
 
-                           hintText: "Tutions from 8am-5pm.",
-                           labelText: "Add Description here",
-                           hintStyle: TextStyle(color: Colors.grey, fontSize: 15.0),
-                           labelStyle: TextStyle(color: Colors.grey),
-                         ),
-                         keyboardType:  TextInputType.multiline,
-                         maxLines: null,
-
+                         )
                        ),
                      ),
                    ),
@@ -365,19 +377,21 @@ class _AddService extends State<AddService> {
                width: MediaQuery.of(context).size.width,
                child: Padding(
                  padding:  const EdgeInsets.only(right:20, left:20, bottom:12),
-                 child: RaisedButton(
-                   onPressed:(){},
+                 child: SizedBox(
+                   height: 50,
+                   child:RaisedButton(
+                     onPressed:(){},
+                     autofocus: true,
+                     shape:ContinuousRectangleBorder(
+                       borderRadius:BorderRadius.circular(15),
+                     ),
 
-                   autofocus: true,
-                   shape:ContinuousRectangleBorder(
-                     borderRadius:BorderRadius.circular(15),
+                     color: Color.fromRGBO(240, 98, 146, 1),
+                     child: Text('Publish Service', style: TextStyle(
+                         fontSize: 22, fontWeight: FontWeight.bold,  color: Color.fromRGBO(255, 255, 255, 1)),
+                     ),
                    ),
-
-                   color: Color.fromRGBO(240, 98, 146, 1),
-                   child: Text('Publish Service', style: TextStyle(
-                       fontSize: 22, fontWeight: FontWeight.bold,  color: Color.fromRGBO(255, 255, 255, 1)),
-                   ),
-               ),
+                 ),
                ),
 
              ),

@@ -87,31 +87,35 @@ class _Verificaton extends State<Verification> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text('Hey, what is your full name?',
-                                  style: TextStyle(fontSize: 20,
+                                  style: TextStyle(fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Color.fromRGBO(240, 98, 146, 1)),),
                               ),
                               SizedBox(height: 12),
-                              TextField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: new BorderSide(color: Color.fromRGBO(
-                                        240, 96, 146, 1)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: new BorderSide(color: Color.fromRGBO(
-                                          240, 96, 146, 1))),
-                                  prefixIcon: Icon(
-                                    Icons.person,
-                                    color: Color.fromRGBO(240, 98, 146, 1),
-                                  ),
-                                  hintText: "eg. Fatima Moin",
+                             SizedBox(
+                               height: 50,
+                               child: TextField(
+                                 decoration: InputDecoration(
+                                   border: OutlineInputBorder(
+                                     borderRadius: BorderRadius.circular(20.0),
+                                     borderSide: new BorderSide(color: Color.fromRGBO(
+                                         240, 96, 146, 1),),
+                                   ),
+                                   focusedBorder: OutlineInputBorder(
+                                       borderSide: new BorderSide(color: Color.fromRGBO(
+                                           240, 96, 146, 1))),
+                                   prefixIcon: Icon(
+                                     Icons.person,
+                                     color: Color.fromRGBO(240, 98, 146, 1),
+                                   ),
+                                   hintText: "eg. Fatima Moin",
 
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 15.0),
-                                  labelStyle: TextStyle(color: Colors.grey),
-                                ),
-                              ),
+                                   hintStyle: TextStyle(
+                                       color: Colors.grey, fontSize: 15.0),
+                                   labelStyle: TextStyle(color: Colors.grey),
+                                 ),
+                               )
+                             ),
                             ],
                           ),
 
@@ -124,30 +128,34 @@ class _Verificaton extends State<Verification> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text('And your mobile number?',
-                                  style: TextStyle(fontSize: 20,
+                                  style: TextStyle(fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Color.fromRGBO(240, 98, 146, 1)),),
                               ),
                               SizedBox(height: 12),
-                              TextField(
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: new BorderSide(color: Color.fromRGBO(
-                                        240, 96, 146, 1)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
+                              SizedBox(
+                                height:50,
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
                                       borderSide: new BorderSide(color: Color.fromRGBO(
-                                          240, 96, 146, 1))),
-                                  prefixIcon: Icon(
-                                    Icons.phone_android,
-                                    color: Color.fromRGBO(240, 98, 146, 1),
+                                          240, 96, 146, 1)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: new BorderSide(color: Color.fromRGBO(
+                                            240, 96, 146, 1))),
+                                    prefixIcon: Icon(
+                                      Icons.phone_android,
+                                      color: Color.fromRGBO(240, 98, 146, 1),
+                                    ),
+                                    hintText: "eg. 03332367890",
+                                    hintStyle: TextStyle(
+                                        color: Colors.grey, fontSize: 15.0),
+                                    labelStyle: TextStyle(color: Colors.grey),
                                   ),
-                                  hintText: "eg. 03332367890",
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 15.0),
-                                  labelStyle: TextStyle(color: Colors.grey),
-                                ),
+                                )
                               ),
                             ],
                           ),
@@ -165,7 +173,7 @@ class _Verificaton extends State<Verification> {
                                     left: 20.0, right: 20, bottom: 12),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text('Which city are you located in?', style: TextStyle(fontSize: 20,
+                                  child: Text('Which city are you located in?', style: TextStyle(fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Color.fromRGBO(240, 98, 146, 1)),),
                                 ),
@@ -213,26 +221,31 @@ class _Verificaton extends State<Verification> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text('And, area?',
-                                  style: TextStyle(fontSize: 20,
+                                  style: TextStyle(fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Color.fromRGBO(240, 98, 146, 1)),),
                               ),
                               SizedBox(height: 12),
-                              TextField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: new BorderSide(color: Color.fromRGBO(
-                                        240, 96, 146, 1)),
+                              SizedBox(
+                                height: 50,
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20.0),
+                                        borderSide: new BorderSide(color: Color.fromRGBO(
+                                            240, 96, 146, 1)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: new BorderSide(color: Color.fromRGBO(
+                                              240, 96, 146, 1))),
+                                      hintText: "eg. North Nazimabad",
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey, fontSize: 15.0),
+                                      labelStyle: TextStyle(color: Colors.grey),
+                                      prefixIcon: Icon(Icons.location_city, color: Color.fromRGBO(240, 98, 146, 1),)
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: new BorderSide(color: Color.fromRGBO(
-                                          240, 96, 146, 1))),
-                                  hintText: "eg. North Nazimabad",
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 15.0),
-                                  labelStyle: TextStyle(color: Colors.grey),
                                 ),
-                              ),
+                              )
                             ],
                           ),
 
@@ -254,7 +267,7 @@ class _Verificaton extends State<Verification> {
                           },
                         ),
                         Expanded(child:Text('I confirm I am a woman above 18 years of age.',
-                          style: TextStyle(fontSize: 17,
+                          style: TextStyle(fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Color.fromRGBO(240, 98, 146, 1)),)),
                       ],
@@ -274,12 +287,12 @@ class _Verificaton extends State<Verification> {
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Column(
                         children: <Widget>[
-                          Text('Now, add a photo', style: TextStyle(fontSize: 27,
+                          Text('Now, add a photo', style: TextStyle(fontSize: 21,
                               fontWeight: FontWeight.bold,
                               color: Color.fromRGBO(240, 98, 146, 1)),),
                           Divider(),
                           Text('This way, people will know who you are.', style:
-                          TextStyle(fontSize: 18,
+                          TextStyle(fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Color.fromRGBO(240, 98, 146, 1)),),
                         ],
@@ -322,44 +335,48 @@ class _Verificaton extends State<Verification> {
                       child: Column(
                         children: <Widget>[
                           Text("Almost done!",
-                            textAlign: TextAlign.center,style: TextStyle(fontSize: 27,
+                            textAlign: TextAlign.center,style: TextStyle(fontSize: 21,
                               fontWeight: FontWeight.bold,
                               color: Color.fromRGBO(240, 98, 146, 1)),),
+                          Divider(),
                           Text("Let's verify so we can make sure your safety is our top priority",
                             textAlign: TextAlign.center,
                             style:
-                          TextStyle(fontSize: 18,
+                          TextStyle(fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Color.fromRGBO(240, 98, 146, 1)),),
                         ],
                       ),
                     ),
-                    GridView.count(
-                      shrinkWrap: true,
-                      primary: false,
-                      padding: const EdgeInsets.all(15),
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      crossAxisCount: 1,
-                      children: <Widget>[
-                        GestureDetector(
-                            onTap: _getCNIC,
-                            child: Container(
-                              color: Colors.black12,
-                              child: image_cnic == null
-                                  ? Icon(FontAwesomeIcons.plus, color: Color.fromRGBO(240, 98, 146, 1))
-                                  : Image.file(image_cnic),
-                            )
-                        )
+                    SizedBox(
+                      height: 340,
+                      child:GridView.count(
+                        shrinkWrap: true,
+                        primary: false,
+                        padding: const EdgeInsets.all(15),
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        crossAxisCount: 1,
+                        children: <Widget>[
+                          GestureDetector(
+                              onTap: _getCNIC,
+                              child: Container(
+                                color: Colors.black12,
+                                child: image_cnic == null
+                                    ? Icon(FontAwesomeIcons.plus, color: Color.fromRGBO(240, 98, 146, 1))
+                                    : Image.file(image_cnic),
+                              )
+                          )
 
-                      ],
+                        ],
+                      ),
                     ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child:
                   Text('Take a clear picture of your National Identity eg. CNIC, Passport, B-Form) ',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14,
+                      style: TextStyle(fontSize: 11.5,
                            fontWeight: FontWeight.bold,
                            color: Color.fromRGBO(240, 98, 146, 1)),),
                 ),

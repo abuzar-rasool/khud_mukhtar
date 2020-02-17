@@ -25,7 +25,7 @@ void main() {
       title: 'Splash',
       theme: ThemeData(fontFamily: 'Poppins'),
       debugShowCheckedModeBanner: false,
-      home:Verification(),
+      home:AddService(),
 
 
       // HomeScreenChat() chat screen
