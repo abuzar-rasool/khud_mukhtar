@@ -11,10 +11,36 @@ User user1= User(
   city: 'Karachi',
   followers: 100,
   following: 200,
-  productList: allproducts,
   rating: 2.5,
+  area: 'Defence',
+  productList: allProducts,
+
 
 );
+User loggedInUser= User(
+  id: 0,
+  name: 'Fatima Moin',
+  imageUrl: 'assets/momina.jpg',
+  cnicPicture: '',
+  contactNumber: '0335-2366331'  ,
+  city: 'Karachi',
+  followers: 100,
+  following: 200,
+  rating: 2.5,
+  area: 'Defence',
+
+
+);
+
+List<Product> allProducts= [
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+
+
+];
 
 class User {
   final int id;
@@ -28,7 +54,9 @@ class User {
   final int following;
   final List<Product> productList;
   final double rating;
-  User({this.id,this.name, this.imageUrl, this.cnicPicture, this.contactNumber, this.city, this.email, this.followers, this.following, this.productList, this.rating});
+  final String area;
+
+  User({this.area,this.id,this.name, this.imageUrl, this.cnicPicture, this.contactNumber, this.city, this.email, this.followers, this.following, this.productList, this.rating});
 
 }
 
@@ -38,18 +66,19 @@ class Product{
   final String description;
   final Category category;
   final int likes;
-  final user;
+  final User user;
   final String mainImage;
   final List<String> galleryImages;
+  final serviceType;
 
-
-  Product({this.title, this.price, this.description, this.category, this.likes, this.user, this.mainImage, this.galleryImages});
+  Product({this.serviceType,this.title, this.price, this.description, this.category, this.likes, this.user, this.mainImage, this.galleryImages});
 
 }
 
 class Category{
   final String name;
-  final Icon icon;
+
+  final IconData icon;
 
   Category({this.name, this.icon});
 
@@ -59,13 +88,13 @@ class Category{
 
 //ALL APP DATA GOES HERE.
 List<Category> categories=[
-  Category(name: 'Education',icon: Icon(FontAwesomeIcons.pen)),
-  Category(name: 'Education',icon: Icon(FontAwesomeIcons.pen)),
-  Category(name: 'Education',icon: Icon(FontAwesomeIcons.pen)),
-  Category(name: 'Education',icon: Icon(FontAwesomeIcons.pen)),
-  Category(name: 'Education',icon: Icon(FontAwesomeIcons.pen)),
-  Category(name: 'Education',icon: Icon(FontAwesomeIcons.pen)),
-  Category(name: 'Education',icon: Icon(FontAwesomeIcons.pen)),
+  Category(name: 'Education',icon: FontAwesomeIcons.pen),
+  Category(name: 'Education',icon: FontAwesomeIcons.hackerNews),
+  Category(name: 'Education',icon: FontAwesomeIcons.pen),
+  Category(name: 'Education',icon: FontAwesomeIcons.pen),
+  Category(name: 'Education',icon: FontAwesomeIcons.pen),
+  Category(name: 'Education',icon: FontAwesomeIcons.pen),
+  Category(name: 'Education',icon: FontAwesomeIcons.pen),
 
 ];
 List<String> galleryImages = [
@@ -73,12 +102,4 @@ List<String> galleryImages = [
   'assets/quranforkidssample.jpg',
   'assets/quranforkidssample.jpg',
   'assets/quranforkidssample.jpg',
-];
-List<Product> allproducts= [
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,user: user1,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,user: user1,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,user: user1,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,user: user1,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,user: user1,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,user: user1,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages),
 ];

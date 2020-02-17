@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:khud_mukhtar/src/models/user_model.dart';
+import 'package:khud_mukhtar/src/screens/chat_screen.dart';
+import 'package:khud_mukhtar/src/screens/profile_screen.dart';
 import 'service_details.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khud_mukhtar/constants/colors.dart';
 
 class bottomAppBar extends StatelessWidget {
+  final Product product;
+  const bottomAppBar({this.product});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,65 +23,74 @@ class bottomAppBar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundImage: AssetImage(('assets/momina.jpg'),),
-                    ),
-                    Positioned(
-                      top: 30,
-                      bottom: -2,
-                      right: -1,
-                      left: 30,
-                      child: ClipOval(
-                        child: Container(
-                          width: 0.5,
-                          height: 0.5,
-                          color: Colors.green,
-                        ),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Profile(user: product.user,)),
+                );
+              },
+              child: Row(
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundImage: AssetImage((product.user.imageUrl),),
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Fatima Moin',
-                      style: TextStyle(
-                        fontSize: 19.0,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        Text(
-                          '4.9',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.black45,
-                            fontWeight: FontWeight.w900,
+                      Positioned(
+                        top: 30,
+                        bottom: -2,
+                        right: -1,
+                        left: 30,
+                        child: ClipOval(
+                          child: Container(
+                            width: 0.5,
+                            height: 0.5,
+                            color: Colors.green,
                           ),
                         ),
-                      ],
-                    ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        product.user.name,
+                        style: TextStyle(
+                          fontSize: 19.0,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Text(
+                            product.user.rating.toString(),
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.black45,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ],
+                      ),
 
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
             OutlineButton(
+
               child: Row(
                 children: <Widget>[
                   Padding(
@@ -86,7 +101,12 @@ class bottomAppBar extends StatelessWidget {
                 ],
               ),
               highlightedBorderColor: pink500,
-              onPressed: () {}, //callback when button is clicked
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatScreen(user: product.user,)),
+                );
+              }, //callback when button is clicked
               borderSide: BorderSide(
                 color: pink300, //Color of the border
                 style: BorderStyle.solid, //Style of the border
@@ -110,15 +130,19 @@ class ServiceSinglePage extends StatelessWidget {
   final Color color1 = pink500;
   final Color color2 = pink300;
   final Color color3 = pink300;
+  Product product;
 
+
+  ServiceSinglePage({this.product});
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: Scaffold(
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
-          child: bottomAppBar(),
+          child: bottomAppBar(product: product,),
         ),
         body: Container(
           height: double.infinity,
@@ -164,7 +188,7 @@ class ServiceSinglePage extends StatelessWidget {
                         children: <Widget>[
                           Icon(Icons.location_on, color: Colors.white),
                           Text(
-                            'Karachi , Pakistan',
+                            '${product.user.city} , Pakistan',
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -174,7 +198,7 @@ class ServiceSinglePage extends StatelessWidget {
 
                       SizedBox(height: 20.0),
                       Text(
-                        "Logo\nDesigning".toUpperCase(),
+                        "${product.title}".toUpperCase(),
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -183,7 +207,7 @@ class ServiceSinglePage extends StatelessWidget {
 
                       SizedBox(height: 5.0),
                       RatingBar(
-                        initialRating: 4.5,
+                        initialRating: product.user.rating,
                         minRating: 1,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
@@ -210,7 +234,7 @@ class ServiceSinglePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text('Service Type',style: TextStyle(color: Colors.white,fontSize: 10),),
-                              Text('Home Based',style: TextStyle(color: Colors.white,fontSize: 13),)
+                              Text('${product.serviceType}',style: TextStyle(color: Colors.white,fontSize: 13),)
                             ],
                           ),
                           SizedBox(
@@ -228,7 +252,7 @@ class ServiceSinglePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text('Category',style: TextStyle(color: Colors.white,fontSize: 10),),
-                              Text('Quran Classes',style: TextStyle(color: Colors.white,fontSize: 13),),
+                              Text('${product.category.name}',style: TextStyle(color: Colors.white,fontSize: 13),),
                             ],
                           ),
                           SizedBox(
@@ -247,7 +271,7 @@ class ServiceSinglePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text('Area',style: TextStyle(color: Colors.white,fontSize: 10),),
-                              Text('North Karachi',style: TextStyle(color: Colors.white,fontSize: 13),)
+                              Text('${product.user.area}',style: TextStyle(color: Colors.white,fontSize: 13),)
                             ],
                           ),
                         ],
@@ -265,7 +289,7 @@ class ServiceSinglePage extends StatelessWidget {
                 child: SizedBox(
 
                   height: 350,
-                  child: Image.asset(('assets/logodesigning.png'), fit: BoxFit.cover),
+                  child: Image.asset((product.mainImage), fit: BoxFit.cover),
                 ),
               ),
               Positioned(
@@ -277,7 +301,6 @@ class ServiceSinglePage extends StatelessWidget {
                   child: IconButton(
                       color: icon,
                       onPressed: (){
-
                       },
                       icon: Icon(FontAwesomeIcons.heart,)),
                 ),
@@ -290,7 +313,10 @@ class ServiceSinglePage extends StatelessWidget {
                   color: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                   onPressed: (){
-                    Navigator.pushNamed(context, '/services_details');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ServiceDetailsPage(product: product,)),
+                    );
                   },
                 ),
               ),
