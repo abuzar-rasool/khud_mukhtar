@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Service {
   const Service(this.name);
@@ -18,10 +21,25 @@ class AddService extends StatefulWidget {
 
   @override
   _AddService createState() => _AddService();
-
 }
 
 class _AddService extends State<AddService> {
+  List<File> images= [null, null, null, null,null,null];
+  File image;
+  Future _getImage() async {
+    File picture = await ImagePicker.pickImage(
+        source: ImageSource.gallery, maxWidth: 300.0, maxHeight: 500.0);
+    setState(() {
+      image= picture;
+    });}
+  Future _getImages(int i) async {
+    File pictures = await ImagePicker.pickImage(
+        source: ImageSource.gallery, maxWidth: 300.0, maxHeight: 500.0);
+    print('pictures : $pictures');
+    setState(() {
+       images[i]= pictures;
+       print("Im here.");
+    });}
   @override
   Widget build(BuildContext context) {
     //  AssetImage logo = AssetImage('assets/logo.png');
@@ -44,23 +62,34 @@ class _AddService extends State<AddService> {
                height: 20,
              ),
              Container(
-               padding: EdgeInsets.only(left:20, right: 20, bottom: 12),
+               width: MediaQuery.of(context).size.width,
+               child: Column(
+                 children: <Widget>[
+                   Padding(
+                     padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
+                     child: Align( alignment: Alignment.centerLeft,
+                       child : Text('Service Name',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
+                     ),
 
-               child: TextField(
-                 decoration: InputDecoration(
-                   border: OutlineInputBorder(
-                     borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
                    ),
-                   focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
-                   prefixIcon: Icon(
-                     Icons.business_center,
-                     color: Color.fromRGBO(240, 98, 146, 1),
-                   ),
-                   hintText: "eg. Tutions - O Levels",
-                   labelText: "Service Name",
-                   hintStyle: TextStyle(color: Colors.grey, fontSize: 15.0),
-                   labelStyle: TextStyle(color: Colors.grey),
-                 ),
+                   Padding(padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
+                   child:TextField(
+                     decoration: InputDecoration(
+                       border: OutlineInputBorder(
+                         borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
+                       ),
+                       focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
+                       prefixIcon: Icon(
+                         Icons.business_center,
+                         color: Color.fromRGBO(240, 98, 146, 1),
+                       ),
+
+                       labelText: "eg. Tutions - O Levels",
+                       hintStyle: TextStyle(color: Colors.grey, fontSize: 15.0),
+                       labelStyle: TextStyle(color: Colors.grey),
+                     ),
+                   ),),
+                 ],
                ),
              ),//service name
              Container(
@@ -68,20 +97,31 @@ class _AddService extends State<AddService> {
                    child: Column(
                      children: <Widget>[
                        Padding(
-                         padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
-                         child: Row(
-                           children: <Widget>[
-                             Text('Main Image', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
-                             Spacer(),
-                             IconButton( icon: Icon(
-                               Icons.add_circle_outline),
-                               color: Color.fromRGBO(240, 98, 146, 1),
-                               onPressed:(){},
-                             ),
-
-                           ],
+                         padding: const EdgeInsets.only(left:20, right: 20,),
+                         child: Align( alignment: Alignment.centerLeft,
+                           child : Text('Main Image',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
                          ),
 
+                       ),
+                       GridView.count(
+                         shrinkWrap: true,
+                         primary: false,
+                         padding: const EdgeInsets.all(15),
+                         crossAxisSpacing: 10,
+                         mainAxisSpacing: 10,
+                         crossAxisCount: 2,
+                         children: <Widget>[
+                           GestureDetector(
+                               onTap: _getImage,
+                               child: Container(
+                                 color: Colors.black12,
+                                 child: image == null
+                                    ? Icon(FontAwesomeIcons.plus, color: Color.fromRGBO(240, 98, 146, 1))
+                                     : Image.file(image),
+                               )
+                           )
+
+                         ],
                        ),
 
                      ],
@@ -92,52 +132,122 @@ class _AddService extends State<AddService> {
                child: Column(
                  children: <Widget>[
                    Padding(
-                     padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
-                     child: Row(
-                       children: <Widget>[
-                         Text('Other Images', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
-                         Spacer(),
-                     IconButton( icon: Icon(
-                         Icons.add_circle_outline),
-                       color: Color.fromRGBO(240, 98, 146, 1),
-                       onPressed:(){},),
-                       ],
+                     padding: const EdgeInsets.only(left:20, right: 20,),
+                     child: Align( alignment: Alignment.centerLeft,
+                       child : Text('Other Images',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
                      ),
 
+                   ),
+                   GridView.count(
+                     shrinkWrap: true,
+                     primary: false,
+                     padding: const EdgeInsets.all(15),
+                     crossAxisSpacing: 10,
+                     mainAxisSpacing: 10,
+                     crossAxisCount: 3,
+                     children: <Widget>[
+                       GestureDetector(
+                           onTap:() => _getImages(0),
+                           child: Container(
+                             color: Colors.black12,
+                             child: images[0] == null
+                                 ? Icon(FontAwesomeIcons.plus, color: Color.fromRGBO(240, 98, 146, 1))
+                                 : Image.file(images[0]),
+                           )
+                       ),
+                       GestureDetector(
+                           onTap:() => _getImages(1),
+                           child: Container(
+                             color: Colors.black12,
+                             child: images[1] == null
+                                 ? Icon(FontAwesomeIcons.plus, color: Color.fromRGBO(240, 98, 146, 1))
+                                 : Image.file(images[1]),
+                           )
+                       ),
+                       GestureDetector(
+                           onTap:() => _getImages(2),
+                           child: Container(
+                             color: Colors.black12,
+                             child: images[2] == null
+                                 ? Icon(FontAwesomeIcons.plus, color: Color.fromRGBO(240, 98, 146, 1))
+                                 : Image.file(images[2]),
+                           )
+                       ),
+                       GestureDetector(
+                           onTap:() => _getImages(3),
+                           child: Container(
+                             color: Colors.black12,
+                             child: images[3] == null
+                                 ? Icon(FontAwesomeIcons.plus, color: Color.fromRGBO(240, 98, 146, 1))
+                                 : Image.file(images[3]),
+                           )
+                       ),
+                       GestureDetector(
+                           onTap:() => _getImages(4),
+                           child: Container(
+                             color: Colors.black12,
+                             child: images[4] == null
+                                 ? Icon(FontAwesomeIcons.plus, color: Color.fromRGBO(240, 98, 146, 1))
+                                 : Image.file(images[4]),
+                           )
+                       ),
+                       GestureDetector(
+                           onTap:() => _getImages(5),
+                           child: Container(
+                             color: Colors.black12,
+                             child: images[5] == null
+                                 ? Icon(FontAwesomeIcons.plus, color: Color.fromRGBO(240, 98, 146, 1))
+                                 : Image.file(images[5]),
+                           )
+                       ),
+
+
+                     ],
                    ),
 
                  ],
                ),
-             ),
+             ),//more images
             Container(
-              padding: EdgeInsets.only(left:20, right: 20, bottom: 12),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
+                    child: Align( alignment: Alignment.centerLeft,
+                      child : Text('Price',  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
+                    ),
 
-              child: TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
                   ),
-                  focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
-                  prefixIcon: Icon(
-                    Icons.attach_money,
-                    color: Color.fromRGBO(240, 98, 146, 1),
+         Padding(
+           padding: const EdgeInsets.only(left:20, right: 20, bottom: 12),
+           child:
+           TextField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: new BorderSide(color : Color.fromRGBO(240,96,146,1)),
+                      ),
+                      focusedBorder: OutlineInputBorder(borderSide: new BorderSide(color: Color.fromRGBO(240,96,146,1))),
+                      prefixIcon: Icon(
+                        Icons.attach_money,
+                        color: Color.fromRGBO(240, 98, 146, 1),
+                      ),
+                      prefixText: "PKR ",
+                      prefixStyle: TextStyle(color: Colors.black),
+                      labelText: "eg. 5000",
+                      hintStyle: TextStyle(color: Colors.grey, fontSize: 15.0),
+                      labelStyle: TextStyle(color: Colors.grey),
+                    ),
+                  ),),
+                ],
                   ),
-                  prefixText: "PKR ",
-                  prefixStyle: TextStyle(color: Colors.black),
-                  hintText: "eg. 5000",
-                  labelText: "Price",
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 15.0),
-                  labelStyle: TextStyle(color: Colors.grey),
-                ),
-              ),
             ), //price
              Container(
                width: MediaQuery.of(context).size.width,
                child: Column(
                  children: <Widget>[
                    Padding(
-                     padding: const EdgeInsets.only(left:20.0, right:20,bottom: 12),
+                     padding: const EdgeInsets.only(left:20.0, right:20,bottom:3),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child:Text('Category', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
@@ -151,7 +261,7 @@ class _AddService extends State<AddService> {
                          items: _category.map((value) => DropdownMenuItem(
                            child: Text(
                              value,
-                             style: TextStyle(color:  Color.fromRGBO(240, 98, 146, 1)),
+                             style: TextStyle(color:  Colors.black),
                            ),
                            value: value,
                          ))
@@ -166,7 +276,7 @@ class _AddService extends State<AddService> {
                          isExpanded: false,
                          hint: Text(
                            'Choose Category Type',
-                           style: TextStyle(color:  Color.fromRGBO(240, 98, 146, 1)),
+                           style: TextStyle(color:  Colors.black),
                          ),
                        ),
                        ),
@@ -181,7 +291,7 @@ class _AddService extends State<AddService> {
                child: Column(
                  children: <Widget>[
                    Padding(
-                     padding: const EdgeInsets.only(left:20.0, right: 20.0, bottom: 12),
+                     padding: const EdgeInsets.only(left:20.0, right: 20.0, bottom: 7),
                      child: Align(
                        alignment: Alignment.centerLeft,
                        child: Text('Service Type', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 98, 146, 1)),),
@@ -271,7 +381,7 @@ class _AddService extends State<AddService> {
                ),
 
              ),
-               ],
+           ],
          )
        )
       ),

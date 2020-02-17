@@ -24,7 +24,7 @@ void main() {
       },
       title: 'Splash',
       debugShowCheckedModeBanner: false,
-      home:OnboardingPage(),
+      home:AddService(),
 
 
       // HomeScreenChat() chat screen
