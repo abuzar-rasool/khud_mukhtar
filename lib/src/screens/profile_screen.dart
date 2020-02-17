@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:khud_mukhtar/src/models/user_model.dart';
 
 class Profile extends StatefulWidget {
-  Profile({Key key}) : super(key: key);
+  final User user;
+  Profile({this.user});
 
   @override
   _Profile createState() => _Profile();
@@ -50,7 +52,7 @@ class _Profile extends State<Profile> {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'Karachi, Pakistan',
+                                  '${widget.user.city}, Pakistan',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 15),
                                 ),
@@ -73,7 +75,7 @@ class _Profile extends State<Profile> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text('05',
+                                      Text('10',
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.white))
@@ -89,7 +91,7 @@ class _Profile extends State<Profile> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text('05',
+                                      Text('${widget.user.followers}',
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.white))
@@ -105,7 +107,7 @@ class _Profile extends State<Profile> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text('05',
+                                      Text('${widget.user.following}',
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.white))
@@ -119,7 +121,7 @@ class _Profile extends State<Profile> {
                               child: Column(
                                 children: <Widget>[
                                   Text(
-                                    'Momina Mustehsan ',
+                                    '${widget.user.name}',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,
@@ -134,7 +136,7 @@ class _Profile extends State<Profile> {
                                         Icons.star,
                                         color: Colors.white,
                                       ),
-                                      Text('5.0',
+                                      Text('${widget.user.rating}',
                                           style: TextStyle(
                                             color: Colors.white,
                                           )),
@@ -167,7 +169,7 @@ class _Profile extends State<Profile> {
                   child: CircleAvatar(
                       backgroundColor: Color.fromRGBO(240, 98, 146, 1),
                       radius: 60,
-                      backgroundImage: profileimage),
+                      backgroundImage: AssetImage(widget.user.imageUrl)),
                 )
               ],
               alignment: AlignmentDirectional.bottomStart,
@@ -188,81 +190,51 @@ class _Profile extends State<Profile> {
                           children: List.generate(20, (index) {
                             return Center(
                               child: Card(
+
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     height: double.infinity,
                                     width: double.infinity,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Flexible(
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
+                                          child: Container(width: MediaQuery.of(context).size.width,
                                             height: 100,
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 fit: BoxFit.fill,
                                                 image: sampleimage,
                                               ),
-                                            ),
-                                          ),
+                                            ),),
                                           flex: 4,
                                         ),
                                         Flexible(
                                           child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: const EdgeInsets.all(8.0),
                                               child: Stack(
                                                 children: <Widget>[
-                                                  Container(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Text(
-                                                            'Quran classes for kids'),
-                                                        Text(
-                                                          'RS 10,000',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )
-                                                      ],
-                                                    ),
+                                                  Container( child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Text('Quran classes for kids'),
+                                                      Text('RS 10,000', style: TextStyle(fontWeight: FontWeight.bold),)
+                                                    ],
+                                                  ),
                                                   ),
                                                   Positioned(
                                                     left: 100,
                                                     child: Row(
                                                       children: <Widget>[
-                                                        Icon(
-                                                          Icons.favorite,
-                                                          color: Colors.red,
-                                                        ),
-                                                        Text(
-                                                          '716',
-                                                          style: TextStyle(
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                      240,
-                                                                      98,
-                                                                      146,
-                                                                      1)),
-                                                        )
+                                                        Icon(Icons.favorite,color: Colors.red,),
+                                                        Text('716',style: TextStyle(color:Color.fromRGBO(240, 98, 146, 1) ),)
                                                       ],
                                                     ),
                                                   )
                                                 ],
-                                                alignment: Alignment.bottomLeft,
-                                              )),
+                                                alignment: Alignment.bottomLeft,)
+                                          ),
                                           flex: 2,
                                         )
                                       ],

@@ -4,8 +4,11 @@ import 'dart:io';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khud_mukhtar/constants/colors.dart';
+import 'package:khud_mukhtar/src/models/user_model.dart';
 
 class ServiceDetailsPage extends StatelessWidget {
+  final Product product;
+  ServiceDetailsPage({this.product});
   static final String path = "lib/src/pages/food/recipe_details.dart";
   FocusNode myFocusNode = new FocusNode();
   @override
@@ -25,7 +28,7 @@ class ServiceDetailsPage extends StatelessWidget {
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(FontAwesomeIcons.solidHeart, color: pink300),
-            label: Text("70 Likes"),
+            label: Text("${product.likes} Likes"),
             onPressed: () {},
           )
         ],
@@ -37,7 +40,7 @@ class ServiceDetailsPage extends StatelessWidget {
               padding: EdgeInsets.all(20.0),
               children: <Widget>[
                 Text(
-                  "Quran Classes\nFor Women".toUpperCase(),
+                  "${product.title}".toUpperCase(),
                   style: TextStyle(
                       color: pink500,
                       fontSize: 38.0,
@@ -47,7 +50,7 @@ class ServiceDetailsPage extends StatelessWidget {
                   height: 5.0,
                 ),
                 Text(
-                  "Rs 5000",
+                  "Rs ${product.price}",
                   style: TextStyle(
                       color: pink300,
                       fontSize: 28.0,
@@ -57,8 +60,7 @@ class ServiceDetailsPage extends StatelessWidget {
                 SizedBox(
                   height: 16.0,
                 ),
-                Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lacinia, odio ut placerat finibus, ipsum risus consectetur ligula, non mattis mi neque ac mi.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lacinia, odio ut placerat finibus, ipsum risus consectetur ligula, non mattis mi neque ac mi."),
+                Text(product.description),
                 SizedBox(
                   height: 20.0,
                 ),
@@ -74,7 +76,7 @@ class ServiceDetailsPage extends StatelessWidget {
                             SizedBox(
                               width: 5.0,
                             ),
-                            Text("Home Based")
+                            Text("${product.serviceType}")
                           ],
                         ),
                       ),
@@ -88,7 +90,7 @@ class ServiceDetailsPage extends StatelessWidget {
                             SizedBox(
                               width: 5.0,
                             ),
-                            Text('North Karachi')
+                            Text('${product.serviceType}')
                           ],
                         ),
                       ),
@@ -183,27 +185,13 @@ class ServiceDetailsPage extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(10.0),
               height: 80,
-              child: ListView(
+              child: ListView.builder(
+
                 scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  _buildBottomImage('assets/quran.jpg'),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  _buildBottomImage('assets/quran.jpg'),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  _buildBottomImage('assets/quran.jpg'),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  _buildBottomImage('assets/quran.jpg'),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  _buildBottomImage('assets/quran.jpg'),
-                ],
+                itemCount: product.galleryImages!=null ? product.galleryImages.length : 0,
+                itemBuilder: (BuildContext ctxt, int index) {
+                  return _buildBottomImage(product.galleryImages[index]);
+                },
               ),
             ),
           )
@@ -212,12 +200,15 @@ class ServiceDetailsPage extends StatelessWidget {
     );
   }
 
-  Container _buildBottomImage(String image) {
-    return Container(
-      width: 80,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+  Widget _buildBottomImage(String image) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      child: Container(
+        width: 80,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+      ),
     );
   }
 

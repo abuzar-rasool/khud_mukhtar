@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:khud_mukhtar/src/models/user_model.dart';
+import 'package:khud_mukhtar/src/screens/service_single.dart';
 
 
 class FeaturedServices extends StatelessWidget {
@@ -12,12 +14,12 @@ class FeaturedServices extends StatelessWidget {
     // TODO: implement build
     return  Center(
       child: Container(
-        height: 320,
+        height: 300,
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(0),
               child: Row(
                 children: <Widget>[
                   Text(
@@ -35,12 +37,21 @@ class FeaturedServices extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ListView(
+                child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    children: List.generate(10, (index) {
-                      return  CustomCard();
-                    })
+                    itemCount: allProducts.length==null ? 0 : allProducts.length,
+                    itemBuilder: (BuildContext ctxt, int index) {
+                      return new CustomCardProduct(
+                        product:allProducts[index],
+                        onPress: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ServiceSinglePage(product: allProducts[index],)),
+                          );
+                        },
+                      );
+                    },
                 ),
               ),
             )
@@ -51,61 +62,65 @@ class FeaturedServices extends StatelessWidget {
   }
 }
 
-class CustomCard extends StatelessWidget {
-  AssetImage profileimage = AssetImage('assets/momina.jpg'),
-      sampleimage = AssetImage('assets/quranforkidssample.jpg');
-  CustomCard({@required this.index, @required this.onPress});
-  final index;
+class CustomCardProduct extends StatelessWidget {
+  final Product product;
   final Function onPress;
+  CustomCardProduct({this.onPress, this.product});
+
+
+
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          width: 200,
-          child: Column(
-            crossAxisAlignment:
-            CrossAxisAlignment.start,
-            children: <Widget>[
-              Flexible(
-                child: Container(
-                  width:
-                  MediaQuery.of(context).size.width,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: sampleimage,
+    return GestureDetector(
+      onTap: onPress,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(0),
+          child: Container(
+            width: 200,
+
+            child: Column(
+              crossAxisAlignment:
+              CrossAxisAlignment.start,
+              children: <Widget>[
+                Flexible(
+                  child: Container(
+                    width:
+                    MediaQuery.of(context).size.width,
+                    height: 120,
+                    decoration:BoxDecoration(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(product.mainImage),
+                      ),
                     ),
                   ),
+                  flex: 4,
                 ),
-                flex: 4,
-              ),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Container(
                       width: MediaQuery.of(context)
                           .size
                           .width,
+
+
                       child: Column(
                         crossAxisAlignment:
                         CrossAxisAlignment.start,
                         mainAxisAlignment:
                         MainAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                              'Quran classes for kids'),
+                          Text(product.title),
                           Spacer(),
                           Row(
                             children: <Widget>[
                               Text(
-                                'RS 10,000',
+                                'Rs ${product.price}',
                                 style: TextStyle(
                                     fontWeight:
                                     FontWeight
@@ -115,7 +130,7 @@ class CustomCard extends StatelessWidget {
                               Icon(Icons.favorite,
                                   color: Colors.red),
                               Text(
-                                '716',
+                                '${product.likes}',
                                 style: TextStyle(
                                     color:
                                     Color.fromRGBO(
@@ -130,16 +145,16 @@ class CustomCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-                flex: 2,
-              )
-            ],
+                  flex: 2,
+                )
+              ],
+            ),
           ),
         ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0)),
+        elevation: 5.0,
       ),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0)),
-      elevation: 5.0,
     );
   }
 
