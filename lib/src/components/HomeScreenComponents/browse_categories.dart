@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:khud_mukhtar/src/models/user_model.dart';
+import 'package:khud_mukhtar/src/screens/ProductDetails.dart';
 
 class BrowseCategoriesCard extends StatelessWidget {
   BrowseCategoriesCard({@required this.index, @required this.onPress});
@@ -33,13 +33,19 @@ class BrowseCategoriesCard extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                itemCount: categories.length,
+              child: ListView(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new CustomCardCategory(icon:categories[index].icon);
-                  }
+                children: List.generate(10, (index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return ProductDetails();
+                          }));
+                    },
+                      child: CustomCard());
+                }),
               ),
             ),
           )
@@ -49,11 +55,10 @@ class BrowseCategoriesCard extends StatelessWidget {
   }
 }
 
-class CustomCardCategory extends StatelessWidget {
-  CustomCardCategory({@required this.onPress,this.icon});
-
+class CustomCard extends StatelessWidget {
+  CustomCard({@required this.index, @required this.onPress});
+  final index;
   final Function onPress;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +70,9 @@ class CustomCardCategory extends StatelessWidget {
           height: 100,
           width: 100,
           child: Icon(
-            icon,
+            Icons.code,
             color: Color.fromRGBO(240, 98, 146, 1),
-            size: 20,
+            size: 50,
           ),
         ),
       ),
