@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:khud_mukhtar/src/screens/login_screen.dart';
 
 class OnboardingPage extends StatefulWidget {
   OnboardingPage({Key key}) : super(key: key);
@@ -115,7 +116,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ),
       )
           : RaisedButton(
-        onPressed: () {},
+        onPressed: () {Navigator.push(context, MaterialPageRoute(
+            builder: (BuildContext context) {
+              return Login();
+            }
+        ));},
         child: Container(
           height: Platform.isIOS ? 70 : 60,
           color: Color.fromRGBO(240,96,146,1),

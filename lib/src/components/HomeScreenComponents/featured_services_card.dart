@@ -11,40 +11,45 @@ class FeaturedServices extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return  Center(
-      child: Container(
-        height: 320,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'Featured Services',
-                    style: TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.bold),
+      child: AspectRatio(
+        aspectRatio: 2.5/1.8,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'Featured Services',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      Spacer(),
+                      FlatButton(
+                        child: Text('See all'),
+                      )
+                    ],
                   ),
-                  Spacer(),
-                  FlatButton(
-                    child: Text('See all'),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    children: List.generate(10, (index) {
-                      return  CustomCard();
-                    })
                 ),
-              ),
-            )
-          ],
+                Expanded(
+                  child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      children: List.generate(10, (index) {
+                        return  Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomCard(),
+                        );
+                      })
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -64,76 +69,75 @@ class CustomCard extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          width: 200,
-          child: Column(
-            crossAxisAlignment:
-            CrossAxisAlignment.start,
-            children: <Widget>[
-              Flexible(
-                child: Container(
-                  width:
-                  MediaQuery.of(context).size.width,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: sampleimage,
-                    ),
-                  ),
-                ),
-                flex: 4,
-              ),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: MediaQuery.of(context)
-                          .size
-                          .width,
-                      child: Column(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                        mainAxisAlignment:
-                        MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                              'Quran classes for kids'),
-                          Spacer(),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                'RS 10,000',
-                                style: TextStyle(
-                                    fontWeight:
-                                    FontWeight
-                                        .bold),
-                              ),
-                              Spacer(),
-                              Icon(Icons.favorite,
-                                  color: Colors.red),
-                              Text(
-                                '716',
-                                style: TextStyle(
-                                    color:
-                                    Color.fromRGBO(
-                                        240,
-                                        98,
-                                        146,
-                                        1)),
-                              )
-                            ],
-                          )
-                        ],
+        child: AspectRatio(
+          aspectRatio: 2.5/2,
+          child: Container(
+            width: 200,
+            child: Column(
+              crossAxisAlignment:
+              CrossAxisAlignment.start,
+              children: <Widget>[
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Container(
+                    width:
+                    MediaQuery.of(context).size.width,
+                    height: 140,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: sampleimage,
                       ),
                     ),
                   ),
+                  flex: 4,
                 ),
-                flex: 2,
-              )
-            ],
+                Flexible(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context)
+                        .size
+                        .width,
+                    child: Column(
+                      crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                      mainAxisAlignment:
+                      MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                            'Quran classes for kids'),
+                        Spacer(),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              'RS 10,000',
+                              style: TextStyle(
+                                  fontWeight:
+                                  FontWeight
+                                      .bold),
+                            ),
+                            Spacer(),
+                            Icon(Icons.favorite,
+                                color: Colors.red),
+                            Text(
+                              '716',
+                              style: TextStyle(
+                                  color:
+                                  Color.fromRGBO(
+                                      240,
+                                      98,
+                                      146,
+                                      1)),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  flex: 2,
+                )
+              ],
+            ),
           ),
         ),
       ),

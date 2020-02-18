@@ -35,46 +35,38 @@ class AllServicesCard extends StatelessWidget {
                 flex: 4,
               ),
               Flexible(
-                child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                            MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Quran classes for kids'),
-                              Text(
-                                'RS 10,000',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                    mainAxisAlignment:
+                    MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Quran classes for kids'),
+                      Spacer(),
+                      Row(children: <Widget>[
+                        Text(
+                          'RS 10,000',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold),
                         ),
-                        Positioned(
-                          left: 100,
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.favorite,
-                                color: Colors.red,
-                              ),
-                              Text(
-                                '716',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(
-                                        240, 98, 146, 1)),
-                              )
-                            ],
-                          ),
+                        Spacer(),
+                        Icon(Icons.favorite,
+                            color: Colors.red),
+                        Text(
+                          '716',
+                          style: TextStyle(
+                              color:
+                              Color.fromRGBO(
+                                  240,
+                                  98,
+                                  146,
+                                  1)),
                         )
-                      ],
-                      alignment: Alignment.bottomLeft,
-                    )),
+                      ],)
+                    ],
+                  ),
+                ),
                 flex: 2,
               )
             ],

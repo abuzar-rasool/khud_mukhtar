@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khud_mukhtar/src/screens/ProductDetails.dart';
 
 class BrowseCategoriesCard extends StatelessWidget {
   BrowseCategoriesCard({@required this.index, @required this.onPress});
@@ -36,7 +37,14 @@ class BrowseCategoriesCard extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 children: List.generate(10, (index) {
-                  return CustomCard();
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return ProductDetails();
+                          }));
+                    },
+                      child: CustomCard());
                 }),
               ),
             ),
@@ -64,7 +72,7 @@ class CustomCard extends StatelessWidget {
           child: Icon(
             Icons.code,
             color: Color.fromRGBO(240, 98, 146, 1),
-            size: 20,
+            size: 50,
           ),
         ),
       ),

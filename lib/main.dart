@@ -22,10 +22,14 @@ void main() {
         '/services_details': (BuildContext context) => new ServiceDetailsPage(),
         '/rating':(BuildContext context)=> new Rating(),
       },
-      title: 'Splash',
-      theme: ThemeData(fontFamily: 'Poppins'),
+      title: 'Khud Mukhtar',
+      theme: ThemeData(fontFamily: 'Poppins',
+      accentColor: Color.fromRGBO(240, 98, 146, 1),
+      accentIconTheme: IconThemeData(color: Color.fromRGBO(240, 98, 146, 1)),
+      primaryColor: Color.fromRGBO(240, 98, 146, 1)),
+
       debugShowCheckedModeBanner: false,
-      home:Verification(),
+      home:OnboardingPage(),
 
 
       // HomeScreenChat() chat screen

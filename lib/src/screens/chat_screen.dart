@@ -5,6 +5,7 @@ import 'package:khud_mukhtar/src/models/user_model.dart';
 class ChatScreen extends StatefulWidget {
   final User user;
 
+
   ChatScreen({this.user});
 
   @override
