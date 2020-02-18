@@ -29,7 +29,7 @@ void main() {
       primaryColor: Color.fromRGBO(240, 98, 146, 1)),
 
       debugShowCheckedModeBanner: false,
-      home:OnboardingPage(),
+      home:HomeScreen(),
 
 
       // HomeScreenChat() chat screen

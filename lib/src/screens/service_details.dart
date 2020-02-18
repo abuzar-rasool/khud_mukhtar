@@ -90,7 +90,7 @@ class ServiceDetailsPage extends StatelessWidget {
                             SizedBox(
                               width: 5.0,
                             ),
-                            Text('${product.serviceType}')
+                            Text('${product.user.city}')
                           ],
                         ),
                       ),

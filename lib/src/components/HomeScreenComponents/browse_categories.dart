@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:khud_mukhtar/src/screens/ProductDetails.dart';
+import 'package:khud_mukhtar/src/models/user_model.dart';
 
 class BrowseCategoriesCard extends StatelessWidget {
   BrowseCategoriesCard({@required this.index, @required this.onPress});
@@ -33,19 +33,13 @@ class BrowseCategoriesCard extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: List.generate(10, (index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return ProductDetails();
-                          }));
-                    },
-                      child: CustomCard());
-                }),
+              child: ListView.builder(
+                  itemCount: categories.length,
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return new CustomCardCategory(icon:categories[index].icon,name: categories[index].name,);
+                  }
               ),
             ),
           )
@@ -55,10 +49,12 @@ class BrowseCategoriesCard extends StatelessWidget {
   }
 }
 
-class CustomCard extends StatelessWidget {
-  CustomCard({@required this.index, @required this.onPress});
-  final index;
+class CustomCardCategory extends StatelessWidget {
+  CustomCardCategory({@required this.onPress,this.icon,this.name});
+
   final Function onPress;
+  final IconData icon;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +65,19 @@ class CustomCard extends StatelessWidget {
         child: Container(
           height: 100,
           width: 100,
-          child: Icon(
-            Icons.code,
-            color: Color.fromRGBO(240, 98, 146, 1),
-            size: 50,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                icon,
+                color: Color.fromRGBO(240, 98, 146, 1),
+                size: 35,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(name,style: TextStyle(fontSize: 12,color: Colors.pink[300]),)
+            ],
           ),
         ),
       ),
@@ -81,6 +86,3 @@ class CustomCard extends StatelessWidget {
 
 
 }
-
-
-

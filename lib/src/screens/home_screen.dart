@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/browse_categories.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/card/all_services_card.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/featured_services_card.dart';
+import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/screens/search_screen.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
-
-
+import 'package:khud_mukhtar/src/screens/service_single.dart';
 final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
-
-
 class HomeScreen extends StatefulWidget {
   bool searchEnabled = false;
 
@@ -19,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
 
-  double preferredSize = 60;
+  double preferredSize = 64;
   static int none = 2;
   Future navigateToSubPage(context) async {
     Navigator.push(
@@ -82,7 +79,7 @@ class _HomeScreen extends State<HomeScreen> {
               child: Column(
                 children: <Widget>[
                   SizedBox(
-                    height: 10,
+                    height: 9,
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -101,7 +98,7 @@ class _HomeScreen extends State<HomeScreen> {
                         ),
                         hintText: "What are you looking for",
                         hintStyle:
-                        TextStyle(color: Colors.grey, fontSize: 15.0),
+                        TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
                     ),
                   ),
@@ -116,10 +113,7 @@ class _HomeScreen extends State<HomeScreen> {
           SliverList(
             delegate: SliverChildListDelegate([
 
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: BrowseCategoriesCard(),
-              ),
+              BrowseCategoriesCard(),
 
               FeaturedServices(),
               Container(
@@ -145,9 +139,16 @@ class _HomeScreen extends State<HomeScreen> {
           ),
           SliverGrid.count(
             crossAxisCount: 2,
-            children: List.generate(20, (index) {
+            children: List.generate(4, (index) {
               return Center(
-                child: AllServicesCard(),
+                child: AllServicesCard(product: allProducts[index],
+                  onPress: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ServiceSinglePage(product: allProducts[index],)),
+                    );
+                  }
+                  ,),
               );
             }),
           )

@@ -124,16 +124,27 @@ class bottomAppBar extends StatelessWidget {
 }
 
 
-class ServiceSinglePage extends StatelessWidget {
+class ServiceSinglePage extends StatefulWidget {
   static final String path = "lib/src/pages/food/recipe_single.dart";
-  final Color icon = pink300;
-  final Color color1 = pink500;
-  final Color color2 = pink300;
-  final Color color3 = pink300;
   Product product;
 
 
   ServiceSinglePage({this.product});
+
+  @override
+  _ServiceSinglePageState createState() => _ServiceSinglePageState();
+}
+
+class _ServiceSinglePageState extends State<ServiceSinglePage> {
+  final Color icon = pink300;
+
+  final Color color1 = pink500;
+
+  final Color color2 = pink300;
+
+  final Color color3 = pink300;
+
+  bool isLiked=false;
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +153,7 @@ class ServiceSinglePage extends StatelessWidget {
       home: Scaffold(
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
-          child: bottomAppBar(product: product,),
+          child: bottomAppBar(product: widget.product,),
         ),
         body: Container(
           height: double.infinity,
@@ -188,7 +199,7 @@ class ServiceSinglePage extends StatelessWidget {
                         children: <Widget>[
                           Icon(Icons.location_on, color: Colors.white),
                           Text(
-                            '${product.user.city} , Pakistan',
+                            '${widget.product.user.city} , Pakistan',
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -198,7 +209,7 @@ class ServiceSinglePage extends StatelessWidget {
 
                       SizedBox(height: 20.0),
                       Text(
-                        "${product.title}".toUpperCase(),
+                        "${widget.product.title}".toUpperCase(),
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -207,7 +218,7 @@ class ServiceSinglePage extends StatelessWidget {
 
                       SizedBox(height: 5.0),
                       RatingBar(
-                        initialRating: product.user.rating,
+                        initialRating: widget.product.user.rating,
                         minRating: 1,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
@@ -234,7 +245,7 @@ class ServiceSinglePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text('Service Type',style: TextStyle(color: Colors.white,fontSize: 10),),
-                              Text('${product.serviceType}',style: TextStyle(color: Colors.white,fontSize: 13),)
+                              Text('${widget.product.serviceType}',style: TextStyle(color: Colors.white,fontSize: 13),)
                             ],
                           ),
                           SizedBox(
@@ -252,7 +263,7 @@ class ServiceSinglePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text('Category',style: TextStyle(color: Colors.white,fontSize: 10),),
-                              Text('${product.category.name}',style: TextStyle(color: Colors.white,fontSize: 13),),
+                              Text('${widget.product.category.name}',style: TextStyle(color: Colors.white,fontSize: 13),),
                             ],
                           ),
                           SizedBox(
@@ -271,7 +282,7 @@ class ServiceSinglePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text('Area',style: TextStyle(color: Colors.white,fontSize: 10),),
-                              Text('${product.user.area}',style: TextStyle(color: Colors.white,fontSize: 13),)
+                              Text('${widget.product.user.area}',style: TextStyle(color: Colors.white,fontSize: 13),)
                             ],
                           ),
                         ],
@@ -289,7 +300,7 @@ class ServiceSinglePage extends StatelessWidget {
                 child: SizedBox(
 
                   height: 350,
-                  child: Image.asset((product.mainImage), fit: BoxFit.cover),
+                  child: Image.asset((widget.product.mainImage), fit: BoxFit.cover),
                 ),
               ),
               Positioned(
@@ -301,8 +312,12 @@ class ServiceSinglePage extends StatelessWidget {
                   child: IconButton(
                       color: icon,
                       onPressed: (){
+                        setState(() {
+                          isLiked=!isLiked;
+                        });
                       },
-                      icon: Icon(FontAwesomeIcons.heart,)),
+                      icon: isLiked ? Icon(FontAwesomeIcons.solidHeart,): Icon(FontAwesomeIcons.heart,)
+                  ),
                 ),
               ),
               Positioned(
@@ -315,7 +330,7 @@ class ServiceSinglePage extends StatelessWidget {
                   onPressed: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ServiceDetailsPage(product: product,)),
+                      MaterialPageRoute(builder: (context) => ServiceDetailsPage(product: widget.product,)),
                     );
                   },
                 ),

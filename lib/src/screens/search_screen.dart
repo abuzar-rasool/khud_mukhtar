@@ -9,11 +9,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  double preferredSize=60;
+  double preferredSize=64;
   static int none=2;
   List<Widget> bottomSearchBar= <Widget>[
     SizedBox(
-      height: 10,
+      height:9,
     ),
     Container(
       decoration: BoxDecoration(
@@ -30,7 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
             color: Colors.black,
           ),
           hintText: "What are you looking for",
-          hintStyle: TextStyle(color: Colors.grey, fontSize: 15.0),
+          hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
         ),
       ),
 
@@ -60,7 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
         IconButton(
           onPressed: (){
             setState(() {
-              if(preferredSize>60){
+              if(preferredSize>64){
                 preferredSize-=160;
                 print('Filter closed');
                 bottomSearchBar.removeLast();
@@ -155,9 +155,15 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink[300],
-        leading: widget.searchEnabled ? Icon(
-          Icons.arrow_back,
-          color: Colors.white,
+        leading: widget.searchEnabled ? IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+
+          ),
+          onPressed: (){
+            Navigator.pop(context);
+          },
         ) : Icon(
           Icons.menu,
           color: Colors.white,

@@ -2,6 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:khud_mukhtar/src/screens/home_screen.dart';
+List<Product> allProducts= [
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+
+
+];
 User user1= User(
   id: 0,
   name: 'Fatima Moin',
@@ -13,7 +26,7 @@ User user1= User(
   following: 200,
   rating: 2.5,
   area: 'Defence',
-  productList: allProducts,
+
 
 
 );
@@ -32,15 +45,7 @@ User loggedInUser= User(
 
 );
 
-List<Product> allProducts= [
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
 
-
-];
 
 class User {
   final int id;
