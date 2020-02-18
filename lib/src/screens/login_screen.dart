@@ -120,7 +120,7 @@ class _Login extends State<Login> {
                               padding: const EdgeInsets.only(right: 60),
                               child: FlatButton(
                                 child: Text(
-                                  'Forget Password?',
+                                  'Forgot Password?',
                                   style: TextStyle(
                                       color: Color.fromRGBO(240, 98, 146, 1),
                                       fontSize: 12),
@@ -139,7 +139,7 @@ class _Login extends State<Login> {
                           return SignUp();
                         }));
                       },
-                      child: Text('Dont have an account? Sign Up')),
+                      child: Text('Dont have an account? Sign Up', style: TextStyle(color: Color.fromRGBO(240, 98, 146, 1)),)),
                 ],
               ),
             ),

@@ -398,14 +398,14 @@ class _Verificaton extends State<Verification> {
           children: <Widget>[
             FlatButton(
               onPressed: () {
-                _pageController.animateToPage(3,
+                _pageController.animateToPage(_currentPage - 1,
                     duration: Duration(milliseconds: 400),
                     curve: Curves.linear);
                 setState(() {});
               },
               splashColor: Color.fromRGBO(240,96,146,1),
               child: Text(
-                'SKIP',
+                'BACK',
                 style: TextStyle(
                     fontSize: 15,
                     color: Color.fromRGBO(240,96,146,1),
