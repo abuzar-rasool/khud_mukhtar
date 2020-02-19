@@ -34,6 +34,7 @@ class _Login extends State<Login> {
                       child: Text(
                         'Sign In',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                             fontSize: 24, color: Color.fromRGBO(240, 98, 146, 1)),
                       ),
                     ),
@@ -59,7 +60,7 @@ class _Login extends State<Login> {
                     ),
                   ),
                   Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.only(top:20.0,left: 20,right: 20),
                       child: Theme(
                         data: new ThemeData(
                             primaryColor: Color.fromRGBO(240, 98, 146, 1),
@@ -76,6 +77,20 @@ class _Login extends State<Login> {
                           ),
                         ),
                       )),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: FlatButton(
+                        child: Text(
+                          'Forget Password?',
+                          style: TextStyle(
+                              color: Color.fromRGBO(240, 98, 146, 1),
+                              fontSize: 12),
+                        ),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Container(
@@ -114,20 +129,7 @@ class _Login extends State<Login> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 60),
-                              child: FlatButton(
-                                child: Text(
-                                  'Forgot Password?',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(240, 98, 146, 1),
-                                      fontSize: 12),
-                                ),
-                              ),
-                            ),
-                          )
+
                         ],
                       ),
                     ),
@@ -139,7 +141,7 @@ class _Login extends State<Login> {
                           return SignUp();
                         }));
                       },
-                      child: Text('Dont have an account? Sign Up', style: TextStyle(color: Color.fromRGBO(240, 98, 146, 1)),)),
+                      child: Text('Dont have an account? Sign Up')),
                 ],
               ),
             ),

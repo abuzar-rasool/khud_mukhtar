@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:khud_mukhtar/src/screens/login_screen.dart';
+
 var  selectedType;
 List<String> _category = <String>[ "Karachi", 'Faisalabad', 'Rawalpindi', 'Multan', 'Gujranwala',
   'Hyderabad', 'Peshawar', 'Quetta'];
@@ -441,7 +443,10 @@ class _Verificaton extends State<Verification> {
         ),
       )
           : RaisedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Login()));
+        },
         child: Container(
 
           height: Platform.isIOS ? 70 : 60,

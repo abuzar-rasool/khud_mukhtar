@@ -3,10 +3,15 @@ import 'package:khud_mukhtar/src/components/HomeScreenComponents/browse_categori
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/card/all_services_card.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/featured_services_card.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
+import 'package:khud_mukhtar/src/screens/profile_screen.dart';
 import 'package:khud_mukhtar/src/screens/search_screen.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
 import 'package:khud_mukhtar/src/screens/service_single.dart';
+
+import 'forums/forum.dart';
+
 final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
 class HomeScreen extends StatefulWidget {
   bool searchEnabled = false;
 
@@ -15,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
-
   double preferredSize = 64;
   static int none = 2;
   Future navigateToSubPage(context) async {
@@ -31,22 +35,23 @@ class _HomeScreen extends State<HomeScreen> {
     // TODO: implement build
     return Scaffold(
       key: _key,
-      drawer: _buildDrawer(),
+      drawer: _buildDrawer(context),
       appBar: AppBar(
         backgroundColor: Colors.pink[300],
         leading: widget.searchEnabled
             ? Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        )
+                Icons.arrow_back,
+                color: Colors.white,
+              )
             : IconButton(
-          onPressed: () {_key.currentState.openDrawer();},
-
-              icon: Icon(
-          Icons.menu,
-          color: Colors.white,
-        ),
-            ),
+                onPressed: () {
+                  _key.currentState.openDrawer();
+                },
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
+              ),
         actions: <Widget>[
           Row(
             children: <Widget>[
@@ -72,7 +77,7 @@ class _HomeScreen extends State<HomeScreen> {
           preferredSize: Size.fromHeight(preferredSize),
           child: Padding(
             padding:
-            const EdgeInsets.only(top: 0, bottom: 25, right: 16, left: 16),
+                const EdgeInsets.only(top: 0, bottom: 25, right: 16, left: 16),
             child: Container(
               alignment: Alignment.center,
               height: preferredSize,
@@ -98,7 +103,7 @@ class _HomeScreen extends State<HomeScreen> {
                         ),
                         hintText: "What are you looking for",
                         hintStyle:
-                        TextStyle(color: Colors.grey, fontSize: 12.0),
+                            TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
                     ),
                   ),
@@ -112,17 +117,21 @@ class _HomeScreen extends State<HomeScreen> {
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildListDelegate([
-
-              BrowseCategoriesCard(),
-
-              FeaturedServices(),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: BrowseCategoriesCard(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: FeaturedServices(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
                         children: <Widget>[
                           Text(
                             'All Services',
@@ -131,8 +140,8 @@ class _HomeScreen extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ]),
@@ -141,14 +150,18 @@ class _HomeScreen extends State<HomeScreen> {
             crossAxisCount: 2,
             children: List.generate(4, (index) {
               return Center(
-                child: AllServicesCard(product: allProducts[index],
-                  onPress: (){
+                child: AllServicesCard(
+                  product: allProducts[index],
+                  onPress: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ServiceSinglePage(product: allProducts[index],)),
+                      MaterialPageRoute(
+                          builder: (context) => ServiceSinglePage(
+                                product: allProducts[index],
+                              )),
                     );
-                  }
-                  ,),
+                  },
+                ),
               );
             }),
           )
@@ -157,9 +170,12 @@ class _HomeScreen extends State<HomeScreen> {
     );
   }
 }
+
 final Color primary = Colors.pink[300];
 final Color active = Colors.pink[300];
-_buildDrawer() {
+
+
+ _buildDrawer(BuildContext context) {
   AssetImage image = new AssetImage('assets/momina.jpg');
   return ClipPath(
     clipper: OvalRightBorderClipper(),
@@ -167,7 +183,8 @@ _buildDrawer() {
       child: Container(
         padding: const EdgeInsets.only(left: 16.0, right: 40),
         decoration: BoxDecoration(
-            color: Color.fromRGBO(240, 98, 146, 1), boxShadow: [BoxShadow(color: Colors.black45)]),
+            color: Color.fromRGBO(240, 98, 146, 1),
+            boxShadow: [BoxShadow(color: Colors.black45)]),
         width: 300,
         child: SafeArea(
           child: SingleChildScrollView(
@@ -188,8 +205,10 @@ _buildDrawer() {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                          colors: [Color.fromRGBO(240, 98, 146, 1), Colors.white])),
+                      gradient: LinearGradient(colors: [
+                        Color.fromRGBO(240, 98, 146, 1),
+                        Colors.white
+                      ])),
                   child: CircleAvatar(
                     radius: 40,
                     backgroundImage: image,
@@ -197,17 +216,37 @@ _buildDrawer() {
                 ),
                 SizedBox(height: 5.0),
                 Text(
-                  "erika costell",
+                  "Fatima Moin",
                   style: TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
                 Text(
-                  "@erika07",
+                  "@fatimamoin",
                   style: TextStyle(color: Colors.white, fontSize: 16.0),
                 ),
                 SizedBox(height: 30.0),
-                _buildRow(Icons.home, "Home"),
+                InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                    },
+                    child: _buildRow(Icons.home, "Home")),
                 _buildDivider(),
-                _buildRow(Icons.person_pin, "Your profile"),
+                InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => Profile()));
+                    },
+                    child: _buildRow(Icons.person_pin, "Your profile")),
+                _buildDivider(),
+                InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => Forums()));
+                    },
+                    child: _buildRow(Icons.forum, "Forums")),
                 _buildDivider(),
                 _buildRow(Icons.settings, "Settings"),
                 _buildDivider(),
@@ -247,4 +286,3 @@ Widget _buildRow(IconData icon, String title) {
     ]),
   );
 }
-

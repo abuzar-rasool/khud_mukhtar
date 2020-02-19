@@ -32,7 +32,7 @@ class _ProfileSeller extends State<ProfileSeller> {
                           bottomRight: Radius.circular(40.0),
                           bottomLeft: Radius.circular(40.0)),
                       child: Container(
-                          height: 235.0,
+                          height: 250.0,
                           width: double.infinity,
                           color: Color.fromRGBO(240, 98, 146, 1),
                           child: Padding(
@@ -190,11 +190,10 @@ class _ProfileSeller extends State<ProfileSeller> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
-                                        height: double.infinity,
-                                        width: double.infinity,
                                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Flexible(
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 20),
                                               child: Container(width: MediaQuery.of(context).size.width,
                                                 height: 100,
                                                 decoration: BoxDecoration(
@@ -203,35 +202,26 @@ class _ProfileSeller extends State<ProfileSeller> {
                                                     image: sampleimage,
                                                   ),
                                                 ),),
-                                              flex: 4,
                                             ),
-                                            Flexible(
-                                              child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Stack(
+                                            Container(
+
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text('Quran classes for kids'),
+
+
+                                                  Row(
                                                     children: <Widget>[
-                                                      Container( child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        children: <Widget>[
-                                                          Text('Quran classes for kids'),
-                                                          Text('RS 10,000', style: TextStyle(fontWeight: FontWeight.bold),)
-                                                        ],
-                                                      ),
-                                                      ),
-                                                      Positioned(
-                                                        left: 100,
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            Icon(Icons.favorite,color: Colors.red,),
-                                                            Text('716',style: TextStyle(color:Color.fromRGBO(240, 98, 146, 1) ),)
-                                                          ],
-                                                        ),
-                                                      )
+                                                      Text('RS 10,000', style: TextStyle(fontWeight: FontWeight.bold),),
+                                                      Spacer(),
+                                                      Icon(Icons.favorite,color: Colors.red,),
+                                                      Text('716',style: TextStyle(color:Color.fromRGBO(240, 98, 146, 1) ),)
                                                     ],
-                                                    alignment: Alignment.bottomLeft,)
+                                                  )
+                                                ],
                                               ),
-                                              flex: 2,
                                             )
                                           ],
                                         ),

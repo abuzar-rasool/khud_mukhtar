@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/screens/chat_screen.dart';
 import 'package:khud_mukhtar/src/screens/profile_screen.dart';
+import 'package:khud_mukhtar/src/screens/profile_seller.dart';
 import 'service_details.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khud_mukhtar/constants/colors.dart';
@@ -27,7 +28,9 @@ class bottomAppBar extends StatelessWidget {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Profile(user: product.user,)),
+//                  MaterialPageRoute(builder: (context) => Profile(user: product.user,)),
+                  MaterialPageRoute(builder: (context) => ProfileSeller()),
+
                 );
               },
               child: Row(

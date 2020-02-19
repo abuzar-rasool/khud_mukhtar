@@ -47,7 +47,7 @@ class bottomAppBar extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      'Fatima Moin',
+                      'Momina Mustehsan',
                       style: TextStyle(
                         fontSize: 19.0,
                         color: Colors.black87,

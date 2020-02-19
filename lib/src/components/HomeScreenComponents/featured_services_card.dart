@@ -19,7 +19,7 @@ class FeaturedServices extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(0),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 children: <Widget>[
                   Text(

@@ -1,12 +1,14 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:khud_mukhtar/src/screens/NotificationScreen/notifications.dart';
 import 'package:khud_mukhtar/src/screens/chat_screen.dart';
 import 'dart:async';
 
 import 'package:khud_mukhtar/src/screens/home_screen.dart';
+import 'package:khud_mukhtar/src/screens/home_screen_chat.dart';
 import 'package:khud_mukhtar/src/screens/profile_screen.dart';
+import 'package:khud_mukhtar/src/screens/profile_seller.dart';
 import 'package:khud_mukhtar/src/screens/search_screen.dart';
+import 'package:khud_mukhtar/src/widgets/recent_chats.dart';
 
 class MainPage extends StatefulWidget {
   static final String path = "lib/src/pages/misc/navybar.dart";
@@ -35,8 +37,9 @@ class _MainPage extends State<MainPage> {
         controller: pageController,
         children: <Widget>[
           HomeScreen(),
+          Notifications(),
           SearchScreen(),
-          ChatScreen(),
+          HomeScreenChat(),
           Profile(),
         ],
       ),
@@ -51,11 +54,13 @@ class _MainPage extends State<MainPage> {
                 FancyBottomNavigationItem(
                     icon: Icon(Icons.home), title: Text('Home')),
                 FancyBottomNavigationItem(
+                    icon: Icon(Icons.notifications),
+                    title: Text('Notifications')),
+                FancyBottomNavigationItem(
                     icon: Icon(Icons.search), title: Text('Search')),
                 FancyBottomNavigationItem(
                     icon: Icon(Icons.message), title: Text('Chat')),
-                FancyBottomNavigationItem(
-                    icon: Icon(Icons.person), title: Text('Profile')),
+
               ],
               onItemSelected: (int value) {
                 indexcontroller.add(value);
@@ -78,13 +83,13 @@ class FancyBottomNavigation extends StatefulWidget {
 
   FancyBottomNavigation(
       {Key key,
-        this.currentIndex = 0,
-        this.iconSize = 24,
-        this.activeColor,
-        this.inactiveColor,
-        this.backgroundColor,
-        @required this.items,
-        @required this.onItemSelected}) {
+      this.currentIndex = 0,
+      this.iconSize = 24,
+      this.activeColor,
+      this.inactiveColor,
+      this.backgroundColor,
+      @required this.items,
+      @required this.onItemSelected}) {
     assert(items != null);
     assert(onItemSelected != null);
   }
@@ -114,12 +119,12 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
 
   _FancyBottomNavigationState(
       {@required this.items,
-        this.currentIndex,
-        this.activeColor,
-        this.inactiveColor = Colors.black,
-        this.backgroundColor,
-        this.iconSize,
-        @required this.onItemSelected}) {
+      this.currentIndex,
+      this.activeColor,
+      this.inactiveColor = Colors.black,
+      this.backgroundColor,
+      this.iconSize,
+      @required this.onItemSelected}) {
     _selectedIndex = currentIndex;
   }
 
@@ -132,9 +137,9 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
       decoration: !isSelected
           ? null
           : BoxDecoration(
-        color: activeColor,
-        borderRadius: BorderRadius.all(Radius.circular(50)),
-      ),
+              color: activeColor,
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+            ),
       child: ListView(
         shrinkWrap: true,
         padding: EdgeInsets.all(0),
@@ -156,9 +161,9 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
               ),
               isSelected
                   ? DefaultTextStyle.merge(
-                style: TextStyle(color: backgroundColor),
-                child: item.title,
-              )
+                      style: TextStyle(color: backgroundColor),
+                      child: item.title,
+                    )
                   : SizedBox.shrink()
             ],
           )
@@ -170,7 +175,7 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
   @override
   Widget build(BuildContext context) {
     activeColor =
-    (activeColor == null) ? Theme.of(context).accentColor : activeColor;
+        (activeColor == null) ? Theme.of(context).accentColor : activeColor;
 
     backgroundColor = (backgroundColor == null)
         ? Theme.of(context).bottomAppBarColor

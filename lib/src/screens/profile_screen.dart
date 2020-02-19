@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
+import 'package:khud_mukhtar/src/screens/Add_Service.dart';
 
 class Profile extends StatefulWidget {
   final User user;
@@ -23,7 +24,10 @@ class _Profile extends State<Profile> {
           color: Colors.white,
         ),
         backgroundColor: Color.fromRGBO(240, 98, 146, 1),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddService()));
+        },
       ),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -38,7 +42,6 @@ class _Profile extends State<Profile> {
                       bottomLeft: Radius.circular(40.0)),
                   child: Container(
                       height: 250.0,
-                      width: double.infinity,
                       color: Color.fromRGBO(240, 98, 146, 1),
                       child: Padding(
                         padding: const EdgeInsets.all(15),
@@ -46,13 +49,20 @@ class _Profile extends State<Profile> {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-                                Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.white,
+                                InkWell(
+
+                                  onTap: (){
+                                    Navigator.pop(context);
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 Spacer(),
                                 Text(
-                                  '${widget.user.city}, Pakistan',
+//                                  '${widget.user.city}, Pakistan',
+                                'Karachi, Pakistan',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 15),
                                 ),
@@ -63,7 +73,7 @@ class _Profile extends State<Profile> {
                               ],
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(20.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: <Widget>[
                                   Column(
@@ -91,7 +101,9 @@ class _Profile extends State<Profile> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text('${widget.user.followers}',
+//                                      Text('${widget.user.followers}',
+                                      Text('233',
+
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.white))
@@ -107,7 +119,9 @@ class _Profile extends State<Profile> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text('${widget.user.following}',
+//                                      Text('${widget.user.following}',
+                                      Text('400',
+
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.white))
@@ -121,7 +135,9 @@ class _Profile extends State<Profile> {
                               child: Column(
                                 children: <Widget>[
                                   Text(
-                                    '${widget.user.name}',
+//                                    '${widget.user.name}',
+                                    'Fatima Moin',
+
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,
@@ -136,7 +152,9 @@ class _Profile extends State<Profile> {
                                         Icons.star,
                                         color: Colors.white,
                                       ),
-                                      Text('${widget.user.rating}',
+//                                      Text('${widget.user.rating}',
+                                      Text('5.0',
+
                                           style: TextStyle(
                                             color: Colors.white,
                                           )),
@@ -169,7 +187,10 @@ class _Profile extends State<Profile> {
                   child: CircleAvatar(
                       backgroundColor: Color.fromRGBO(240, 98, 146, 1),
                       radius: 60,
-                      backgroundImage: AssetImage(widget.user.imageUrl)),
+
+//                      backgroundImage: AssetImage(widget.user.imageUrl)
+                  backgroundImage: profileimage,
+                  ),
                 )
               ],
               alignment: AlignmentDirectional.bottomStart,
@@ -194,11 +215,10 @@ class _Profile extends State<Profile> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
-                                    height: double.infinity,
-                                    width: double.infinity,
                                     child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Flexible(
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 10),
                                           child: Container(width: MediaQuery.of(context).size.width,
                                             height: 100,
                                             decoration: BoxDecoration(
@@ -207,35 +227,26 @@ class _Profile extends State<Profile> {
                                                 image: sampleimage,
                                               ),
                                             ),),
-                                          flex: 4,
                                         ),
-                                        Flexible(
-                                          child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Stack(
-                                                children: <Widget>[
-                                                  Container( child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      Text('Quran classes for kids'),
-                                                      Text('RS 10,000', style: TextStyle(fontWeight: FontWeight.bold),)
-                                                    ],
-                                                  ),
-                                                  ),
-                                                  Positioned(
-                                                    left: 100,
-                                                    child: Row(
-                                                      children: <Widget>[
-                                                        Icon(Icons.favorite,color: Colors.red,),
-                                                        Text('716',style: TextStyle(color:Color.fromRGBO(240, 98, 146, 1) ),)
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                                alignment: Alignment.bottomLeft,)
-                                          ),
-                                          flex: 2,
+                                        Container(
+
+                                          child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text('Quran classes for kids'),
+
+
+                                            Row(
+                                              children: <Widget>[
+                                                Text('RS 10,000', style: TextStyle(fontWeight: FontWeight.bold),),
+                                                Spacer(),
+                                                Icon(Icons.favorite,color: Colors.red,),
+                                                Text('716',style: TextStyle(color:Color.fromRGBO(240, 98, 146, 1) ),)
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                         )
                                       ],
                                     ),

@@ -55,6 +55,16 @@ flutter:
     - assets/quranforkidssample.jpg
     - assets/logo.png
     - assets/momina.jpg
+    - assets/cm1.jpeg
+    - assets/cm2.jpeg
+    - assets/cm3.jpeg
+    - assets/cm4.jpeg
+    - assets/cm5.jpeg
+    - assets/cm6.jpeg
+    - assets/cm7.jpeg
+    - assets/cm8.jpeg
+    - assets/cm9.jpeg
+    - assets/cm0.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
