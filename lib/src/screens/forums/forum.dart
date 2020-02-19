@@ -29,9 +29,13 @@ class _Forums extends State<Forums> {
       ),
 
       body: SafeArea(
-        child: Center(
-          child:Text('COMING SOON!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),)
-          ,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child:Container(alignment:Alignment.center
+                ,child: Text('COMING SOON!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50,color: Colors.pink[300]),))
+            ,
+          ),
         ),
       )
     );

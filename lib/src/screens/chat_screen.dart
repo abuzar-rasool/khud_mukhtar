@@ -76,7 +76,9 @@ class _ChatScreenState extends State<ChatScreen> {
           color: message.isLiked
               ? Colors.pink[300]
               : Colors.pink[300],
-          onPressed: () {},
+          onPressed: () { setState(() {
+            message.isLiked=!message.isLiked;
+          });},
         )
       ],
     );

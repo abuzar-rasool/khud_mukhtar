@@ -4,7 +4,7 @@ import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-rig
 
 
 class DarkDrawerPage extends StatelessWidget {
-  AssetImage image = new AssetImage('assets/momina.jpg');
+  AssetImage image = new AssetImage('assets/fatima.jpeg');
   static final String path = "lib/src/pages/navigation/drawer1.dart";
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   final Color primary = Color(0xff291747);

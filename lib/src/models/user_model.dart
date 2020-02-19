@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khud_mukhtar/src/screens/home_screen.dart';
 List<Product> allProducts= [
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
-  Product(title: 'Quran Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Quran Classes',price: 2000,description: "Hello World",likes: 4,mainImage: 'assets/quranforkidssample.jpg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'O Level Tutions',price: 10000,description: "Hello World",likes: 4,mainImage: 'assets/teaching.jpeg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Baking Classes',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/baking.jpeg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Wedding Photos',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/wedding.jpeg',galleryImages: galleryImages,serviceType: 'Home Based',user: user1,category: categories[0]),
+  Product(title: 'Marketing for business',price: 5000,description: "Hello World",likes: 4,mainImage: 'assets/marketing.jpeg',galleryImages: galleryImages,serviceType: 'Online',user: user1,category: categories[0]),
 
 
 ];
 User user1= User(
   id: 0,
-  name: 'Fatima Moin',
+  name: 'Momina Qureshi',
   imageUrl: 'assets/momina.jpg',
   cnicPicture: '',
   contactNumber: '0335-2366331'  ,
@@ -33,7 +33,7 @@ User user1= User(
 User loggedInUser= User(
   id: 0,
   name: 'Fatima Moin',
-  imageUrl: 'assets/momina.jpg',
+  imageUrl: 'assets/fatima.jpeg',
   cnicPicture: '',
   contactNumber: '0335-2366331'  ,
   city: 'Karachi',
@@ -93,11 +93,11 @@ class Category{
 
 //ALL APP DATA GOES HERE.
 List<Category> categories=[
-  Category(name: 'Education',icon: FontAwesomeIcons.pen),
-  Category(name: 'Education',icon: FontAwesomeIcons.hackerNews),
-  Category(name: 'Education',icon: FontAwesomeIcons.pen),
-  Category(name: 'Education',icon: FontAwesomeIcons.pen),
-  Category(name: 'Education',icon: FontAwesomeIcons.pen),
+  Category(name: 'Education',icon: FontAwesomeIcons.graduationCap),
+  Category(name: 'Baking',icon: FontAwesomeIcons.birthdayCake),
+  Category(name: 'Photography',icon: FontAwesomeIcons.camera),
+  Category(name: 'Marketing',icon: FontAwesomeIcons.chartLine),
+  Category(name: 'Beauty',icon: FontAwesomeIcons.spa),
   Category(name: 'Education',icon: FontAwesomeIcons.pen),
   Category(name: 'Education',icon: FontAwesomeIcons.pen),
 

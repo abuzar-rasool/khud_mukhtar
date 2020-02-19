@@ -4,6 +4,7 @@ import 'package:khud_mukhtar/src/components/HomeScreenComponents/card/all_servic
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/featured_services_card.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/screens/profile_screen.dart';
+import 'package:khud_mukhtar/src/screens/profile_seller.dart';
 import 'package:khud_mukhtar/src/screens/search_screen.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
 import 'package:khud_mukhtar/src/screens/service_single.dart';
@@ -176,7 +177,7 @@ final Color active = Colors.pink[300];
 
 
  _buildDrawer(BuildContext context) {
-  AssetImage image = new AssetImage('assets/momina.jpg');
+  AssetImage image = new AssetImage('assets/fatima.jpeg');
   return ClipPath(
     clipper: OvalRightBorderClipper(),
     child: Drawer(

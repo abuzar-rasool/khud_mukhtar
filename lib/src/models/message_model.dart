@@ -5,7 +5,7 @@ class Message {
   final String
       time; // Would usually be type DateTime or Firebase Timestamp in production apps
   final String text;
-  final bool isLiked;
+  bool isLiked;
   final bool unread;
 
   Message({
@@ -21,39 +21,39 @@ class Message {
 final User currentUser = User(
   id: 0,
   name: 'Current User',
-  imageUrl: 'assets/profile.jpg',
+  imageUrl: 'assets/images/greg.jpg',
 );
 
 // USERS
 final User greg = User(
   id: 1,
-  name: 'Greg',
-  imageUrl: 'assets/profile.jpg',
+  name: 'Kunza Rizvi',
+  imageUrl: 'assets/cm1.jpeg',
 );
 final User james = User(
   id: 2,
   name: 'Aleena Zahid',
-  imageUrl: 'assets/profile.jpg',
+  imageUrl: 'assets/cm0.jpeg',
 );
 final User john = User(
   id: 3,
-  name: 'Fatima Moin',
+  name: 'Momina Qureshi',
   imageUrl: 'assets/momina.jpg',
 );
 final User olivia = User(
   id: 4,
   name: 'Anum Khan',
-  imageUrl: 'assets/profile.jpg',
+  imageUrl: 'assets/cm2.jpeg',
 );
 final User sam = User(
   id: 5,
   name: 'Yusra Shaikh',
-  imageUrl: 'assets/profile.jpg',
+  imageUrl: 'assets/cm3.jpeg',
 );
 final User sophia = User(
   id: 6,
   name: 'Yusra Ali',
-  imageUrl: 'assets/profile.jpg',
+  imageUrl: 'assets/cm4.jpeg',
 );
 final User steven = User(
   id: 7,
@@ -69,35 +69,35 @@ List<Message> chats = [
   Message(
     sender: james,
     time: '5:30 PM',
-    text: 'Hey, how\'s it going? What did you do today?',
+    text: 'I like your Quran Classes services. Please more info.',
     isLiked: false,
     unread: true,
   ),
   Message(
     sender: olivia,
     time: '4:30 PM',
-    text: 'Hey, how\'s it going? What did you do today?',
+    text: 'Nahi pata. Dekh kar batatati hoon.',
     isLiked: false,
       unread: true,
   ),
   Message(
     sender: john,
     time: '3:30 PM',
-    text: 'Hey, how\'s it going? What did you do today?',
+    text: 'Jee bilkul. Discount mil jayega',
     isLiked: false,
     unread: false,
   ),
   Message(
     sender: sophia,
     time: '2:30 PM',
-    text: 'Hey, how\'s it going? What did you do today?',
+    text: 'Sure. I will get back to you soon.',
     isLiked: false,
     unread: true,
   ),
   Message(
     sender: steven,
     time: '1:30 PM',
-    text: 'Hey, how\'s it going? What did you do today?',
+    text: 'Does 5pm work for you?',
     isLiked: false,
     unread: false,
   ),

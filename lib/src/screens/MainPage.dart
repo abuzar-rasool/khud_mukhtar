@@ -40,7 +40,7 @@ class _MainPage extends State<MainPage> {
           Notifications(),
           SearchScreen(),
           HomeScreenChat(),
-          Profile(),
+          ProfileSeller(),
         ],
       ),
       bottomNavigationBar: StreamBuilder<Object>(

@@ -15,12 +15,7 @@ class _HomeScreenChatState extends State<HomeScreenChat> {
       backgroundColor: Colors.pink[300],
       appBar: AppBar(
         backgroundColor: Colors.pink[300],
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          iconSize: 30.0,
-          color: Colors.white,
-          onPressed: () {},
-        ),
+
         title: Text(
           'Chats',
           style: TextStyle(

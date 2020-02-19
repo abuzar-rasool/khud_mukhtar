@@ -24,6 +24,7 @@ class AddService extends StatefulWidget {
 }
 
 class _AddService extends State<AddService> {
+
   List<File> images= [null, null, null, null,null,null];
   File image;
   Future _getImage() async {
@@ -45,6 +46,7 @@ class _AddService extends State<AddService> {
     //  AssetImage logo = AssetImage('assets/logo.png');
     // TODO: implement build
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(240, 98, 146, 1),
         leading: IconButton(
@@ -346,7 +348,7 @@ class _AddService extends State<AddService> {
                      Padding(
                        padding: const EdgeInsets.only(left:20.0, right: 20, bottom:12),
                        child: SizedBox(
-                         height:50,
+
                          child:TextField(
 
                            decoration: InputDecoration(
@@ -380,7 +382,9 @@ class _AddService extends State<AddService> {
                  child: SizedBox(
                    height: 50,
                    child:RaisedButton(
-                     onPressed:(){},
+                     onPressed:(){
+
+                     },
                      autofocus: true,
                      shape:ContinuousRectangleBorder(
                        borderRadius:BorderRadius.circular(15),
