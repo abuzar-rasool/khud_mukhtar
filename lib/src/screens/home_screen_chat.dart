@@ -14,6 +14,7 @@ class _HomeScreenChatState extends State<HomeScreenChat> {
     return Scaffold(
       backgroundColor: Colors.pink[300],
       appBar: AppBar(
+        leading: Container(),
         backgroundColor: Colors.pink[300],
 
         title: Text(

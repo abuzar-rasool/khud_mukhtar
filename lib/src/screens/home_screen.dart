@@ -9,6 +9,7 @@ import 'package:khud_mukhtar/src/screens/search_screen.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
 import 'package:khud_mukhtar/src/screens/service_single.dart';
 
+import 'MainPage.dart';
 import 'forums/forum.dart';
 
 final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -225,14 +226,7 @@ final Color active = Colors.pink[300];
                   style: TextStyle(color: Colors.white, fontSize: 16.0),
                 ),
                 SizedBox(height: 30.0),
-                InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                    },
-                    child: _buildRow(Icons.home, "Home")),
-                _buildDivider(),
+
                 InkWell(
                     onTap: () {
                       Navigator.pop(context);

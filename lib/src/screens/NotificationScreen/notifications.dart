@@ -123,14 +123,7 @@ _buildDrawer(BuildContext context) {
                   style: TextStyle(color: Colors.white, fontSize: 16.0),
                 ),
                 SizedBox(height: 30.0),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                  },
-                    child: _buildRow(Icons.home, "Home")),
-                _buildDivider(),
+
                 InkWell(
                     onTap: () {
                       Navigator.pop(context);
