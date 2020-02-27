@@ -99,7 +99,7 @@ List<Category> categories=[
   Category(name: 'Marketing',icon: FontAwesomeIcons.chartLine),
   Category(name: 'Beauty',icon: FontAwesomeIcons.spa),
   Category(name: 'Education',icon: FontAwesomeIcons.pen),
-  Category(name: 'Education',icon: FontAwesomeIcons.pen),
+  Category(name: 'Programming',icon: FontAwesomeIcons.code),
 
 ];
 List<String> galleryImages = [

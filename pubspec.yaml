@@ -73,6 +73,7 @@ flutter:
     - assets/cm0.jpeg
     - assets/fatima.jpeg
     - assets/launchericon/icon.png
+    - assets/splash.png
     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -13,6 +13,7 @@ import 'package:khud_mukhtar/src/screens/service_details.dart';
 import 'package:khud_mukhtar/src/screens/service_single.dart';
 import 'package:khud_mukhtar/src/screens/service_single2.dart';
 import 'package:khud_mukhtar/src/screens/signup_screen.dart';
+import 'package:khud_mukhtar/src/screens/splashscreen.dart';
 import 'package:khud_mukhtar/src/screens/verification.dart';
 import './src/screens/login_screen.dart';
 
@@ -30,7 +31,7 @@ void main() {
       primaryColor: Color.fromRGBO(240, 98, 146, 1)),
 
       debugShowCheckedModeBanner: false,
-      home:OnboardingPage(),
+      home:SplashScreenOne(),
 
 
       // HomeScreenChat() chat screen
