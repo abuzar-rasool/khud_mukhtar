@@ -20,7 +20,9 @@ List<String> _category = <String>[
   'Programming',
 ];
 
+
 class AddService extends StatefulWidget {
+
   AddService({Key key}) : super(key: key);
 
   @override
@@ -50,9 +52,12 @@ class _AddService extends State<AddService> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
     //  AssetImage logo = AssetImage('assets/logo.png');
     // TODO: implement build
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(240, 98, 146, 1),
         leading: IconButton(
@@ -448,19 +453,26 @@ class _AddService extends State<AddService> {
                           right: 20, left: 20, bottom: 12),
                       child: SizedBox(
                         height: 50,
-                        child: RaisedButton(
-                          onPressed: () {},
-                          autofocus: true,
-                          shape: ContinuousRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          color: Color.fromRGBO(240, 98, 146, 1),
-                          child: Text(
-                            'Publish Service',
-                            style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(255, 255, 255, 1)),
+                        child: Builder(
+                          builder: (context) => RaisedButton(
+                            onPressed: () {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text('Service Published'),
+                                duration: Duration(seconds: 3),
+                              ));
+                            },
+                            autofocus: true,
+                            shape: ContinuousRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            color: Color.fromRGBO(240, 98, 146, 1),
+                            child: Text(
+                              'Publish Service',
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(255, 255, 255, 1)),
+                            ),
                           ),
                         ),
                       ),
@@ -471,6 +483,7 @@ class _AddService extends State<AddService> {
       backgroundColor: Colors.white,
     );
   }
+
 }
 
 class filterChipWidget extends StatefulWidget {
@@ -506,4 +519,5 @@ class _filterChipWidgetState extends State<filterChipWidget> {
       selectedColor: Color.fromRGBO(247, 166, 194, 1),
     );
   }
+
 }
