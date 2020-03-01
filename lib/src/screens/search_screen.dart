@@ -208,12 +208,12 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   final category = [
-    'Category 1',
-    'Category 2',
-    'Category 3',
-    'Category 4',
-    'Category 5',
-    'Category 6'
+    'Education',
+    'Cooking',
+    'Baking',
+    'Photography',
+    'Marketing',
+    'Programming'
   ];
 
   void showFancyCustomDialog(BuildContext context) {
