@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "1045571324951",
-    "firebase_url": "https://khud-mukhtar-6d255.firebaseio.com",
-    "project_id": "khud-mukhtar-6d255",
-    "storage_bucket": "khud-mukhtar-6d255.appspot.com"
+    "project_number": "718557335089",
+    "firebase_url": "https://khud-mukhtar.firebaseio.com",
+    "project_id": "khud-mukhtar",
+    "storage_bucket": "khud-mukhtar.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1045571324951:android:8fea742272c7afed8a6052",
+        "mobilesdk_app_id": "1:718557335089:android:c0f2321e7ca35133550f10",
         "android_client_info": {
           "package_name": "com.khudmukhtar.khud_mukhtar"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1045571324951-qu4ocpggj89t5otqt5sv17nghq8dsm0v.apps.googleusercontent.com",
+          "client_id": "718557335089-t91rs7akv3ghs5mc27ll0dic3pq0vgc7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC9UFIiAiM8XPWkvZ_sVJalqQA3yJfdKbU"
+          "current_key": "AIzaSyCp5_EAW8_uTnFoWecrchczezWtnZXhThg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1045571324951-qu4ocpggj89t5otqt5sv17nghq8dsm0v.apps.googleusercontent.com",
+              "client_id": "718557335089-t91rs7akv3ghs5mc27ll0dic3pq0vgc7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -15,48 +15,50 @@ class Message {
     this.isLiked,
     this.unread,
   });
+
+
 }
 
 // YOU - current user
 final User currentUser = User(
-  id: 0,
+  id: '0',
   name: 'Current User',
   imageUrl: 'assets/images/greg.jpg',
 );
 
 // USERS
 final User greg = User(
-  id: 1,
+  id: '1',
   name: 'Kunza Rizvi',
   imageUrl: 'assets/cm1.jpeg',
 );
 final User james = User(
-  id: 2,
+  id: '2',
   name: 'Aleena Zahid',
   imageUrl: 'assets/cm0.jpeg',
 );
 final User john = User(
-  id: 3,
+  id: '3',
   name: 'Momina Qureshi',
   imageUrl: 'assets/momina.jpg',
 );
 final User olivia = User(
-  id: 4,
+  id: '4',
   name: 'Anum Khan',
   imageUrl: 'assets/cm2.jpeg',
 );
 final User sam = User(
-  id: 5,
+  id: '5',
   name: 'Yusra Shaikh',
   imageUrl: 'assets/cm3.jpeg',
 );
 final User sophia = User(
-  id: 6,
+  id: '6',
   name: 'Yusra Ali',
   imageUrl: 'assets/cm4.jpeg',
 );
 final User steven = User(
-  id: 7,
+  id: '7',
   name: 'Fatima Arshad',
   imageUrl: 'assets/profile.jpg',
 );
