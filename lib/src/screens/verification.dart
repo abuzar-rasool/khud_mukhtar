@@ -1,11 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:khud_mukhtar/src/screens/login_screen.dart';
 
 import '../uplod.dart';
@@ -40,6 +42,7 @@ class _Verificaton extends State<Verification> {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
   bool val = false;
+  bool verify = false;
   final databaseReference = Firestore.instance;
 
   String id;
@@ -52,6 +55,7 @@ class _Verificaton extends State<Verification> {
   int followers = 0;
   int following = 0;
   String area;
+
 
   Widget _buildPageIndicator(bool isCurrentPage) {
     return AnimatedContainer(
@@ -79,11 +83,42 @@ class _Verificaton extends State<Verification> {
 
   Future _getCNIC() async {
     File picturex = await ImagePicker.pickImage(
-        source: ImageSource.camera, maxWidth: 300.0, maxHeight: 500.0);
+        source: ImageSource.gallery, maxWidth: 300.0, maxHeight: 500.0);
 
     setState(() {
       image_cnic = picturex;
     });
+    verify = await cnicnVerify(picturex);
+    if (verify) {
+      setState(() {
+        verify = true;
+      });
+    } else if (!verify) {
+      Fluttertoast.showToast(
+          msg: "Unable to verify your CNIC. Please upload a clear image and try again.",
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
+    }
+  }
+
+
+  Future<bool> cnicnVerify(File picture) async {
+    final image = FirebaseVisionImage.fromFile(picture);
+    final dedector = FirebaseVision.instance.textRecognizer();
+    VisionText readText = await dedector.processImage(image);
+    for (TextBlock block in readText.blocks) {
+      for (TextLine line in block.lines) {
+        for (TextElement word in line.elements) {
+          print('img txt');
+          print(word.text);
+          if (word.text == 'F') {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
 
   @override
@@ -108,7 +143,7 @@ class _Verificaton extends State<Verification> {
                       children: <Widget>[
                         Container(
                           padding:
-                              EdgeInsets.only(left: 20, right: 20, bottom: 12),
+                          EdgeInsets.only(left: 20, right: 20, bottom: 12),
                           child: Column(
                             children: <Widget>[
                               Align(
@@ -131,10 +166,10 @@ class _Verificaton extends State<Verification> {
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(20.0),
+                                        BorderRadius.circular(20.0),
                                         borderSide: new BorderSide(
                                           color:
-                                              Color.fromRGBO(240, 96, 146, 1),
+                                          Color.fromRGBO(240, 96, 146, 1),
                                         ),
                                       ),
                                       focusedBorder: OutlineInputBorder(
@@ -156,7 +191,7 @@ class _Verificaton extends State<Verification> {
                         ), //Name
                         Container(
                           padding:
-                              EdgeInsets.only(left: 20, right: 20, bottom: 12),
+                          EdgeInsets.only(left: 20, right: 20, bottom: 12),
                           child: Column(
                             children: <Widget>[
                               Align(
@@ -180,7 +215,7 @@ class _Verificaton extends State<Verification> {
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(20.0),
+                                        BorderRadius.circular(20.0),
                                         borderSide: new BorderSide(
                                             color: Color.fromRGBO(
                                                 240, 96, 146, 1)),
@@ -228,13 +263,13 @@ class _Verificaton extends State<Verification> {
                                   child: DropdownButton(
                                     items: _category
                                         .map((value) => DropdownMenuItem(
-                                              child: Text(
-                                                value,
-                                                style: TextStyle(
-                                                    color: Colors.black),
-                                              ),
-                                              value: value,
-                                            ))
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(
+                                            color: Colors.black),
+                                      ),
+                                      value: value,
+                                    ))
                                         .toList(),
                                     onChanged: (selectedCategoryType) {
                                       city = '$selectedCategoryType';
@@ -256,7 +291,7 @@ class _Verificaton extends State<Verification> {
                         ), //City
                         Container(
                           padding:
-                              EdgeInsets.only(left: 20, right: 20, bottom: 12),
+                          EdgeInsets.only(left: 20, right: 20, bottom: 12),
                           child: Column(
                             children: <Widget>[
                               Align(
@@ -280,7 +315,7 @@ class _Verificaton extends State<Verification> {
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(20.0),
+                                        BorderRadius.circular(20.0),
                                         borderSide: new BorderSide(
                                             color: Color.fromRGBO(
                                                 240, 96, 146, 1)),
@@ -320,12 +355,12 @@ class _Verificaton extends State<Verification> {
                           ),
                           Expanded(
                               child: Text(
-                            'I confirm I am a woman above 18 years of age.',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(240, 98, 146, 1)),
-                          )),
+                                'I confirm I am a woman above 18 years of age.',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(240, 98, 146, 1)),
+                              )),
                         ],
                       ),
                     ),
@@ -373,7 +408,7 @@ class _Verificaton extends State<Verification> {
                               color: Colors.black12,
                               child: image == null
                                   ? Icon(FontAwesomeIcons.plus,
-                                      color: Color.fromRGBO(240, 98, 146, 1))
+                                  color: Color.fromRGBO(240, 98, 146, 1))
                                   : Image.file(image),
                             ))
                       ],
@@ -421,12 +456,14 @@ class _Verificaton extends State<Verification> {
                         crossAxisCount: 1,
                         children: <Widget>[
                           GestureDetector(
-                              onTap: _getCNIC,
+                              onTap: !verify ? _getCNIC : () {
+                                print('already verified');
+                              },
                               child: Container(
                                 color: Colors.black12,
                                 child: image_cnic == null
                                     ? Icon(FontAwesomeIcons.plus,
-                                        color: Color.fromRGBO(240, 98, 146, 1))
+                                    color: Color.fromRGBO(240, 98, 146, 1))
                                     : Image.file(image_cnic),
                               ))
                         ],
@@ -435,7 +472,7 @@ class _Verificaton extends State<Verification> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Text(
-                        'Take a clear picture of your National Identity eg. CNIC, Passport, B-Form) ',
+                        'Take a clear picture of your National Identity eg. CNIC, Passport, B-Form).',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 11.5,
@@ -443,7 +480,24 @@ class _Verificaton extends State<Verification> {
                             color: Color.fromRGBO(240, 98, 146, 1)),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.check, size: 16,
+                              color: verify
+                                  ? Color.fromRGBO(240, 98, 146, 1)
+                                  : Colors.grey),
+                          Text('CNIC Verfied', style: TextStyle(fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: verify
+                                  ? Color.fromRGBO(240, 98, 146, 1)
+                                  : Colors.grey),)
+                        ],
+                      ),
+                    ),
                   ],
+
                 ),
               ),
             ],
@@ -452,97 +506,97 @@ class _Verificaton extends State<Verification> {
       ),
       bottomSheet: _currentPage != 2
           ? Container(
-              margin: EdgeInsets.symmetric(vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FlatButton(
-                    onPressed: () {
-                      _pageController.animateToPage(_currentPage - 1,
-                          duration: Duration(milliseconds: 400),
-                          curve: Curves.linear);
-                      setState(() {});
-                    },
-                    splashColor: Color.fromRGBO(240, 96, 146, 1),
-                    child: Text(
-                      'BACK',
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromRGBO(240, 96, 146, 1),
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    child: Row(children: [
-                      for (int i = 0; i < _totalPages; i++)
-                        i == _currentPage
-                            ? _buildPageIndicator(true)
-                            : _buildPageIndicator(false)
-                    ]),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      _pageController.animateToPage(_currentPage + 1,
-                          duration: Duration(milliseconds: 400),
-                          curve: Curves.linear);
-                      setState(() {});
-                    },
-                    splashColor: Colors.blue[50],
-                    child: Text(
-                      'NEXT',
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromRGBO(240, 96, 146, 1),
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : RaisedButton(
-              onPressed: () async {
-                var uploadProfile = FileUpload(
-                    fileType: 'profileimage',
-                    file: image,
-                    fireBaseUserid: widget.currentUser.uid);
-                var uploadCnic = FileUpload(
-                    fileType: 'cnicimage',
-                    file: image_cnic,
-                    fireBaseUserid: widget.currentUser.uid);
-                imagePath = await uploadProfile.uploadFile();
-                image_cnic_path = await uploadCnic.uploadFile();
-
-                databaseReference
-                    .collection("Users")
-                    .document(widget.currentUser.uid)
-                    .updateData({
-                  'name': name,
-                  'imageUrl': imagePath,
-                  'cnicPicture': image_cnic_path,
-                  'contactNumber': contactNumber,
-                  'city': city,
-                  'email': email,
-                  'followers': followers,
-                  'following': following,
-                  'area': area,
-                  'email': widget.currentUser.email
-                });
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Login()));
+        margin: EdgeInsets.symmetric(vertical: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            FlatButton(
+              onPressed: () {
+                _pageController.animateToPage(_currentPage - 1,
+                    duration: Duration(milliseconds: 400),
+                    curve: Curves.linear);
+                setState(() {});
               },
-              child: Container(
-                height: Platform.isIOS ? 70 : 60,
-                color: Color.fromRGBO(240, 96, 146, 1),
-                alignment: Alignment.center,
-                child: Text(
-                  'CONFIRM AND CONTINUE',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
+              splashColor: Color.fromRGBO(240, 96, 146, 1),
+              child: Text(
+                'BACK',
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Color.fromRGBO(240, 96, 146, 1),
+                    fontWeight: FontWeight.bold),
               ),
             ),
+            Container(
+              child: Row(children: [
+                for (int i = 0; i < _totalPages; i++)
+                  i == _currentPage
+                      ? _buildPageIndicator(true)
+                      : _buildPageIndicator(false)
+              ]),
+            ),
+            FlatButton(
+              onPressed: () {
+                _pageController.animateToPage(_currentPage + 1,
+                    duration: Duration(milliseconds: 400),
+                    curve: Curves.linear);
+                setState(() {});
+              },
+              splashColor: Colors.blue[50],
+              child: Text(
+                'NEXT',
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Color.fromRGBO(240, 96, 146, 1),
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      )
+          : RaisedButton(
+        onPressed: () async {
+          var uploadProfile = FileUpload(
+              fileType: 'profileimage',
+              file: image,
+              fireBaseUserid: widget.currentUser.uid);
+          var uploadCnic = FileUpload(
+              fileType: 'cnicimage',
+              file: image_cnic,
+              fireBaseUserid: widget.currentUser.uid);
+          imagePath = await uploadProfile.uploadFile();
+          image_cnic_path = await uploadCnic.uploadFile();
+
+          databaseReference
+              .collection("Users")
+              .document(widget.currentUser.uid)
+              .updateData({
+            'name': name,
+            'imageUrl': imagePath,
+            'cnicPicture': image_cnic_path,
+            'contactNumber': contactNumber,
+            'city': city,
+            'email': email,
+            'followers': followers,
+            'following': following,
+            'area': area,
+            'email': widget.currentUser.email
+          });
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Login()));
+        },
+        child: Container(
+          height: Platform.isIOS ? 70 : 60,
+          color: Color.fromRGBO(240, 96, 146, 1),
+          alignment: Alignment.center,
+          child: Text(
+            'CONFIRM AND CONTINUE',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
     );
   }
