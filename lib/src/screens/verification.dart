@@ -45,7 +45,7 @@ class _Verificaton extends State<Verification> {
   bool verify = false;
   final databaseReference = Firestore.instance;
 
-  //done
+
   String id;
   String name;
   String imageUrl;
