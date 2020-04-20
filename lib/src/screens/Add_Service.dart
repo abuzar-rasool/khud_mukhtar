@@ -1,11 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Service {
   const Service(this.name);
+
   final String name;
 }
 
@@ -30,8 +32,17 @@ class AddService extends StatefulWidget {
 }
 
 class _AddService extends State<AddService> {
+  String serviceName;
+  int servicePrice;
+  String categorySelected;
+  bool homeBased = false;
+  bool online = false;
+  String description;
+
+
   List<File> images = [null, null, null, null, null, null];
   File image;
+
   Future _getImage() async {
     File picture = await ImagePicker.pickImage(
         source: ImageSource.gallery, maxWidth: 300.0, maxHeight: 500.0);
@@ -99,6 +110,9 @@ class _AddService extends State<AddService> {
                             child: SizedBox(
                               height: 50,
                               child: TextField(
+                                onChanged: (value) {
+                                  serviceName = value;
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
@@ -108,7 +122,7 @@ class _AddService extends State<AddService> {
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color:
-                                              Color.fromRGBO(240, 96, 146, 1))),
+                                          Color.fromRGBO(240, 96, 146, 1))),
                                   prefixIcon: Icon(
                                     Icons.business_center,
                                     color: Color.fromRGBO(240, 98, 146, 1),
@@ -157,8 +171,8 @@ class _AddService extends State<AddService> {
                                   color: Colors.black12,
                                   child: image == null
                                       ? Icon(FontAwesomeIcons.plus,
-                                          color:
-                                              Color.fromRGBO(240, 98, 146, 1))
+                                      color:
+                                      Color.fromRGBO(240, 98, 146, 1))
                                       : Image.file(image),
                                 ))
                           ],
@@ -200,8 +214,8 @@ class _AddService extends State<AddService> {
                                   color: Colors.black12,
                                   child: images[0] == null
                                       ? Icon(FontAwesomeIcons.plus,
-                                          color:
-                                              Color.fromRGBO(240, 98, 146, 1))
+                                      color:
+                                      Color.fromRGBO(240, 98, 146, 1))
                                       : Image.file(images[0]),
                                 )),
                             GestureDetector(
@@ -210,8 +224,8 @@ class _AddService extends State<AddService> {
                                   color: Colors.black12,
                                   child: images[1] == null
                                       ? Icon(FontAwesomeIcons.plus,
-                                          color:
-                                              Color.fromRGBO(240, 98, 146, 1))
+                                      color:
+                                      Color.fromRGBO(240, 98, 146, 1))
                                       : Image.file(images[1]),
                                 )),
                             GestureDetector(
@@ -220,8 +234,8 @@ class _AddService extends State<AddService> {
                                   color: Colors.black12,
                                   child: images[2] == null
                                       ? Icon(FontAwesomeIcons.plus,
-                                          color:
-                                              Color.fromRGBO(240, 98, 146, 1))
+                                      color:
+                                      Color.fromRGBO(240, 98, 146, 1))
                                       : Image.file(images[2]),
                                 )),
                             GestureDetector(
@@ -230,8 +244,8 @@ class _AddService extends State<AddService> {
                                   color: Colors.black12,
                                   child: images[3] == null
                                       ? Icon(FontAwesomeIcons.plus,
-                                          color:
-                                              Color.fromRGBO(240, 98, 146, 1))
+                                      color:
+                                      Color.fromRGBO(240, 98, 146, 1))
                                       : Image.file(images[3]),
                                 )),
                             GestureDetector(
@@ -240,8 +254,8 @@ class _AddService extends State<AddService> {
                                   color: Colors.black12,
                                   child: images[4] == null
                                       ? Icon(FontAwesomeIcons.plus,
-                                          color:
-                                              Color.fromRGBO(240, 98, 146, 1))
+                                      color:
+                                      Color.fromRGBO(240, 98, 146, 1))
                                       : Image.file(images[4]),
                                 )),
                             GestureDetector(
@@ -250,8 +264,8 @@ class _AddService extends State<AddService> {
                                   color: Colors.black12,
                                   child: images[5] == null
                                       ? Icon(FontAwesomeIcons.plus,
-                                          color:
-                                              Color.fromRGBO(240, 98, 146, 1))
+                                      color:
+                                      Color.fromRGBO(240, 98, 146, 1))
                                       : Image.file(images[5]),
                                 )),
                           ],
@@ -282,6 +296,9 @@ class _AddService extends State<AddService> {
                             child: SizedBox(
                               height: 50,
                               child: TextField(
+                                onChanged: (value) {
+                                  servicePrice = int.parse(value);
+                                },
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -292,7 +309,7 @@ class _AddService extends State<AddService> {
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color:
-                                              Color.fromRGBO(240, 96, 146, 1))),
+                                          Color.fromRGBO(240, 96, 146, 1))),
                                   prefixIcon: Icon(
                                     Icons.attach_money,
                                     color: Color.fromRGBO(240, 98, 146, 1),
@@ -335,15 +352,16 @@ class _AddService extends State<AddService> {
                             child: DropdownButton(
                               items: _category
                                   .map((value) => DropdownMenuItem(
-                                        child: Text(
-                                          value,
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                        value: value,
-                                      ))
+                                child: Text(
+                                  value,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                value: value,
+                              ))
                                   .toList(),
                               onChanged: (selectedCategoryType) {
                                 print('$selectedCategoryType');
+                                selectedType = selectedCategoryType;
                                 setState(() {
                                   selectedType = selectedCategoryType;
                                 });
@@ -385,13 +403,21 @@ class _AddService extends State<AddService> {
                             alignment: Alignment.centerLeft,
                             child: Container(
                                 child: Wrap(
-                              spacing: 5.0,
-                              runSpacing: 5.0,
-                              children: <Widget>[
-                                filterChipWidget(chipName: 'Home-Based'),
-                                filterChipWidget(chipName: 'Online'),
-                              ],
-                            )),
+                                  spacing: 5.0,
+                                  runSpacing: 5.0,
+                                  children: <Widget>[
+                                    filterChipWidget(chipName: 'Home-Based',
+                                      isSelected: homeBased,
+                                      onClick: (value) {
+                                        homeBased = value;
+                                      },),
+                                    filterChipWidget(chipName: 'Online',
+                                      isSelected: online,
+                                      onClick: (value) {
+                                        homeBased = value;
+                                      },),
+                                  ],
+                                )),
                           ),
                         ),
                       ],
@@ -422,25 +448,28 @@ class _AddService extends State<AddService> {
                                 left: 20.0, right: 20, bottom: 12),
                             child: SizedBox(
                                 child: TextField(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  borderSide: new BorderSide(
-                                      color: Color.fromRGBO(240, 96, 146, 1)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: new BorderSide(
-                                        color:
+                                  onChanged: (value) {
+                                    description = value;
+                                  },
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide: new BorderSide(
+                                          color: Color.fromRGBO(240, 96, 146, 1)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: new BorderSide(
+                                            color:
                                             Color.fromRGBO(240, 96, 146, 1))),
-                                hintText: "Tutions from 8am-5pm.",
-                                labelText: "Add Description here",
-                                hintStyle:
+                                    hintText: "Tutions from 8am-5pm.",
+                                    labelText: "Add Description here",
+                                    hintStyle:
                                     TextStyle(color: Colors.grey, fontSize: 9),
-                                labelStyle: TextStyle(color: Colors.grey),
-                              ),
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                            )),
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                  ),
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                )),
                           ),
                         ),
                       ],
@@ -488,15 +517,18 @@ class _AddService extends State<AddService> {
 
 class filterChipWidget extends StatefulWidget {
   final String chipName;
+  bool isSelected;
+  Function onClick;
 
-  filterChipWidget({Key key, this.chipName}) : super(key: key);
+  filterChipWidget({Key key, this.chipName, this.isSelected, this.onClick})
+      : super(key: key);
 
   @override
   _filterChipWidgetState createState() => _filterChipWidgetState();
 }
 
 class _filterChipWidgetState extends State<filterChipWidget> {
-  var _isSelected = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -506,14 +538,15 @@ class _filterChipWidgetState extends State<filterChipWidget> {
           color: Color.fromRGBO(255, 255, 255, 1),
           fontSize: 16.0,
           fontWeight: FontWeight.bold),
-      selected: _isSelected,
+      selected: widget.isSelected,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30.0),
       ),
       backgroundColor: Color.fromRGBO(240, 96, 146, 1),
       onSelected: (isSelected) {
         setState(() {
-          _isSelected = isSelected;
+          widget.isSelected = !widget.isSelected;
+          widget.onClick(widget.isSelected);
         });
       },
       selectedColor: Color.fromRGBO(247, 166, 194, 1),
