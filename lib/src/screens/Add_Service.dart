@@ -588,7 +588,7 @@ class _AddService extends State<AddService> {
     );
   }
 }
-
+//chip update
 class filterChipWidget extends StatefulWidget {
   final String chipName;
   bool isSelected;
