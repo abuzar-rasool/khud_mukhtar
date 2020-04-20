@@ -517,7 +517,8 @@ class _AddService extends State<AddService> {
                               CollectionReference productCollection =
                               databaseReference.collection("Products");
                               DocumentReference productDocument =
-                              await productCollection.add(newService.toMap())
+                              await productCollection
+                                  .add(newService.toMap())
                                   .catchError((e) {
                                 print(e);
                               });
@@ -525,24 +526,10 @@ class _AddService extends State<AddService> {
                                   .collection("Users")
                                   .document(currentUser.uid.toString());
 
-//                              await userDocument.get().catchError((e) {
-//                                print(e.toString());
-//                              }).then((DocumentSnapshot) {
-//                                List<String> serviceList = DocumentSnapshot.data['productList'];
-//                                if (serviceList!=null){
-//                                  serviceList.add(productDocument.documentID);
-//
-//                                }else{
-//
-//                                }
-//
-//                              });
-                              await userDocument.updateData(
-                                  {
-                                    'productList': FieldValue.arrayUnion(
-                                        [productDocument.documentID])
-                                  }
-                              );
+                              await userDocument.updateData({
+                                'productList': FieldValue.arrayUnion(
+                                    [productDocument.documentID])
+                              });
 
                               print('Text Data Uploaded Uplodaing Images....');
                               var productMainImage = FileUpload(
@@ -550,9 +537,8 @@ class _AddService extends State<AddService> {
                                   file: image,
                                   id: productDocument.documentID);
 
-
-                              String imagepath = await productMainImage
-                                  .uploadFile();
+                              String imagepath =
+                              await productMainImage.uploadFile();
                               print('Main Image Uploaded');
                               List<String> galleryImagePath = [];
                               for (var galleryImage in images) {
@@ -561,8 +547,8 @@ class _AddService extends State<AddService> {
                                       fileType: 'productgallery',
                                       file: galleryImage,
                                       id: productDocument.documentID);
-                                  String productGalleryImagePath = await productGalleryImage
-                                      .uploadFile();
+                                  String productGalleryImagePath =
+                                  await productGalleryImage.uploadFile();
                                   galleryImagePath.add(productGalleryImagePath);
                                 }
                               }
@@ -570,14 +556,14 @@ class _AddService extends State<AddService> {
 
                               await productDocument.updateData({
                                 'imageurl': imagepath,
-                                'galleryImages': FieldValue.arrayUnion(
-                                    galleryImagePath)
+                                'galleryImages':
+                                FieldValue.arrayUnion(galleryImagePath)
                               });
 
-//                              Scaffold.of(context).showSnackBar(SnackBar(
-//                                content: Text('Service Published'),
-//                                duration: Duration(seconds: 3),
-//                              ));
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text('Service Published'),
+                                duration: Duration(seconds: 3),
+                              ));
                             },
                             autofocus: true,
                             shape: ContinuousRectangleBorder(
