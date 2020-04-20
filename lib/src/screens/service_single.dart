@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:khud_mukhtar/src/models/user_model.dart';
-import 'package:khud_mukhtar/src/screens/chat_screen.dart';
-import 'package:khud_mukhtar/src/screens/profile_screen.dart';
-import 'package:khud_mukhtar/src/screens/profile_seller.dart';
-import 'service_details.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khud_mukhtar/constants/colors.dart';
+import 'package:khud_mukhtar/src/models/user_model.dart';
+import 'package:khud_mukhtar/src/screens/chat_screen.dart';
+import 'package:khud_mukhtar/src/screens/profile_seller.dart';
+
+import 'service_details.dart';
 
 class bottomAppBar extends StatelessWidget {
   final Product product;
@@ -93,7 +93,6 @@ class bottomAppBar extends StatelessWidget {
               ),
             ),
             OutlineButton(
-
               child: Row(
                 children: <Widget>[
                   Padding(
