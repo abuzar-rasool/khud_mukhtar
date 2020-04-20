@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
   OnboardingPage({Key key}) : super(key: key);
@@ -116,7 +117,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ),
       )
           : RaisedButton(
-        onPressed: () {Navigator.push(context, MaterialPageRoute(
+        onPressed: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool('showonboarding', false);
+          Navigator.push(context, MaterialPageRoute(
             builder: (BuildContext context) {
               return Login();
             }
