@@ -559,11 +559,11 @@ class _Verificaton extends State<Verification> {
           var uploadProfile = FileUpload(
               fileType: 'profileimage',
               file: image,
-              fireBaseUserid: widget.currentUser.uid);
+              id: widget.currentUser.uid);
           var uploadCnic = FileUpload(
               fileType: 'cnicimage',
               file: image_cnic,
-              fireBaseUserid: widget.currentUser.uid);
+              id: widget.currentUser.uid);
           imagePath = await uploadProfile.uploadFile();
           image_cnic_path = await uploadCnic.uploadFile();
 
@@ -580,7 +580,7 @@ class _Verificaton extends State<Verification> {
             'followers': followers,
             'following': following,
             'area': area,
-            'email': widget.currentUser.email
+            'email': widget.currentUser.email,
           });
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => Login()));

@@ -1,9 +1,14 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:khud_mukhtar/src/models/user_model.dart';
+
+import '../uplod.dart';
 
 class Service {
   const Service(this.name);
@@ -11,7 +16,6 @@ class Service {
   final String name;
 }
 
-var selectedType;
 List<String> _category = <String>[
   'Teaching',
   'Baking',
@@ -22,9 +26,7 @@ List<String> _category = <String>[
   'Programming',
 ];
 
-
 class AddService extends StatefulWidget {
-
   AddService({Key key}) : super(key: key);
 
   @override
@@ -38,7 +40,8 @@ class _AddService extends State<AddService> {
   bool homeBased = false;
   bool online = false;
   String description;
-
+  var selectedType;
+  final databaseReference = Firestore.instance;
 
   List<File> images = [null, null, null, null, null, null];
   File image;
@@ -63,7 +66,8 @@ class _AddService extends State<AddService> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> _scaffoldKey =
+    new GlobalKey<ScaffoldState>();
 
     //  AssetImage logo = AssetImage('assets/logo.png');
     // TODO: implement build
@@ -361,9 +365,10 @@ class _AddService extends State<AddService> {
                                   .toList(),
                               onChanged: (selectedCategoryType) {
                                 print('$selectedCategoryType');
-                                selectedType = selectedCategoryType;
+
                                 setState(() {
                                   selectedType = selectedCategoryType;
+                                  categorySelected = selectedType;
                                 });
                               },
                               value: selectedType,
@@ -406,16 +411,20 @@ class _AddService extends State<AddService> {
                                   spacing: 5.0,
                                   runSpacing: 5.0,
                                   children: <Widget>[
-                                    filterChipWidget(chipName: 'Home-Based',
+                                    filterChipWidget(
+                                      chipName: 'Home-Based',
                                       isSelected: homeBased,
                                       onClick: (value) {
                                         homeBased = value;
-                                      },),
-                                    filterChipWidget(chipName: 'Online',
+                                      },
+                                    ),
+                                    filterChipWidget(
+                                      chipName: 'Online',
                                       isSelected: online,
                                       onClick: (value) {
-                                        homeBased = value;
-                                      },),
+                                        online = value;
+                                      },
+                                    ),
                                   ],
                                 )),
                           ),
@@ -455,7 +464,8 @@ class _AddService extends State<AddService> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20.0),
                                       borderSide: new BorderSide(
-                                          color: Color.fromRGBO(240, 96, 146, 1)),
+                                          color: Color.fromRGBO(
+                                              240, 96, 146, 1)),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: new BorderSide(
@@ -484,11 +494,90 @@ class _AddService extends State<AddService> {
                         height: 50,
                         child: Builder(
                           builder: (context) => RaisedButton(
-                            onPressed: () {
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text('Service Published'),
-                                duration: Duration(seconds: 3),
-                              ));
+                            onPressed: () async {
+                              FirebaseUser currentUser =
+                              await FirebaseAuth.instance.currentUser();
+                              print(serviceName);
+                              print(servicePrice);
+                              print(categorySelected);
+                              print(homeBased);
+                              print(online);
+                              print(description);
+                              Product newService = Product(
+                                title: serviceName,
+                                price: servicePrice,
+                                description: description,
+                                categoryName: categorySelected,
+                                userId: currentUser.uid,
+                                online: online,
+                                homeBased: homeBased,
+                                likes: 0,
+                              );
+
+                              CollectionReference productCollection =
+                              databaseReference.collection("Products");
+                              DocumentReference productDocument =
+                              await productCollection.add(newService.toMap())
+                                  .catchError((e) {
+                                print(e);
+                              });
+                              DocumentReference userDocument = databaseReference
+                                  .collection("Users")
+                                  .document(currentUser.uid.toString());
+
+//                              await userDocument.get().catchError((e) {
+//                                print(e.toString());
+//                              }).then((DocumentSnapshot) {
+//                                List<String> serviceList = DocumentSnapshot.data['productList'];
+//                                if (serviceList!=null){
+//                                  serviceList.add(productDocument.documentID);
+//
+//                                }else{
+//
+//                                }
+//
+//                              });
+                              await userDocument.updateData(
+                                  {
+                                    'productList': FieldValue.arrayUnion(
+                                        [productDocument.documentID])
+                                  }
+                              );
+
+                              print('Text Data Uploaded Uplodaing Images....');
+                              var productMainImage = FileUpload(
+                                  fileType: 'productimage',
+                                  file: image,
+                                  id: productDocument.documentID);
+
+
+                              String imagepath = await productMainImage
+                                  .uploadFile();
+                              print('Main Image Uploaded');
+                              List<String> galleryImagePath = [];
+                              for (var galleryImage in images) {
+                                if (galleryImage != null) {
+                                  var productGalleryImage = FileUpload(
+                                      fileType: 'productgallery',
+                                      file: galleryImage,
+                                      id: productDocument.documentID);
+                                  String productGalleryImagePath = await productGalleryImage
+                                      .uploadFile();
+                                  galleryImagePath.add(productGalleryImagePath);
+                                }
+                              }
+                              print('Gallery Image Uploaded');
+
+                              await productDocument.updateData({
+                                'imageurl': imagepath,
+                                'galleryImages': FieldValue.arrayUnion(
+                                    galleryImagePath)
+                              });
+
+//                              Scaffold.of(context).showSnackBar(SnackBar(
+//                                content: Text('Service Published'),
+//                                duration: Duration(seconds: 3),
+//                              ));
                             },
                             autofocus: true,
                             shape: ContinuousRectangleBorder(
@@ -512,7 +601,6 @@ class _AddService extends State<AddService> {
       backgroundColor: Colors.white,
     );
   }
-
 }
 
 class filterChipWidget extends StatefulWidget {
@@ -528,8 +616,6 @@ class filterChipWidget extends StatefulWidget {
 }
 
 class _filterChipWidgetState extends State<filterChipWidget> {
-
-
   @override
   Widget build(BuildContext context) {
     return FilterChip(
@@ -552,5 +638,4 @@ class _filterChipWidgetState extends State<filterChipWidget> {
       selectedColor: Color.fromRGBO(247, 166, 194, 1),
     );
   }
-
 }
