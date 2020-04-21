@@ -142,31 +142,38 @@ class _HomeScreen extends State<HomeScreen> {
                           ),
                         ],
                       ),
+                      Container(
+                        height: 200,
+                        child:  CustomListView(),
+                      )
+
                     ],
+
                   ),
                 ),
               ),
             ]),
           ),
-          SliverGrid.count(
-            crossAxisCount: 2,
-            children: List.generate(4, (index) {
-              return Center(
-                child: AllServicesCard(
-                  product: allProducts[index],
-                  onPress: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ServiceSinglePage(
-                                product: allProducts[index],
-                              )),
-                    );
-                  },
-                ),
-              );
-            }),
-          )
+
+//          SliverGrid.count(
+//            crossAxisCount: 2,
+//            children: List.generate(4, (index) {
+//              return Center(
+//                child: AllServicesCard(
+//                  product: allProducts[index],
+//                  onPress: () {
+//                    Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) => ServiceSinglePage(
+//                                product: allProducts[index],
+//                              )),
+//                    );
+//                  },
+//                ),
+//              );
+//            }),
+//          )
         ],
       ),
     );
@@ -285,3 +292,81 @@ Widget _buildRow(IconData icon, String title) {
 
 
 
+
+
+class CustomListView extends StatefulWidget{
+  //CustomListView({);
+  @override
+  _CustomListViewState createState() => _CustomListViewState();
+}
+
+class _CustomListViewState extends State<CustomListView> {
+
+  Future getItems() async{
+    var firestore = Firestore.instance;
+    QuerySnapshot userDoc =  await firestore.collection("Products").getDocuments();
+    //print(userDoc.data);
+    //print(widget.userID);
+    return userDoc.documents;
+//    if(userDoc.data.containsKey("productList")){
+//
+//      var myProductIDs = (userDoc.data["productList"]);
+//
+//      var myProducts = [];
+//      for(String id in myProductIDs){
+//        print(id);
+//
+//        DocumentSnapshot product = await firestore.collection("Products").document(id).get();
+//        myProducts.add(product);
+//      }
+//      return myProducts;
+//    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child:FutureBuilder(
+            future: getItems()
+            ,builder:(_, snapshot){
+          if (snapshot.data == null){
+            return Center(child:Text("Loading!"));
+          }
+
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Center(child:Text("Loading!"));
+          }else {
+            return
+
+              GridView.count(
+        scrollDirection: Axis.horizontal,
+                  crossAxisCount: 1,
+                  children:List.generate(snapshot.data.length, (index){
+                    DocumentSnapshot doc = snapshot.data[index];
+                    var product = Product.fromMap(doc.data);
+
+                    //Map product = doc.data;
+                    Image thumnail = Image.network(product.mainImage);
+                    print("Rs "+ product.price.toString());
+
+                    return AllServicesCard(
+                      product: product,
+                      myImage: thumnail,
+                      onPress: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ServiceSinglePage(
+                                product: product,
+                              )),
+                        );
+                      },
+                    );
+
+                  })
+              );
+          }
+
+        })
+    );
+  }
+}
