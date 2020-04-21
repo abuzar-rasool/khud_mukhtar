@@ -1,4 +1,4 @@
-# KHUD MUKHTAR
+# Khud Mukhtar
 
 Flutter apllication for DSC Solution Challenge
 
