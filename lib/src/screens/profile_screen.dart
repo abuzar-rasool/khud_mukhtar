@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/card/all_services_card.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
@@ -8,7 +9,8 @@ import 'package:khud_mukhtar/src/widgets/loading.dart';
 
 class Profile extends StatefulWidget {
   final User user;
-  Profile({this.user});
+  var userID;
+  Profile({this.user,this.userID});
 
   @override
   _Profile createState() => _Profile();
@@ -16,9 +18,12 @@ class Profile extends StatefulWidget {
 
 class _Profile extends State<Profile> {
   //AssetImage profileimage = AssetImage('assets/fatima.jpeg');
-var userID  = "xkfGHSZxFTWbg8IOLcQz2SaOWcC3";
+//var userID  = "xkfGHSZxFTWbg8IOLcQz2SaOWcC3";
+
   @override
   Widget build(BuildContext context) {
+    var userID  = widget.user?.id;
+
     // TODO: implement build
     return Scaffold(
       appBar: MyCustomAppBar(userID: userID,),
@@ -82,8 +87,17 @@ class MyCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _MyCustomAppBarState extends State<MyCustomAppBar> {
   //var userID = "";
 
+  Future getID() async{
+    print("Getting uid");
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    return user.uid;
+  }
+
   Future getUserData() async{
-    var userID = widget.userID;
+
+
+
+    var userID = widget.userID ?? await getID();
     Firestore db = Firestore.instance;
     DocumentSnapshot documentSnapshot = await db.collection("Users").document(userID).get();
     //print("HELLO");
@@ -233,6 +247,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                       )),
                                 ],
                               ),
+                              widget.userID == null ?
                               OutlineButton(
                                   borderSide:
                                   BorderSide(color: Colors.white),
@@ -246,7 +261,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                   color: Colors.white,
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
-                                      new BorderRadius.circular(30.0)))
+                                      new BorderRadius.circular(30.0))) : Center(),
                             ],
                           ),
                         ),
@@ -287,9 +302,19 @@ class CustomListView extends StatefulWidget {
 
 class _CustomListViewState extends State<CustomListView> {
 
+
+  Future getID() async{
+    print("Getting uid");
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    return user.uid;
+  }
+
+
   Future getItems() async{
+    var userID = widget.userID ?? await getID();
+
     var firestore = Firestore.instance;
-    DocumentSnapshot userDoc =  await firestore.collection("Users").document(widget.userID).get();
+    DocumentSnapshot userDoc =  await firestore.collection("Users").document(userID).get();
     //print(userDoc.data);
     //print(widget.userID);
     if(userDoc.data.containsKey("productList")){
