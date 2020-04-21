@@ -1,6 +1,6 @@
-# khud_mukhtar
+# KHUD MUKHTAR
 
-Flutter App Prototype for Digital Pakistan 
+Flutter apllication for DSC Solution Challenge
 
 ## Getting Started
 
