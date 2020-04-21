@@ -79,12 +79,13 @@ class MyCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _MyCustomAppBarState extends State<MyCustomAppBar> {
   //var userID = "";
 
-  Future getDP() async{
+  Future getUserData() async{
     var userID = widget.userID;
     Firestore db = Firestore.instance;
     DocumentSnapshot documentSnapshot = await db.collection("Users").document(userID).get();
-    print("HELLO");
+    //print("HELLO");
     print(documentSnapshot.data);
+
     return documentSnapshot.data;
 
   }
@@ -92,11 +93,12 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-    future: getDP()
+    future: getUserData()
     ,builder: (_, snapshot){
       print(snapshot.data);
-     Image myDP = Image.network(snapshot.data['imageUrl']);
-     var rating = snapshot.data['rating'] ?? 0;
+      var user = User.fromMap(snapshot.data);
+      Image myDP = Image.network(user.imageUrl);
+     var rating = user.rating ?? 0;
 
       if(snapshot.connectionState == ConnectionState.waiting){
         return Center(child:Text("Loading!"));
@@ -129,7 +131,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                               ),
                             ),
                             Spacer(),
-                            Text(snapshot.data['city'],
+                            Text(user.city,
                               style: TextStyle(
                                   color: Colors.white, fontSize: 15),
                             ),
@@ -152,7 +154,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Text(snapshot.data['productList'].length.toString(),
+                                  Text(user.productList.length.toString(),
                                       style: TextStyle(
                                           fontSize: 20,
                                           color: Colors.white))
@@ -169,7 +171,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                         fontWeight: FontWeight.bold),
                                   ),
 //                                      Text('${widget.user.followers}',
-                                  Text(snapshot.data['followers'].toString(),
+                                  Text(user.followers.toString(),
 
                                       style: TextStyle(
                                           fontSize: 20,
@@ -187,7 +189,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                         fontWeight: FontWeight.bold),
                                   ),
 //                                      Text('${widget.user.following}',
-                                  Text(snapshot.data['following'].toString(),
+                                  Text(user.following.toString(),
 
                                       style: TextStyle(
                                           fontSize: 20,
@@ -201,7 +203,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                           margin: EdgeInsets.only(left: 80),
                           child: Column(
                             children: <Widget>[
-                              Text(snapshot.data['name'].toString(),
+                              Text(user.name.toString(),
 
                                 style: TextStyle(
                                     color: Colors.white,
@@ -278,7 +280,6 @@ class CustomListView extends StatefulWidget {
 }
 
 class _CustomListViewState extends State<CustomListView> {
-  //var sampleimage = AssetImage('assets/quranforkidssample.jpg');
 
   Future getItems() async{
     var firestore = Firestore.instance;
@@ -306,6 +307,7 @@ class _CustomListViewState extends State<CustomListView> {
       future: getItems()
       ,builder:(_, snapshot){
 
+
         if(snapshot.connectionState == ConnectionState.waiting){
           return Center(child:Text("Loading!"));
         }else {
@@ -315,9 +317,11 @@ class _CustomListViewState extends State<CustomListView> {
               crossAxisCount: 2,
               children:List.generate(snapshot.data.length, (index){
                 DocumentSnapshot doc = snapshot.data[index];
-                Map product = doc.data;
-                Image thumnail = Image.network(product['imageurl']);
-                print("Rs "+product['price'].toString());
+                var product = Product.fromMap(doc.data);
+
+                //Map product = doc.data;
+                Image thumnail = Image.network(product.mainImage);
+                print("Rs "+ product.price.toString());
                 return Center(
                   child: Card(
 
@@ -343,16 +347,16 @@ class _CustomListViewState extends State<CustomListView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(product['title']),
+                                  Text(product.title),
 
 
                                   Row(
                                     children: <Widget>[
 
-                                      Text("Rs "+product['price'].toString(), style: TextStyle(fontWeight: FontWeight.bold),),
+                                      Text("Rs "+product.price.toString(), style: TextStyle(fontWeight: FontWeight.bold),),
                                       Spacer(),
                                       Icon(Icons.favorite,color: Colors.red,),
-                                      Text(product['likes'].toString(),style: TextStyle(color:Color.fromRGBO(240, 98, 146, 1) ),)
+                                      Text(product.likes.toString(),style: TextStyle(color:Color.fromRGBO(240, 98, 146, 1) ),)
                                     ],
                                   )
                                 ],

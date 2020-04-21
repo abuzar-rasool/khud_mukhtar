@@ -80,19 +80,41 @@ User loggedInUser = User(
 );
 
 class User {
-  final String id;
-  final String name;
-  final String imageUrl;
-  final String cnicPicture;
-  final String contactNumber;
-  final String city;
-  final String email;
-  final int followers;
-  final int following;
+   String id;
+   String name;
+   String imageUrl;
+   String cnicPicture;
+   String contactNumber;
+   String city;
+   String email;
+   int followers;
+   int following;
   List<Product> productList = [];
-  final double rating;
-  final String area;
+   double rating;
+   String area;
 
+  User.fromMap(Map map){
+    this.name = map['name'];
+    this.city = map['city'];
+    this.followers = map['followers'];
+    this.following = map['following'];
+    this.cnicPicture = map['cnicPicture'];
+
+    this.rating = map['rating'];
+    this.area = map['area'];
+    this.id = map['id'];
+    this.imageUrl = map['imageUrl'];
+    this.contactNumber = map['contactNumber'];
+
+    var userProducts = List<Product>();
+    if (map['productList'] != null){
+    for (var i in map['productList']){
+      print(i);
+      userProducts.add(Product());
+    }
+  this.productList = userProducts;
+  }
+  }
   User(
       {this.area,
       this.id,
@@ -125,20 +147,44 @@ class User {
 }
 
 class Product {
-  final String title;
-  final int price;
-  final String description;
-  final Category category;
-  final int likes;
-  final User user;
-  final String mainImage;
-  final List<String> galleryImages;
-  final serviceType;
-  final bool homeBased;
-  final bool online;
-  final String userId;
-  final String categoryName;
+   String title;
+   int price;
+   String description;
+   Category category;
+   int likes;
+   User user;
+   String mainImage;
+   List<String> galleryImages;
+   var serviceType;
+   bool homeBased;
+   bool online;
+   String userId;
+   String categoryName;
 
+   Product.fromMap(Map map){
+     this.serviceType = map['serviceType'];
+     this.title = map['title'];
+     this.price = map['price'];
+     this.description = map['description'];
+     this.category = map['category'];
+     this.likes = map['likes'];
+     this.user = map['user'];
+     this.mainImage = map['imageurl'];
+     this.homeBased = map['homeBased'];
+     this.online = map['online'];
+     this.userId = map['userId'];
+     this.categoryName  = map['categoryName'];
+
+
+     if(map['galleryImages'] != null){
+       this.galleryImages = List<String>();
+       for (var i in map['galleryImages']){
+         this.galleryImages.add(i.toString());
+       }
+     }
+     //this.galleryImages = map['galleryImages'];
+
+   }
   Product(
       {this.serviceType,
       this.title,
