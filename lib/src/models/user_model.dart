@@ -11,8 +11,9 @@ List<Product> allProducts = [
       mainImage: 'assets/quranforkidssample.jpg',
       galleryImages: galleryImages,
       serviceType: 'Home Based',
-      user: user1,
-      category: categories[0]),
+     // user: user1,
+      //category: categories[0]
+),
   Product(
       title: 'O Level Tutions',
       price: 10000,
@@ -21,8 +22,9 @@ List<Product> allProducts = [
       mainImage: 'assets/teaching.jpeg',
       galleryImages: galleryImages,
       serviceType: 'Home Based',
-      user: user1,
-      category: categories[0]),
+     // user: user1,
+     // category: categories[0]
+),
   Product(
       title: 'Baking Classes',
       price: 5000,
@@ -31,8 +33,9 @@ List<Product> allProducts = [
       mainImage: 'assets/baking.jpeg',
       galleryImages: galleryImages,
       serviceType: 'Home Based',
-      user: user1,
-      category: categories[0]),
+     // user: user1,
+  //    category: categories[0]
+  ),
   Product(
       title: 'Wedding Photos',
       price: 5000,
@@ -41,8 +44,9 @@ List<Product> allProducts = [
       mainImage: 'assets/wedding.jpeg',
       galleryImages: galleryImages,
       serviceType: 'Home Based',
-      user: user1,
-      category: categories[0]),
+     // user: user1,
+      //category: categories[0]
+  ),
   Product(
       title: 'Marketing for business',
       price: 5000,
@@ -51,8 +55,9 @@ List<Product> allProducts = [
       mainImage: 'assets/marketing.jpeg',
       galleryImages: galleryImages,
       serviceType: 'Online',
-      user: user1,
-      category: categories[0]),
+      //user: user1,
+      //category: categories[0]
+  ),
 ];
 User user1 = User(
   id: '0',
@@ -113,6 +118,7 @@ class User {
       userProducts.add(Product());
     }
   this.productList = userProducts;
+
   }
   }
   User(
@@ -150,12 +156,12 @@ class Product {
    String title;
    int price;
    String description;
-   Category category;
+   //Category category;
    int likes;
-   User user;
+  // User user;
    String mainImage;
    List<String> galleryImages;
-   var serviceType;
+   String serviceType;
    bool homeBased;
    bool online;
    String userId;
@@ -166,15 +172,20 @@ class Product {
      this.title = map['title'];
      this.price = map['price'];
      this.description = map['description'];
-     this.category = map['category'];
+    // this.category = map['category'];
      this.likes = map['likes'];
-     this.user = map['user'];
+    // this.user = map['user'];
      this.mainImage = map['imageurl'];
-     this.homeBased = map['homeBased'];
+     this.homeBased = map['homebased'];
      this.online = map['online'];
-     this.userId = map['userId'];
+     this.userId = map['userid'];
      this.categoryName  = map['categoryName'];
 
+     //this.serviceType = "Online";
+this.serviceType = (this.homeBased ? "Home based" : "Online");
+//if (this.online){
+//  this.serviceType = ( this.serviceType == "" ? "Online" : "${this.serviceType} \n Online");
+//}
 
      if(map['galleryImages'] != null){
        this.galleryImages = List<String>();
@@ -190,9 +201,9 @@ class Product {
       this.title,
       this.price,
       this.description,
-      this.category,
+     // this.category,
       this.likes,
-      this.user,
+      //this.user,
       this.mainImage,
         this.galleryImages,
         this.homeBased,
@@ -206,9 +217,9 @@ class Product {
       'price': price,
       'imageurl': mainImage,
       'description': description,
-      'category': category,
+     // 'category': category,
       'likes': likes,
-      'user': user,
+      //'user': user,
       'galleryImages': galleryImages,
       'homebased': homeBased,
       'online': online,

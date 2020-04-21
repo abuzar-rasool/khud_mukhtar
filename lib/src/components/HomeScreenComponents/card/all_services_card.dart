@@ -5,15 +5,19 @@ import 'package:khud_mukhtar/src/models/user_model.dart';
 
 class AllServicesCard extends StatelessWidget {
 
-  AssetImage profileimage = AssetImage('assets/momina.jpg'),
-      sampleimage = AssetImage('assets/quranforkidssample.jpg');
+  //AssetImage profileimage = AssetImage('assets/momina.jpg'),
+     // sampleimage = AssetImage('assets/quranforkidssample.jpg');
 
-  AllServicesCard({@required this.product, @required this.onPress});
+  AllServicesCard({@required this.product, @required this.onPress, this.myImage});
   final Product product;
+  final Image myImage;
+
   final Function onPress;
 
   @override
   Widget build(BuildContext context) {
+    ImageProvider displayImage = myImage == null ? AssetImage(product.mainImage) : myImage.image;
+
     // TODO: implement build
     return  GestureDetector(
       onTap: onPress,
@@ -34,7 +38,8 @@ class AllServicesCard extends StatelessWidget {
                       borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage(product.mainImage),
+                       image: displayImage,
+                       // image: AssetImage(product.mainImage),
                       ),
                     ),
                   ),

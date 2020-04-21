@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -11,8 +12,9 @@ import 'service_details.dart';
 
 class bottomAppBar extends StatelessWidget {
   final Product product;
-  const bottomAppBar({this.product});
+  final User user;
 
+  const bottomAppBar({this.product,this.user});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,7 +40,9 @@ class bottomAppBar extends StatelessWidget {
                   Stack(
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundImage: AssetImage((product.user.imageUrl),),
+                        backgroundImage:
+                        Image.network(user.imageUrl).image,
+                        //AssetImage((user.imageUrl),),
                       ),
                       Positioned(
                         top: 30,
@@ -63,7 +67,7 @@ class bottomAppBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        product.user.name,
+                        user.name,
                         style: TextStyle(
                           fontSize: 19.0,
                           color: Colors.black87,
@@ -77,7 +81,7 @@ class bottomAppBar extends StatelessWidget {
                             color: Colors.amber,
                           ),
                           Text(
-                            product.user.rating.toString(),
+                            (user.rating ?? 0).toString(),
                             style: TextStyle(
                               fontSize: 15.0,
                               color: Colors.black45,
@@ -106,7 +110,7 @@ class bottomAppBar extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ChatScreen(user: product.user,)),
+                  MaterialPageRoute(builder: (context) => ChatScreen(user: user,)),
                 );
               }, //callback when button is clicked
               borderSide: BorderSide(
@@ -131,6 +135,7 @@ class ServiceSinglePage extends StatefulWidget {
   Product product;
 
 
+
   ServiceSinglePage({this.product});
 
   @override
@@ -148,202 +153,233 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
 
   bool isLiked=false;
 
+
+  Future getUserInformation() async {
+    DocumentSnapshot snapshot = await Firestore.instance.collection("Users").document(widget.product.userId).get();
+    print("${widget.product.userId} my data");
+    return snapshot.data;
+  }
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
+    return
+      FutureBuilder(
+          future: getUserInformation()
+          ,builder: (_, snapshot){
+        if (snapshot.connectionState == ConnectionState.waiting || snapshot.data == null){
+          return
+            Container(
+              color: Colors.white,
+              child: Center(child:Text("Loading",style: TextStyle(color: Colors.black),),),);
+
+        }
+
+
+        var user = User.fromMap(snapshot.data);
+        //print(user.city);
+
+        return MaterialApp(
       home: Scaffold(
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
-          child: bottomAppBar(product: widget.product,),
+          child: bottomAppBar(product: widget.product,user: user,),
         ),
-        body: Container(
-          height: double.infinity,
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                  top: 350,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [color2, color3],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter)),
-                  )),
-              Positioned(
-                  top: 150,
-                  left: 0,
-                  right: 150,
-                  bottom: 80,
-                  child: Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                        color: color1,
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(50.0))),
-                  )),
-              Positioned(
+        body:
+        Container(
+        height: double.infinity,
+        child: Stack(
+          children: <Widget>[
+            Positioned(
                 top: 350,
                 left: 0,
                 right: 0,
+                bottom: 0,
                 child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: 20.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Icon(Icons.location_on, color: Colors.white),
-                          Text(
-                            '${widget.product.user.city} , Pakistan',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 20.0),
-                      Text(
-                        "${widget.product.title}".toUpperCase(),
-                        style: TextStyle(
+                  height: 200,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [color2, color3],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter)),
+                )),
+            Positioned(
+                top: 150,
+                left: 0,
+                right: 150,
+                bottom: 80,
+                child: Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                      color: color1,
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(50.0))),
+                )),
+            Positioned(
+              top: 350,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 20.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Icon(Icons.location_on, color: Colors.white),
+                        Text(
+                          '${user.city} , Pakistan',
+                          style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 25.0),
-                      ),
-
-                      SizedBox(height: 5.0),
-                      RatingBar(
-                        initialRating: widget.product.user.rating,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemSize: 20,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.amber,
+                          ),
                         ),
+                      ],
+                    ),
+
+                    SizedBox(height: 20.0),
+                    Text(
+                      "${widget.product.title}".toUpperCase(),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 25.0),
+                    ),
+
+                    SizedBox(height: 5.0),
+                    RatingBar(
+                      initialRating: user.rating ?? 0,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 20,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
                       ),
-                      SizedBox(height: 30.0),
-                      Text('Rs. 5000',style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.bold,
-                      ),),
-                      SizedBox(height: 80.0),
-                      Wrap(
+                    ),
+                    SizedBox(height: 30.0),
+                    Text('Rs. ${widget.product.price}',style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                    SizedBox(height: 80.0),
+                    Wrap(
 
-                        children: <Widget>[
+                      children: <Widget>[
 
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Service Type',style: TextStyle(color: Colors.white,fontSize: 10),),
-                              Text('${widget.product.serviceType}',style: TextStyle(color: Colors.white,fontSize: 13),)
-                            ],
-                          ),
-                          SizedBox(
-                            width: 15.0,
-                          ),
-                          Container(
-                            height: 30,
-                            width: 0.5,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 16.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Category',style: TextStyle(color: Colors.white,fontSize: 10),),
-                              Text('${widget.product.category.name}',style: TextStyle(color: Colors.white,fontSize: 13),),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 15.0,
-                          ),
-                          Container(
-                            height: 30,
-                            width: 0.5,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 16.0,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Service Type',style: TextStyle(color: Colors.white,fontSize: 10),),
+                            Text('${widget.product.serviceType}',style: TextStyle(color: Colors.white,fontSize: 13),)
+                          ],
+                        ),
+                        SizedBox(
+                          width: 15.0,
+                        ),
+                        Container(
+                          height: 30,
+                          width: 0.5,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 16.0,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Category',style: TextStyle(color: Colors.white,fontSize: 10),),
+                            Text(widget.product.categoryName,style: TextStyle(color: Colors.white,fontSize: 13),),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 15.0,
+                        ),
+                        Container(
+                          height: 30,
+                          width: 0.5,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 16.0,
+                        ),
 
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Area',style: TextStyle(color: Colors.white,fontSize: 10),),
-                              Text('${widget.product.user.area}',style: TextStyle(color: Colors.white,fontSize: 13),)
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Area',style: TextStyle(color: Colors.white,fontSize: 10),),
+                            Text('${user.area}',style: TextStyle(color: Colors.white,fontSize: 13),)
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                height: 380,
-                alignment: Alignment.topCenter,
-                decoration: BoxDecoration(boxShadow: [
-                  BoxShadow(color: Colors.black38, blurRadius: 30.0)
-                ]),
-                child: SizedBox(
+            ),
+            Container(
+              height: 380,
+              alignment: Alignment.topCenter,
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(color: Colors.black38, blurRadius: 30.0)
+              ]),
+              child: SizedBox(
 
-                  height: 350,
-                  child: Image.asset((widget.product.mainImage), fit: BoxFit.cover),
+                height: 350,
+                child:
+                Image.network(widget.product.mainImage,fit:BoxFit.cover),
+                //Image.asset((widget.product.mainImage), fit: BoxFit.cover),
+              ),
+            ),
+            Positioned(
+              top: 325,
+              left: 20,
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 25,
+                child: IconButton(
+                    color: icon,
+                    onPressed: (){
+                      setState(() {
+                        isLiked=!isLiked;
+                      });
+                    },
+                    icon: isLiked ? Icon(FontAwesomeIcons.solidHeart,): Icon(FontAwesomeIcons.heart,)
                 ),
               ),
-              Positioned(
-                top: 325,
-                left: 20,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 25,
-                  child: IconButton(
-                      color: icon,
-                      onPressed: (){
-                        setState(() {
-                          isLiked=!isLiked;
-                        });
-                      },
-                      icon: isLiked ? Icon(FontAwesomeIcons.solidHeart,): Icon(FontAwesomeIcons.heart,)
-                  ),
-                ),
+            ),
+            Positioned(
+              top: 325,
+              right: 20,
+              child: RaisedButton(
+                child: Text("Read More".toUpperCase()),
+                color: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ServiceDetailsPage(product: widget.product,)),
+                  );
+                },
               ),
-              Positioned(
-                top: 325,
-                right: 20,
-                child: RaisedButton(
-                  child: Text("Read More".toUpperCase()),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ServiceDetailsPage(product: widget.product,)),
-                    );
-                  },
-                ),
-              ),
-            ],
+            ),
+          ],
 
 
-          ),
         ),
+      ),
+
+
+
+
+
 
       ),
     );
+      });
   }
 }

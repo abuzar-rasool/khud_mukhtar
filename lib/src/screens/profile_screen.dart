@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:khud_mukhtar/src/components/HomeScreenComponents/card/all_services_card.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/screens/Add_Service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:khud_mukhtar/src/screens/service_single.dart';
 
 class Profile extends StatefulWidget {
   final User user;
@@ -96,11 +98,14 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
     future: getUserData()
     ,builder: (_, snapshot){
       print(snapshot.data);
+      if (snapshot.data == null){
+        return Center(child:Text("Loading!"));
+      }
       var user = User.fromMap(snapshot.data);
       Image myDP = Image.network(user.imageUrl);
      var rating = user.rating ?? 0;
 
-      if(snapshot.connectionState == ConnectionState.waiting){
+      if(snapshot.connectionState == ConnectionState.active){
         return Center(child:Text("Loading!"));
       }
 
@@ -306,7 +311,9 @@ class _CustomListViewState extends State<CustomListView> {
       child:FutureBuilder(
       future: getItems()
       ,builder:(_, snapshot){
-
+        if (snapshot.data == null){
+          return Center(child:Text("Loading!"));
+        }
 
         if(snapshot.connectionState == ConnectionState.waiting){
           return Center(child:Text("Loading!"));
@@ -322,55 +329,21 @@ class _CustomListViewState extends State<CustomListView> {
                 //Map product = doc.data;
                 Image thumnail = Image.network(product.mainImage);
                 print("Rs "+ product.price.toString());
-                return Center(
-                  child: Card(
 
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Container(width: MediaQuery.of(context).size.width,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: thumnail.image,
-                                  ),
-                                ),),
-                            ),
-                            Container(
-
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(product.title),
-
-
-                                  Row(
-                                    children: <Widget>[
-
-                                      Text("Rs "+product.price.toString(), style: TextStyle(fontWeight: FontWeight.bold),),
-                                      Spacer(),
-                                      Icon(Icons.favorite,color: Colors.red,),
-                                      Text(product.likes.toString(),style: TextStyle(color:Color.fromRGBO(240, 98, 146, 1) ),)
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    elevation: 5.0,
-                  ),
+                return AllServicesCard(
+                  product: product,
+                  myImage: thumnail,
+                  onPress: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ServiceSinglePage(
+                            product: product,
+                          )),
+                    );
+                  },
                 );
+
               })
         );
         }
