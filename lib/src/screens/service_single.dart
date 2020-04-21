@@ -7,6 +7,7 @@ import 'package:khud_mukhtar/constants/colors.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/screens/chat_screen.dart';
 import 'package:khud_mukhtar/src/screens/profile_seller.dart';
+import 'package:khud_mukhtar/src/widgets/loading.dart';
 
 import 'service_details.dart';
 
@@ -170,7 +171,7 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
           return
             Container(
               color: Colors.white,
-              child: Center(child:Text("Loading",style: TextStyle(color: Colors.black),),),);
+              child: Center(child:LoadingView()),);
 
         }
 

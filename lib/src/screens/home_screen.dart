@@ -1,15 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/browse_categories.dart';
-import 'package:khud_mukhtar/src/components/HomeScreenComponents/card/all_services_card.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/featured_services_card.dart';
-import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/screens/profile_screen.dart';
-import 'package:khud_mukhtar/src/screens/profile_seller.dart';
 import 'package:khud_mukhtar/src/screens/search_screen.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
-import 'package:khud_mukhtar/src/screens/service_single.dart';
-import 'MainPage.dart';
+import 'package:khud_mukhtar/src/widgets/HListViewProducts.dart';
+
 import 'forums/forum.dart';
 
 final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -144,7 +140,7 @@ class _HomeScreen extends State<HomeScreen> {
                       ),
                       Container(
                         height: 200,
-                        child:  CustomListView(),
+                        child:  HListViewProducts(),
                       )
 
                     ],
@@ -293,80 +289,3 @@ Widget _buildRow(IconData icon, String title) {
 
 
 
-
-class CustomListView extends StatefulWidget{
-  //CustomListView({);
-  @override
-  _CustomListViewState createState() => _CustomListViewState();
-}
-
-class _CustomListViewState extends State<CustomListView> {
-
-  Future getItems() async{
-    var firestore = Firestore.instance;
-    QuerySnapshot userDoc =  await firestore.collection("Products").getDocuments();
-    //print(userDoc.data);
-    //print(widget.userID);
-    return userDoc.documents;
-//    if(userDoc.data.containsKey("productList")){
-//
-//      var myProductIDs = (userDoc.data["productList"]);
-//
-//      var myProducts = [];
-//      for(String id in myProductIDs){
-//        print(id);
-//
-//        DocumentSnapshot product = await firestore.collection("Products").document(id).get();
-//        myProducts.add(product);
-//      }
-//      return myProducts;
-//    }
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child:FutureBuilder(
-            future: getItems()
-            ,builder:(_, snapshot){
-          if (snapshot.data == null){
-            return Center(child:Text("Loading!"));
-          }
-
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return Center(child:Text("Loading!"));
-          }else {
-            return
-
-              GridView.count(
-        scrollDirection: Axis.horizontal,
-                  crossAxisCount: 1,
-                  children:List.generate(snapshot.data.length, (index){
-                    DocumentSnapshot doc = snapshot.data[index];
-                    var product = Product.fromMap(doc.data);
-
-                    //Map product = doc.data;
-                    Image thumnail = Image.network(product.mainImage);
-                    print("Rs "+ product.price.toString());
-
-                    return AllServicesCard(
-                      product: product,
-                      myImage: thumnail,
-                      onPress: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ServiceSinglePage(
-                                product: product,
-                              )),
-                        );
-                      },
-                    );
-
-                  })
-              );
-          }
-
-        })
-    );
-  }
-}

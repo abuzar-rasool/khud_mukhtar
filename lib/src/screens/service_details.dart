@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khud_mukhtar/constants/colors.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
+import 'package:khud_mukhtar/src/widgets/loading.dart';
 
 
 class ServiceDetailsPage extends StatelessWidget {
@@ -52,7 +53,7 @@ class _ServiceStateState extends State<ServiceState> {
             return
               Container(
                 color: Colors.white,
-                child: Center(child:Text("Loading",style: TextStyle(color: Colors.black),),),);
+                child: Center(child:LoadingView()),);
 
           }
 

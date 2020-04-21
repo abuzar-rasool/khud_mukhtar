@@ -4,6 +4,7 @@ import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/screens/Add_Service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:khud_mukhtar/src/screens/service_single.dart';
+import 'package:khud_mukhtar/src/widgets/loading.dart';
 
 class Profile extends StatefulWidget {
   final User user;
@@ -99,14 +100,14 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
     ,builder: (_, snapshot){
       print(snapshot.data);
       if (snapshot.data == null){
-        return Center(child:Text("Loading!"));
+        return LoadingView();
       }
       var user = User.fromMap(snapshot.data);
       Image myDP = Image.network(user.imageUrl);
      var rating = user.rating ?? 0;
 
       if(snapshot.connectionState == ConnectionState.active){
-        return Center(child:Text("Loading!"));
+        return LoadingView();
       }
 
       return Container(
@@ -312,11 +313,11 @@ class _CustomListViewState extends State<CustomListView> {
       future: getItems()
       ,builder:(_, snapshot){
         if (snapshot.data == null){
-          return Center(child:Text("Loading!"));
+          return LoadingView();
         }
 
         if(snapshot.connectionState == ConnectionState.waiting){
-          return Center(child:Text("Loading!"));
+          return LoadingView();
         }else {
           return
 
