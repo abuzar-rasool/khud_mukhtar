@@ -24,7 +24,9 @@ class _SignUp extends State<SignUp> {
   signUp(String email, String password,BuildContext context) async {
     AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password).catchError((error){
-      print(error.toString());
+          //print(error);
+          print(error.toString());
+
     });
     FirebaseUser user = result.user;
     User newUser = User(id: user.uid,email: user.email);
