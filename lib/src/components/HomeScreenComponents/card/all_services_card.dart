@@ -47,7 +47,8 @@ class AllServicesCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              Text('${product.title}'),
+                              Text('${product.title}', softWrap: true,
+                                maxLines: 1,),
                               Row(
                                 children: <Widget>[
                                   Text(
