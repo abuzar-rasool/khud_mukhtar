@@ -1,17 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:khud_mukhtar/src/screens/NotificationScreen/notifications.dart';
-import 'package:khud_mukhtar/src/screens/chat_screen.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:khud_mukhtar/src/screens/NotificationScreen/notifications.dart';
 import 'package:khud_mukhtar/src/screens/home_screen.dart';
 import 'package:khud_mukhtar/src/screens/home_screen_chat.dart';
-import 'package:khud_mukhtar/src/screens/profile_screen.dart';
 import 'package:khud_mukhtar/src/screens/profile_seller.dart';
 import 'package:khud_mukhtar/src/screens/search_screen.dart';
-import 'package:khud_mukhtar/src/widgets/recent_chats.dart';
 
 class MainPage extends StatefulWidget {
   static final String path = "lib/src/pages/misc/navybar.dart";
+
   @override
   _MainPage createState() => _MainPage();
 }
@@ -26,6 +24,7 @@ class _MainPage extends State<MainPage> {
   PageController pageController = PageController(initialPage: 0);
   StreamController<int> indexcontroller = StreamController<int>.broadcast();
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,15 +80,14 @@ class FancyBottomNavigation extends StatefulWidget {
   final List<FancyBottomNavigationItem> items;
   final ValueChanged<int> onItemSelected;
 
-  FancyBottomNavigation(
-      {Key key,
-      this.currentIndex = 0,
-      this.iconSize = 24,
-      this.activeColor,
-      this.inactiveColor,
-      this.backgroundColor,
-      @required this.items,
-      @required this.onItemSelected}) {
+  FancyBottomNavigation({Key key,
+    this.currentIndex = 0,
+    this.iconSize = 24,
+    this.activeColor,
+    this.inactiveColor,
+    this.backgroundColor,
+    @required this.items,
+    @required this.onItemSelected}) {
     assert(items != null);
     assert(onItemSelected != null);
   }
@@ -117,14 +115,13 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
   int _selectedIndex;
   ValueChanged<int> onItemSelected;
 
-  _FancyBottomNavigationState(
-      {@required this.items,
-      this.currentIndex,
-      this.activeColor,
-      this.inactiveColor = Colors.black,
-      this.backgroundColor,
-      this.iconSize,
-      @required this.onItemSelected}) {
+  _FancyBottomNavigationState({@required this.items,
+    this.currentIndex,
+    this.activeColor,
+    this.inactiveColor = Colors.black,
+    this.backgroundColor,
+    this.iconSize,
+    @required this.onItemSelected}) {
     _selectedIndex = currentIndex;
   }
 
@@ -137,9 +134,9 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
       decoration: !isSelected
           ? null
           : BoxDecoration(
-              color: activeColor,
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-            ),
+        color: activeColor,
+        borderRadius: BorderRadius.all(Radius.circular(50)),
+      ),
       child: ListView(
         shrinkWrap: true,
         padding: EdgeInsets.all(0),
@@ -161,9 +158,9 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
               ),
               isSelected
                   ? DefaultTextStyle.merge(
-                      style: TextStyle(color: backgroundColor),
-                      child: item.title,
-                    )
+                style: TextStyle(color: backgroundColor),
+                child: item.title,
+              )
                   : SizedBox.shrink()
             ],
           )
@@ -175,7 +172,9 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation> {
   @override
   Widget build(BuildContext context) {
     activeColor =
-        (activeColor == null) ? Theme.of(context).accentColor : activeColor;
+    (activeColor == null) ? Theme
+        .of(context)
+        .accentColor : activeColor;
 
     backgroundColor = (backgroundColor == null)
         ? Theme.of(context).bottomAppBarColor

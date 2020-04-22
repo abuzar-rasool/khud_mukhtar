@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/models/message_model.dart';
-import 'package:khud_mukhtar/src/screens/chat_screen.dart';
+import 'package:khud_mukhtar/src/screens/chat_screen_old.dart';
 
 class FavoriteContacts extends StatelessWidget {
   @override
@@ -45,7 +45,8 @@ class FavoriteContacts extends StatelessWidget {
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => ChatScreen(
+                      builder: (_) =>
+                          ChatScreenOld(
                         user: favorites[index],
                       ),
                     ),

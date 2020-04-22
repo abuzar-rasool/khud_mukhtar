@@ -8,10 +8,8 @@ import 'package:khud_mukhtar/src/screens/verification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'MainPage.dart';
-import 'home_screen.dart';
 import 'login_screen.dart';
 import 'onboarding_1.dart';
-import 'package:khud_mukhtar/src/authenticiation.dart';
 
 
 class SplashScreenOne extends StatefulWidget {

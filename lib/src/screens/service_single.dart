@@ -5,7 +5,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khud_mukhtar/constants/colors.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
-import 'package:khud_mukhtar/src/screens/chat_screen.dart';
+import 'package:khud_mukhtar/src/screens/chat_screen_old.dart';
 import 'package:khud_mukhtar/src/screens/profile_seller.dart';
 import 'package:khud_mukhtar/src/widgets/loading.dart';
 
@@ -111,7 +111,8 @@ class bottomAppBar extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ChatScreen(user: user,)),
+                  MaterialPageRoute(
+                      builder: (context) => ChatScreenOld(user: user,)),
                 );
               }, //callback when button is clicked
               borderSide: BorderSide(
