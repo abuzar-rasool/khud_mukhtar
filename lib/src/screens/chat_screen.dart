@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:khud_mukhtar/src/components/chatscreencomponents/full_screen.dart';
@@ -607,7 +608,7 @@ class ChatScreenState extends State<ChatScreen> {
             child: new Container(
               margin: new EdgeInsets.symmetric(horizontal: 1.0),
               child: new IconButton(
-                icon: new Icon(Icons.image),
+                icon: new Icon(FontAwesomeIcons.camera),
                 onPressed: getImage,
                 color: primaryColor,
               ),
@@ -618,7 +619,7 @@ class ChatScreenState extends State<ChatScreen> {
             child: new Container(
               margin: new EdgeInsets.symmetric(horizontal: 1.0),
               child: new IconButton(
-                icon: new Icon(Icons.face),
+                icon: new Icon(FontAwesomeIcons.laugh),
                 onPressed: getSticker,
                 color: primaryColor,
               ),
