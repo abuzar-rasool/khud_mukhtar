@@ -219,12 +219,12 @@ class GetLastMessage extends StatelessWidget {
     );
   }
 }
+
 class GetLastMessageTime extends StatelessWidget {
   GetLastMessageTime({this.id,this.peerId});
   String id;
   String peerId;
   Future<String> lastMessageTime() async {
-    print('getting last message time');
     String groupChatId;
     if (id.hashCode <= peerId.hashCode) {
       groupChatId = '$id-$peerId';
@@ -239,9 +239,8 @@ class GetLastMessageTime extends StatelessWidget {
         .orderBy('timestamp', descending: true)
         .limit(1).getDocuments();
     lastMessageTime=lastMessageDocumentQuery.documents[0]['timestamp'];
-    DateTime lastMessageTimeStamp = DateTime.parse(lastMessageTime).toLocal();
-    print(lastMessageTime);
-    return 'ya';
+    DateTime lastMessageTimeStamp = DateTime.fromMillisecondsSinceEpoch(int.parse(lastMessageTime));
+    return DateFormat.jm().format(lastMessageTimeStamp);
   }
   @override
   Widget build(BuildContext context) {
@@ -258,7 +257,7 @@ class GetLastMessageTime extends StatelessWidget {
             ),
           );
         }
-        return Text('');
+        return Text('10:08');
       },
     );
   }
