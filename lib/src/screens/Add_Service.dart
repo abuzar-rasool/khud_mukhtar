@@ -512,6 +512,7 @@ class _AddService extends State<AddService> {
                                 online: online,
                                 homeBased: homeBased,
                                 likes: 0,
+                                Featured : false,
                               );
 
                               CollectionReference productCollection =
