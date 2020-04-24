@@ -4,6 +4,7 @@ import 'package:khud_mukhtar/src/components/HomeScreenComponents/featured_servic
 import 'package:khud_mukhtar/src/screens/profile_screen.dart';
 import 'package:khud_mukhtar/src/screens/search_screen.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
+import 'package:khud_mukhtar/src/widgets/FeaturedHList.dart';
 import 'package:khud_mukhtar/src/widgets/HListViewProducts.dart';
 
 import 'forums/forum.dart';
@@ -121,7 +122,7 @@ class _HomeScreen extends State<HomeScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: FeaturedServices(),
+                child: FeaturedHList(),
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),

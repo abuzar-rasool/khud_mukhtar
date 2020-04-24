@@ -166,6 +166,7 @@ class Product {
    bool online;
    String userId;
    String categoryName;
+   bool Featured;
 
    Product.fromMap(Map map){
      this.serviceType = map['serviceType'];
@@ -209,7 +210,7 @@ this.serviceType = (this.homeBased ? "Home based" : "Online");
         this.homeBased,
         this.online,
         this.userId,
-        this.categoryName});
+        this.categoryName,this.Featured});
 
   Map<String, dynamic> toMap() {
     return {
