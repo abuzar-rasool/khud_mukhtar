@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:intl/intl.dart';
 import 'package:khud_mukhtar/src/screens/chat_screen.dart';
 
 class RecentChats extends StatelessWidget {
   FirebaseUser currentUser;
-
   RecentChats({this.currentUser});
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -26,7 +27,7 @@ class RecentChats extends StatelessWidget {
             topRight: Radius.circular(30.0),
           ),
           child: StreamBuilder(
-            stream: Firestore.instance.collection('Users').snapshots(),
+            stream: Firestore.instance.collection('Users').where('chattingWith',arrayContains: currentUser.uid).snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return Center(
@@ -131,15 +132,7 @@ class RecentChats extends StatelessWidget {
                                             .size
                                             .width *
                                             0.45,
-                                        child: Text(
-                                          'Last message to be added here',
-                                          style: TextStyle(
-                                            color: Colors.blueGrey,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                        child: GetLastMessage(id: currentUser.uid,peerId: document.documentID,),
                                       ),
                                     ],
                                   ),
@@ -147,14 +140,7 @@ class RecentChats extends StatelessWidget {
                               ),
                               Column(
                                 children: <Widget>[
-                                  Text(
-                                    '5:03pm',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  GetLastMessageTime(id: currentUser.uid,peerId: document.documentID,),
                                   SizedBox(height: 5.0),
 //                                chat.unread
 //                                    ? Container(
@@ -192,3 +178,89 @@ class RecentChats extends StatelessWidget {
     );
   }
 }
+class GetLastMessage extends StatelessWidget {
+  GetLastMessage({this.id,this.peerId});
+  String id;
+  String peerId;
+
+  Future<String> lastMessage() async {
+    String groupChatId;
+    if (id.hashCode <= peerId.hashCode) {
+      groupChatId = '$id-$peerId';
+    } else {
+      groupChatId = '$peerId-$id';
+    }
+    String lastMessage;
+    var lastMessageDocumentQuery = await  Firestore.instance
+        .collection('messages')
+        .document(groupChatId)
+        .collection(groupChatId)
+        .orderBy('timestamp', descending: true)
+        .limit(1).getDocuments();
+    lastMessage=lastMessageDocumentQuery.documents[0]['content'];
+    return lastMessage;
+    }
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future:lastMessage() ,
+      builder: (context,snapshot){
+        if(snapshot.hasData){
+          return Text(
+              '${snapshot.data}',
+              style: TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 15.0,
+              fontWeight: FontWeight.w600,
+          ),);
+        }
+        return Text('');
+      },
+    );
+  }
+}
+class GetLastMessageTime extends StatelessWidget {
+  GetLastMessageTime({this.id,this.peerId});
+  String id;
+  String peerId;
+  Future<String> lastMessageTime() async {
+    print('getting last message time');
+    String groupChatId;
+    if (id.hashCode <= peerId.hashCode) {
+      groupChatId = '$id-$peerId';
+    } else {
+      groupChatId = '$peerId-$id';
+    }
+    String lastMessageTime;
+    var lastMessageDocumentQuery = await  Firestore.instance
+        .collection('messages')
+        .document(groupChatId)
+        .collection(groupChatId)
+        .orderBy('timestamp', descending: true)
+        .limit(1).getDocuments();
+    lastMessageTime=lastMessageDocumentQuery.documents[0]['timestamp'];
+    DateTime lastMessageTimeStamp = DateTime.parse(lastMessageTime).toLocal();
+    print(lastMessageTime);
+    return 'ya';
+  }
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future:lastMessageTime() ,
+      builder: (context,snapshot){
+        if(snapshot.hasData){
+          return Text(
+            snapshot.data.toString(),
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 15.0,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        }
+        return Text('');
+      },
+    );
+  }
+}
+
