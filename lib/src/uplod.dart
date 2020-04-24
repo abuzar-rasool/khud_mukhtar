@@ -10,7 +10,12 @@ class FileUpload{
   FileUpload({this.fileType, this.id, this.file});
 
   Future<String> uploadFile() async {
-    String filename=file.path.split('/').last;
+    String filename;
+    if(file==null){
+        return 'https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/default-profile.jpg?alt=media&token=9bc356c5-ee13-4fd8-a659-d9164e1675cf';
+    }else{
+      filename = file.path.split('/').last;
+    }
     StorageReference storageReference;
     if (fileType == 'profileimage') {
       storageReference =

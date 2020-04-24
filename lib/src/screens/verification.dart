@@ -97,7 +97,17 @@ class _Verificaton extends State<Verification> {
     setState(() {
       image_cnic = picturex;
     });
-    verify = await cnicnVerify(picturex);
+    try{
+      verify = await cnicnVerify(picturex);
+
+    }catch(e){
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
+    }
+
     if (verify) {
       setState(() {
         verify = true;
@@ -517,8 +527,9 @@ class _Verificaton extends State<Verification> {
               fileType: 'cnicimage',
               file: image_cnic,
               id: widget.currentUser.uid);
+          print(image);
           imagePath = await uploadProfile.uploadFile();
-          image_cnic_path = await uploadCnic.uploadFile();
+           image_cnic_path = await uploadCnic.uploadFile();
           databaseReference
               .collection("Users")
               .document(widget.currentUser.uid)
