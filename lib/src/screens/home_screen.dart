@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/browse_categories.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/featured_services_card.dart';
@@ -8,6 +9,7 @@ import 'package:khud_mukhtar/src/widgets/FeaturedHList.dart';
 import 'package:khud_mukhtar/src/widgets/HListViewProducts.dart';
 
 import 'forums/forum.dart';
+import 'login_screen.dart';
 
 final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
@@ -203,7 +205,13 @@ final Color active = Colors.pink[300];
                       Icons.power_settings_new,
                       color: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      print('Logging user out');
+                      FirebaseAuth.instance.signOut();
+                      Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (context) => Login()));
+
+                    },
                   ),
                 ),
                 Container(
