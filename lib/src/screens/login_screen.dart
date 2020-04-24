@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/screens/signup_screen.dart';
 import 'package:khud_mukhtar/src/screens/verification.dart';
-
+import 'package:khud_mukhtar/src/components/loader.dart';
 import 'MainPage.dart';
 
 class Login extends StatefulWidget {
@@ -13,24 +13,41 @@ class Login extends StatefulWidget {
   _Login createState() => _Login();
 }
 
+
 class _Login extends State<Login> {
   String password;
   String email;
+  final formkey = new GlobalKey<FormState>();
+  String error;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final db = Firestore.instance;
   FirebaseUser user;
+  bool load = false;
+
+  bool validate()
+  {
+    final form = formkey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     AssetImage logo = AssetImage('assets/logo.png');
     // TODO: implement build
-    return Scaffold(
+    return load ? Loading() : Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
+              child: Form(
+                key: formkey,
               child: Column(
                 children: <Widget>[
+                  showAlert(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image(image: logo),
@@ -54,19 +71,21 @@ class _Login extends State<Login> {
                           primaryColor:
                           Color.fromRGBO(240, 98, 146, 1), //Pink dark shade
                           hintColor: Color.fromRGBO(240, 98, 146, 1)),
-                      child: TextField(
+                      child: TextFormField(
                         onChanged: (value) {
                           email = value;
                         },
                         decoration: new InputDecoration(
                           prefixIcon: Icon(
                             Icons.mail_outline,
-                            color: Colors.pink,
+                            color: Color.fromRGBO(240, 98, 146, 1),
                           ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50.0)),
                           hintText: "Email",
+                          errorStyle: TextStyle(color: Colors.pink),
                         ),
+                        validator: (value) => value.isEmpty ? "Please enter an email address" : null,
                       ),
                     ),
                   ),
@@ -77,7 +96,7 @@ class _Login extends State<Login> {
                         data: new ThemeData(
                             primaryColor: Color.fromRGBO(240, 98, 146, 1),
                             hintColor: Color.fromRGBO(240, 98, 146, 1)),
-                        child: TextField(
+                        child: TextFormField(
                           onChanged: (value) {
                             password = value;
                           },
@@ -89,7 +108,10 @@ class _Login extends State<Login> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50.0)),
                             hintText: "Password",
+                              errorStyle: TextStyle(color: Colors.pink),
                           ),
+                          obscureText: true,
+                          validator: (value) => value.isEmpty ? "Please enter a password" : null,
                         ),
                       )),
                   Padding(
@@ -114,14 +136,21 @@ class _Login extends State<Login> {
                             child: Container(
                               height: 50.0,
                               child: RaisedButton(
-                                onPressed: () async {
+                                onPressed: () async { if (validate()) {
+                                  setState(() {
+                                    load = true;
+                                  });
+                                  print("LOAD IS TRUE");
                                   //implementing navigation functionality if the user is logged in the check its verification status.
-
                                   AuthResult result = await _firebaseAuth
                                       .signInWithEmailAndPassword(
                                       email: email, password: password)
                                       .catchError((e) {
-                                    print(e.toString());
+                                        setState(() {
+                                          error = e.message;
+                                          load = false;
+                                        });
+
                                   });
                                   user = result.user;
                                   if (user != null) {
@@ -153,7 +182,7 @@ class _Login extends State<Login> {
                                       }
                                     });
                                   }
-                                },
+                                }},
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(80.0)),
                                 padding: EdgeInsets.all(0.0),
@@ -196,7 +225,56 @@ class _Login extends State<Login> {
                 ],
               ),
             ),
-          )),
+            ),
+          ),
+      ),
+    );
+  }
+  Widget showAlert() {
+    if (error != null) {
+      return Container(
+        color: Color.fromRGBO(240, 98, 146, 1),
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline, color: Colors.white),
+            ),
+            Expanded(
+              child: Text(
+                error,
+                style: TextStyle(
+                  color: Colors.white
+                ),
+
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.close,
+                  color: Colors.white,),
+                onPressed: () {
+                  setState(() {
+                    error = null;
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 0,
     );
   }
 }
+
+
+
+
+
+
