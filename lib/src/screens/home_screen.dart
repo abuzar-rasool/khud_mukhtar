@@ -1,10 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/browse_categories.dart';
-import 'package:khud_mukhtar/src/components/HomeScreenComponents/featured_services_card.dart';
+import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
 import 'package:khud_mukhtar/src/screens/profile_screen.dart';
 import 'package:khud_mukhtar/src/screens/search_screen.dart';
-import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
 import 'package:khud_mukhtar/src/widgets/FeaturedHList.dart';
 import 'package:khud_mukhtar/src/widgets/HListViewProducts.dart';
 
@@ -23,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> {
   double preferredSize = 64;
   static int none = 2;
+
   Future navigateToSubPage(context) async {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => SearchScreen()));
@@ -41,18 +42,18 @@ class _HomeScreen extends State<HomeScreen> {
         backgroundColor: Colors.pink[300],
         leading: widget.searchEnabled
             ? Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              )
+          Icons.arrow_back,
+          color: Colors.white,
+        )
             : IconButton(
-                onPressed: () {
-                  _key.currentState.openDrawer();
-                },
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                ),
-              ),
+          onPressed: () {
+            _key.currentState.openDrawer();
+          },
+          icon: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+        ),
         actions: <Widget>[
           Row(
             children: <Widget>[
@@ -78,7 +79,7 @@ class _HomeScreen extends State<HomeScreen> {
           preferredSize: Size.fromHeight(preferredSize),
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 0, bottom: 25, right: 16, left: 16),
+            const EdgeInsets.only(top: 0, bottom: 25, right: 16, left: 16),
             child: Container(
               alignment: Alignment.center,
               height: preferredSize,
@@ -104,7 +105,7 @@ class _HomeScreen extends State<HomeScreen> {
                         ),
                         hintText: "What are you looking for",
                         hintStyle:
-                            TextStyle(color: Colors.grey, fontSize: 12.0),
+                        TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
                     ),
                   ),
@@ -183,7 +184,7 @@ final Color primary = Colors.pink[300];
 final Color active = Colors.pink[300];
 
 
- _buildDrawer(BuildContext context) {
+_buildDrawer(BuildContext context) {
   AssetImage image = new AssetImage('assets/fatima.jpeg');
   return ClipPath(
     clipper: OvalRightBorderClipper(),
@@ -210,33 +211,10 @@ final Color active = Colors.pink[300];
                       FirebaseAuth.instance.signOut();
                       Navigator.pushReplacement(
                           context, MaterialPageRoute(builder: (context) => Login()));
-
                     },
                   ),
                 ),
-                Container(
-                  height: 90,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(colors: [
-                        Color.fromRGBO(240, 98, 146, 1),
-                        Colors.white
-                      ])),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundImage: image,
-                  ),
-                ),
-                SizedBox(height: 5.0),
-                Text(
-                  "Fatima Moin",
-                  style: TextStyle(color: Colors.white, fontSize: 18.0),
-                ),
-                Text(
-                  "@fatimamoin",
-                  style: TextStyle(color: Colors.white, fontSize: 16.0),
-                ),
+                ProfileSnippet(),
                 SizedBox(height: 30.0),
 
                 InkWell(
@@ -293,6 +271,89 @@ Widget _buildRow(IconData icon, String title) {
     ]),
   );
 }
+
+
+class ProfileSnippet extends StatelessWidget {
+  String imageUrl;
+  String userName;
+
+
+  Future<bool> userMeta() async {
+    FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
+    DocumentReference userDocument = Firestore.instance.collection('Users')
+        .document(currentUser.uid);
+    Firestore db = Firestore.instance;
+    DocumentSnapshot documentSnapshot = await db.collection("Users").document(
+        currentUser.uid).get();
+    if (documentSnapshot != null) {
+      imageUrl = documentSnapshot.data['imageUrl'];
+      userName = documentSnapshot.data['name'];
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: userMeta(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data) {
+          return Column(
+            children: <Widget>[
+              Container(
+                height: 90,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(colors: [
+                      Color.fromRGBO(240, 98, 146, 1),
+                      Colors.white
+                    ])),
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: NetworkImage(imageUrl),
+                ),
+              ),
+              SizedBox(height: 5.0),
+              Text(
+                "$userName",
+                style: TextStyle(color: Colors.white, fontSize: 18.0),
+              ),
+            ],
+          );
+        }
+        else {
+          return Column(
+            children: <Widget>[
+              Container(
+                height: 90,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(colors: [
+                      Color.fromRGBO(240, 98, 146, 1),
+                      Colors.white
+                    ])),
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.white,
+                ),
+              ),
+              SizedBox(height: 5.0),
+              Text(
+                "",
+                style: TextStyle(color: Colors.white, fontSize: 18.0),
+              ),
+
+            ],
+          );
+        }
+      },
+    );
+  }
+}
+
 
 
 
