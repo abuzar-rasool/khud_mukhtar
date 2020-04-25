@@ -6,7 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khud_mukhtar/constants/colors.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
-import 'package:khud_mukhtar/src/screens/profile_seller.dart';
+import 'package:khud_mukhtar/src/screens/profile_screen.dart';
 import 'package:khud_mukhtar/src/widgets/loading.dart';
 
 import 'chat_screen.dart';
@@ -15,8 +15,9 @@ import 'service_details.dart';
 class bottomAppBar extends StatelessWidget {
   final Product product;
   final User user;
+  final currentLoggedInuser;
 
-  const bottomAppBar({this.product, this.user});
+  const bottomAppBar({this.product, this.user, this.currentLoggedInuser});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +33,11 @@ class bottomAppBar extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileSeller()),
+                  MaterialPageRoute(builder: (context) =>
+                      Profile(
+                        userID: user.id,
+                        currentUserId: currentLoggedInuser.uid,
+                      )),
                 );
               },
               child: Row(
@@ -164,7 +169,9 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
 
   bool isLiked = false;
 
+  FirebaseUser currentLoggedInUser;
   Future getUserInformation() async {
+    currentLoggedInUser = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot snapshot = await Firestore.instance
         .collection("Users")
         .document(widget.product.userId)
@@ -195,6 +202,7 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
               child: bottomAppBar(
                 product: widget.product,
                 user: user,
+                currentLoggedInuser: currentLoggedInUser,
               ),
             ),
             body: Container(

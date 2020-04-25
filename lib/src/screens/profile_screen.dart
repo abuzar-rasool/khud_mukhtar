@@ -1,33 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/card/all_services_card.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/screens/Add_Service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:khud_mukhtar/src/screens/service_single.dart';
 import 'package:khud_mukhtar/src/widgets/loading.dart';
 
 class Profile extends StatefulWidget {
-  final User user;
+  var currentUserId;
   var userID;
-  Profile({this.user,this.userID});
+
+  Profile({this.userID, this.currentUserId});
 
   @override
   _Profile createState() => _Profile();
 }
 
 class _Profile extends State<Profile> {
-  //AssetImage profileimage = AssetImage('assets/fatima.jpeg');
-//var userID  = "xkfGHSZxFTWbg8IOLcQz2SaOWcC3";
 
   @override
   Widget build(BuildContext context) {
-    var userID  = widget.user?.id;
-
+    var userID = widget.userID;
+    var currentUserId = widget.currentUserId;
     // TODO: implement build
     return Scaffold(
-      appBar: MyCustomAppBar(userID: userID,),
-      floatingActionButton: FloatingActionButton(
+      appBar: MyCustomAppBar(userID: userID, currentUserId: currentUserId,),
+      floatingActionButton: userID == currentUserId ? FloatingActionButton(
         child: Icon(
           Icons.add,
           color: Colors.white,
@@ -37,7 +36,7 @@ class _Profile extends State<Profile> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => AddService()));
         },
-      ),
+      ) : null,
       body: SafeArea(
 
           child: SingleChildScrollView(
@@ -73,20 +72,19 @@ class _Profile extends State<Profile> {
 
 class MyCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String userID;
-  MyCustomAppBar({this.userID});
+  final String currentUserId;
 
-
+  MyCustomAppBar({this.userID, this.currentUserId});
 
   @override
   // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(250);
+
   @override
   _MyCustomAppBarState createState() => _MyCustomAppBarState();
 }
 
 class _MyCustomAppBarState extends State<MyCustomAppBar> {
-  //var userID = "";
-
   Future getID() async{
     print("Getting uid");
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -94,31 +92,26 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
   }
 
   Future getUserData() async{
-
-
-
     var userID = widget.userID ?? await getID();
     Firestore db = Firestore.instance;
     DocumentSnapshot documentSnapshot = await db.collection("Users").document(userID).get();
     //print("HELLO");
     print(documentSnapshot.data);
-
     return documentSnapshot.data;
-
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-    future: getUserData()
-    ,builder: (_, snapshot){
+        future: getUserData()
+        ,builder: (_, snapshot){
       print(snapshot.data);
       if (snapshot.data == null){
         return LoadingView();
       }
       var user = User.fromMap(snapshot.data);
       Image myDP = Image.network(user.imageUrl);
-     var rating = user.rating ?? 0;
+      var rating = user.rating ?? 0;
 
       if(snapshot.connectionState == ConnectionState.active){
         return LoadingView();
@@ -247,7 +240,8 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                       )),
                                 ],
                               ),
-                              widget.userID == null ?
+                              widget.userID == widget.currentUserId
+                                  ?
                               OutlineButton(
                                   borderSide:
                                   BorderSide(color: Colors.white),
@@ -261,7 +255,21 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                   color: Colors.white,
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
-                                      new BorderRadius.circular(30.0))) : Center(),
+                                      new BorderRadius.circular(30.0)))
+                                  : OutlineButton(
+                                  borderSide:
+                                  BorderSide(color: Colors.white),
+                                  child: Text(
+                                    'FOLLOW',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                  color: Colors.white,
+                                  shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                      new BorderRadius.circular(30.0))),
                             ],
                           ),
                         ),
@@ -285,8 +293,6 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
           overflow: Overflow.visible,
         ),),);
     });
-
-
   }
 }
 
@@ -295,7 +301,9 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
 
 class CustomListView extends StatefulWidget {
   final String userID;
+
   CustomListView({this.userID});
+
   @override
   _CustomListViewState createState() => _CustomListViewState();
 }
@@ -312,69 +320,66 @@ class _CustomListViewState extends State<CustomListView> {
 
   Future getItems() async{
     var userID = widget.userID ?? await getID();
-
     var firestore = Firestore.instance;
     DocumentSnapshot userDoc =  await firestore.collection("Users").document(userID).get();
     //print(userDoc.data);
     //print(widget.userID);
     if(userDoc.data.containsKey("productList")){
-
       var myProductIDs = (userDoc.data["productList"]);
 
-     var myProducts = [];
-     for(String id in myProductIDs){
-       print(id);
+      var myProducts = [];
+      for(String id in myProductIDs){
+        print(id);
 
-       DocumentSnapshot product = await firestore.collection("Products").document(id).get();
-       myProducts.add(product);
-     }
-     return myProducts;
+        DocumentSnapshot product = await firestore.collection("Products").document(id).get();
+        myProducts.add(product);
+      }
+      return myProducts;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child:FutureBuilder(
-      future: getItems()
-      ,builder:(_, snapshot){
-        if (snapshot.data == null){
-          return LoadingView();
-        }
+        child:FutureBuilder(
+            future: getItems()
+            ,builder:(_, snapshot){
+          if (snapshot.data == null){
+            return LoadingView();
+          }
 
-        if(snapshot.connectionState == ConnectionState.waiting){
-          return LoadingView();
-        }else {
-          return
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return LoadingView();
+          }else {
+            return
 
-            GridView.count(
-              crossAxisCount: 2,
-              children:List.generate(snapshot.data.length, (index){
-                DocumentSnapshot doc = snapshot.data[index];
-                var product = Product.fromMap(doc.data);
+              GridView.count(
+                  crossAxisCount: 2,
+                  children:List.generate(snapshot.data.length, (index){
+                    DocumentSnapshot doc = snapshot.data[index];
+                    var product = Product.fromMap(doc.data);
 
-                //Map product = doc.data;
-                Image thumnail = Image.network(product.mainImage);
-                print("Rs "+ product.price.toString());
+                    //Map product = doc.data;
+                    Image thumnail = Image.network(product.mainImage);
+                    print("Rs "+ product.price.toString());
 
-                return AllServicesCard(
-                  product: product,
-                  myImage: thumnail,
-                  onPress: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ServiceSinglePage(
-                            product: product,
-                          )),
+                    return AllServicesCard(
+                      product: product,
+                      myImage: thumnail,
+                      onPress: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ServiceSinglePage(
+                                product: product,
+                              )),
+                        );
+                      },
                     );
-                  },
-                );
-
-              })
-        );
-        }
-
-      })
+                  })
+              );
+          }
+        })
     );
   }
 }
