@@ -117,7 +117,10 @@ class ChatScreenState extends State<ChatScreen> {
     }
 
     Firestore.instance.collection('Users').document(id).updateData(
-        {'chattingWith': peerId});
+        {'chattingWith': FieldValue.arrayUnion([peerId])});
+    Firestore.instance.collection('Users').document(peerId).updateData(
+        {'chattingWith': FieldValue.arrayUnion([id])});
+
 
     setState(() {});
   }
@@ -700,8 +703,8 @@ class ChatScreenState extends State<ChatScreen> {
   }
 }
 
-//GIFS used from https://www.animatedimages.org/
+//GIF used from https://www.animatedimages.org/
 //http://clipart-library.com/animated-pictures-of-women.html
 //https://www.clipart.email/download/2978062.html
 //https://www.animatedimages.org/cat-women-105.htm
-//TUTORIAL CHAT https://medium.com/flutter-community/building-a-chat-app-with-flutter-and-firebase-from-scratch-9eaa7f41782e
+//CHAT TUTORIAL FOLLOWED https://medium.com/flutter-community/building-a-chat-app-with-flutter-and-firebase-from-scratch-9eaa7f41782e

@@ -1,6 +1,11 @@
 
+import 'dart:js';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
+import 'package:khud_mukhtar/src/screens/login_screen.dart';
 
 
 class DarkDrawerPage extends StatelessWidget {
@@ -24,7 +29,7 @@ class DarkDrawerPage extends StatelessWidget {
           },
         ),
       ),
-      drawer: _buildDrawer(),
+      drawer: _buildDrawer(context),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -58,7 +63,7 @@ class DarkDrawerPage extends StatelessWidget {
     );
   }
 
-  _buildDrawer() {
+  _buildDrawer(BuildContext context) {
     AssetImage image = new AssetImage('assets/momina.jpg');
     return ClipPath(
       clipper: OvalRightBorderClipper(),
@@ -79,7 +84,13 @@ class DarkDrawerPage extends StatelessWidget {
                         Icons.power_settings_new,
                         color: active,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        print('Logging user out');
+                        FirebaseAuth.instance.signOut();
+                        Navigator.pushReplacement(
+                            context, MaterialPageRoute(builder: (context) => Login()));
+
+                      },
                     ),
                   ),
                   Container(

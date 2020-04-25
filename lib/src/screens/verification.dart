@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
@@ -9,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:khud_mukhtar/src/screens/login_screen.dart';
+import 'package:khud_mukhtar/src/components/loader.dart';
 
 import '../uplod.dart';
 
@@ -24,6 +24,15 @@ List<String> _category = <String>[
   'Quetta'
 ];
 
+class Validator{
+  static bool validate(String pass, String confirm_pass){
+    if (pass == confirm_pass)
+      {
+        return true;
+      }
+    return false;
+  }
+}
 class Verification extends StatefulWidget {
   FirebaseUser currentUser;
 
@@ -36,6 +45,7 @@ class Verification extends StatefulWidget {
 class _Verificaton extends State<Verification> {
   File image;
   File image_cnic;
+  bool load = false;
   String imagePath;
   String image_cnic_path;
   final int _totalPages = 3;
@@ -44,7 +54,6 @@ class _Verificaton extends State<Verification> {
   bool val = false;
   bool verify = false;
   final databaseReference = Firestore.instance;
-
 
   String id;
   String name;
@@ -56,7 +65,7 @@ class _Verificaton extends State<Verification> {
   int followers = 0;
   int following = 0;
   String area;
-
+  final formkey = new GlobalKey<FormState>();
 
   Widget _buildPageIndicator(bool isCurrentPage) {
     return AnimatedContainer(
@@ -81,7 +90,6 @@ class _Verificaton extends State<Verification> {
       image = picture;
     });
   }
-
   Future _getCNIC() async {
     File picturex = await ImagePicker.pickImage(
         source: ImageSource.gallery, maxWidth: 300.0, maxHeight: 500.0);
@@ -89,7 +97,17 @@ class _Verificaton extends State<Verification> {
     setState(() {
       image_cnic = picturex;
     });
-    verify = await cnicnVerify(picturex);
+    try{
+      verify = await cnicnVerify(picturex);
+
+    }catch(e){
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
+    }
+
     if (verify) {
       setState(() {
         verify = true;
@@ -102,8 +120,6 @@ class _Verificaton extends State<Verification> {
           textColor: Colors.white);
     }
   }
-
-
   Future<bool> cnicnVerify(File picture) async {
     final image = FirebaseVisionImage.fromFile(picture);
     final dedector = FirebaseVision.instance.textRecognizer();
@@ -121,14 +137,30 @@ class _Verificaton extends State<Verification> {
     }
     return false;
   }
+  bool termsChecked = true;
+  bool verifyChecked = true;
+  bool validate()
+  {
+    final form = formkey.currentState;
+    if (form.validate()) {
+      if (termsChecked) {
+      // The checkbox wasn't checked
+      form.save();
+
+      return true; }
+    }
+
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return load ? Loading() : Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Container(
           child: PageView(
+            physics: NeverScrollableScrollPhysics(),
             controller: _pageController,
             onPageChanged: (int page) {
               _currentPage = page;
@@ -137,237 +169,151 @@ class _Verificaton extends State<Verification> {
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
-                child: Column(
+                child: Form(
+                  key: formkey,
+                  child: Column(
                   children: <Widget>[
                     SizedBox(height: 60),
+                    showAlert(),
+                    SizedBox(height: 10),
                     Column(
                       children: <Widget>[
-                        Container(
-                          padding:
-                          EdgeInsets.only(left: 20, right: 20, bottom: 12),
-                          child: Column(
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Hey, what is your full name?',
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(240, 98, 146, 1)),
-                                ),
-                              ),
-                              SizedBox(height: 12),
-                              SizedBox(
-                                  height: 50,
-                                  child: TextField(
-                                    onChanged: (value) {
-                                      name = value;
-                                    },
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(20.0),
-                                        borderSide: new BorderSide(
-                                          color:
-                                          Color.fromRGBO(240, 96, 146, 1),
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: new BorderSide(
-                                              color: Color.fromRGBO(
-                                                  240, 96, 146, 1))),
-                                      prefixIcon: Icon(
-                                        Icons.person,
-                                        color: Color.fromRGBO(240, 98, 146, 1),
-                                      ),
-                                      hintText: "eg. Fatima Moin",
-                                      hintStyle: TextStyle(
-                                          color: Colors.grey, fontSize: 15.0),
-                                      labelStyle: TextStyle(color: Colors.grey),
-                                    ),
-                                  )),
-                            ],
-                          ),
-                        ), //Name
-                        Container(
-                          padding:
-                          EdgeInsets.only(left: 20, right: 20, bottom: 12),
-                          child: Column(
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'And your mobile number?',
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(240, 98, 146, 1)),
-                                ),
-                              ),
-                              SizedBox(height: 12),
-                              SizedBox(
-                                  height: 50,
-                                  child: TextField(
-                                    onChanged: (value) {
-                                      contactNumber = value;
-                                    },
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(20.0),
-                                        borderSide: new BorderSide(
-                                            color: Color.fromRGBO(
-                                                240, 96, 146, 1)),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: new BorderSide(
-                                              color: Color.fromRGBO(
-                                                  240, 96, 146, 1))),
-                                      prefixIcon: Icon(
-                                        Icons.phone_android,
-                                        color: Color.fromRGBO(240, 98, 146, 1),
-                                      ),
-                                      hintText: "eg. 03332367890",
-                                      hintStyle: TextStyle(
-                                          color: Colors.grey, fontSize: 15.0),
-                                      labelStyle: TextStyle(color: Colors.grey),
-                                    ),
-                                  )),
-                            ],
-                          ),
-                        ), //Contact
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20.0, right: 20, bottom: 12),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Which city are you located in?',
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromRGBO(240, 98, 146, 1)),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 5),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: DropdownButton(
-                                    items: _category
-                                        .map((value) => DropdownMenuItem(
-                                      child: Text(
-                                        value,
-                                        style: TextStyle(
-                                            color: Colors.black),
-                                      ),
-                                      value: value,
-                                    ))
-                                        .toList(),
-                                    onChanged: (selectedCategoryType) {
-                                      city = '$selectedCategoryType';
-                                      setState(() {
-                                        selectedType = selectedCategoryType;
-                                      });
-                                    },
-                                    value: selectedType,
-                                    isExpanded: false,
-                                    hint: Text(
-                                      'Choose City         ',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ), //City
-                        Container(
-                          padding:
-                          EdgeInsets.only(left: 20, right: 20, bottom: 12),
-                          child: Column(
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'And, area?',
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(240, 98, 146, 1)),
-                                ),
-                              ),
-                              SizedBox(height: 12),
-                              SizedBox(
-                                height: 50,
-                                child: TextField(
-                                  onChanged: (value) {
-                                    area = value;
-                                    print(area);
-                                  },
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(20.0),
-                                        borderSide: new BorderSide(
-                                            color: Color.fromRGBO(
-                                                240, 96, 146, 1)),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: new BorderSide(
-                                              color: Color.fromRGBO(
-                                                  240, 96, 146, 1))),
-                                      hintText: "eg. North Nazimabad",
-                                      hintStyle: TextStyle(
-                                          color: Colors.grey, fontSize: 15.0),
-                                      labelStyle: TextStyle(color: Colors.grey),
-                                      prefixIcon: Icon(
-                                        Icons.location_city,
-                                        color: Color.fromRGBO(240, 98, 146, 1),
-                                      )),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                        new ListTile(
+                          leading: const Icon(Icons.person,  color: Color.fromRGBO(240, 98, 146, 1), size: 50
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10, right: 20, bottom: 12),
-                      child: Row(
-                        children: <Widget>[
-                          Checkbox(
-                            value: val,
+                          title: new Text('Hey, what is your full name?',
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(240, 98, 146, 1)),
+                          ),
+                          subtitle: new TextFormField(
+                            onChanged: (value) {
+                              name = value;
+                            },
+                            decoration: InputDecoration(
+
+                              hintText: "eg. Fatima Moin",
+                              hintStyle: TextStyle(
+                                  color: Colors.grey, fontSize: 15.0),
+                              labelStyle: TextStyle(color: Colors.grey),
+                              errorStyle: TextStyle(color: Colors.pink),
+                            ),
+                            validator: (value) => value.isEmpty ? "Please enter your name" : null,
+
+
+                          ),
+                          isThreeLine: true,
+                        ) ,//Name
+                        new ListTile(
+                          leading: const Icon(Icons.phone_android,  color: Color.fromRGBO(240, 98, 146, 1), size: 50
+                          ),
+                          title: new Text('And your mobile number?',
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(240, 98, 146, 1)),
+                          ),
+                          subtitle: new TextFormField(
+                            keyboardType: TextInputType.phone,
+                            onChanged: (value) {
+                              contactNumber = value;
+                            },
+                            decoration: InputDecoration(
+
+                              hintText: "eg. 03333 1935084",
+                              hintStyle: TextStyle(
+                                  color: Colors.grey, fontSize: 15.0),
+                              labelStyle: TextStyle(color: Colors.grey),
+                              errorStyle: TextStyle(color: Colors.pink),
+                            ),
+                            validator: (value) => value.isEmpty ? "Please enter your contact number" : null,),),
+                        new ListTile(
+                              leading: const Icon(Icons.location_on,  color: Color.fromRGBO(240, 98, 146, 1), size: 50
+                              ),
+                              title: new Text('Which city are you located in?',
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(240, 98, 146, 1)),
+                              ),
+                              subtitle: DropdownButtonFormField(
+                                items: _category
+                                    .map((value) => DropdownMenuItem(
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                        color: Colors.black),
+                                  ),
+                                  value: value,
+                                ))
+                                    .toList(),
+                                onChanged: (selectedCategoryType) {
+                                  city = '$selectedCategoryType';
+                                  setState(() {
+                                    selectedType = selectedCategoryType;
+                                  });
+                                },
+                                isDense: true,
+                                value: selectedType,
+                                isExpanded: false,
+                                hint:  Text(
+                                  'Choose City',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return "Please select your city";
+                                  };
+                                }
+                              ),
+                        ),
+                        new ListTile(
+                          leading: const Icon(Icons.location_city,  color: Color.fromRGBO(240, 98, 146, 1), size: 50
+                          ),
+                          title: new Text('And, area?',
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(240, 98, 146, 1)),
+                          ),
+                          subtitle: new TextFormField(
+                            onChanged: (value) {
+                              contactNumber = value;
+                            },
+                            decoration: InputDecoration(
+
+                              hintText: "eg. North Nazimabad",
+                              hintStyle: TextStyle(
+                                  color: Colors.grey, fontSize: 15.0),
+                              labelStyle: TextStyle(color: Colors.grey),
+                              errorStyle: TextStyle(color: Colors.pink),
+                            ),
+                            validator: (value) => value.isEmpty ? "Please enter your area" : null,),),
+                        new  CheckboxListTile(
+                          value: val,
+                          title: new Text('I confirm I am a woman above 18 years of age.',
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(240, 98, 146, 1)),
+                          ),
                             checkColor: Colors.white,
                             activeColor: Color.fromRGBO(240, 98, 146, 1),
                             onChanged: (bool value) {
                               setState(() {
                                 val = value;
+                                termsChecked = value;
                               });
                             },
-                          ),
-                          Expanded(
-                              child: Text(
-                                'I confirm I am a woman above 18 years of age.',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(240, 98, 146, 1)),
-                              )),
-                        ],
-                      ),
+                        ),
+                   //add other containers
+                ],
                     ),
+
                   ],
                 ),
-              ), //first page
+              ), ),//first page
               Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -422,6 +368,8 @@ class _Verificaton extends State<Verification> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: 60),
+                    showAlert_cnic(),
+                    SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Column(
@@ -536,11 +484,17 @@ class _Verificaton extends State<Verification> {
               ]),
             ),
             FlatButton(
-              onPressed: () {
+              onPressed: () async { if (validate()){
                 _pageController.animateToPage(_currentPage + 1,
                     duration: Duration(milliseconds: 400),
                     curve: Curves.linear);
                 setState(() {});
+              };
+              if (val != true)
+                {
+                setState(() {
+                  termsChecked = false;
+                });}
               },
               splashColor: Colors.blue[50],
               child: Text(
@@ -556,6 +510,15 @@ class _Verificaton extends State<Verification> {
       )
           : RaisedButton(
         onPressed: () async {
+          setState(() {
+            load = true;
+          });
+          if (verify != true)
+          {
+            setState(() {
+              verifyChecked = false;
+              load = false;
+            });}
           var uploadProfile = FileUpload(
               fileType: 'profileimage',
               file: image,
@@ -564,9 +527,9 @@ class _Verificaton extends State<Verification> {
               fileType: 'cnicimage',
               file: image_cnic,
               id: widget.currentUser.uid);
+          print(image);
           imagePath = await uploadProfile.uploadFile();
-          image_cnic_path = await uploadCnic.uploadFile();
-
+           image_cnic_path = await uploadCnic.uploadFile();
           databaseReference
               .collection("Users")
               .document(widget.currentUser.uid)
@@ -582,6 +545,7 @@ class _Verificaton extends State<Verification> {
             'area': area,
             'email': widget.currentUser.email,
           });
+
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => Login()));
         },
@@ -599,6 +563,91 @@ class _Verificaton extends State<Verification> {
         ),
       ),
       backgroundColor: Colors.white,
+    );
+  }
+
+  Widget showAlert() {
+    if (termsChecked == false) {
+
+      return Container(
+        color: Color.fromRGBO(240, 98, 146, 1),
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline, color: Colors.white),
+            ),
+            Expanded(
+              child: Text(
+                "You have not agreed to the terms and conditions.",
+                style: TextStyle(
+                    color: Colors.white
+                ),
+
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.close,
+                  color: Colors.white,),
+                onPressed: () {
+                  setState(() {
+                    termsChecked = null;
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 0,
+    );
+  }
+  Widget showAlert_cnic() {
+    if (verifyChecked == false) {
+
+      return Container(
+        color: Color.fromRGBO(240, 98, 146, 1),
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline, color: Colors.white),
+            ),
+            Expanded(
+              child: Text(
+                "Please verify your CNIC.",
+                style: TextStyle(
+                    color: Colors.white
+                ),
+
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.close,
+                  color: Colors.white,),
+                onPressed: () {
+                  setState(() {
+                    verifyChecked = null;
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 0,
     );
   }
 }
