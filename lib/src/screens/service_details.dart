@@ -257,7 +257,7 @@ class _ServiceStateState extends State<ServiceState> {
         width: 80,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+            image: DecorationImage(image: NetworkImage(image), fit: BoxFit.cover)),
       ),
     );
   }

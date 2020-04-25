@@ -2,87 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-List<Product> allProducts = [
-  Product(
-      title: 'Quran Classes',
-      price: 2000,
-      description: "Hello World",
-      likes: 4,
-      mainImage: 'assets/quranforkidssample.jpg',
-      galleryImages: galleryImages,
-      serviceType: 'Home Based',
-     // user: user1,
-      //category: categories[0]
-),
-  Product(
-      title: 'O Level Tutions',
-      price: 10000,
-      description: "Hello World",
-      likes: 4,
-      mainImage: 'assets/teaching.jpeg',
-      galleryImages: galleryImages,
-      serviceType: 'Home Based',
-     // user: user1,
-     // category: categories[0]
-),
-  Product(
-      title: 'Baking Classes',
-      price: 5000,
-      description: "Hello World",
-      likes: 4,
-      mainImage: 'assets/baking.jpeg',
-      galleryImages: galleryImages,
-      serviceType: 'Home Based',
-     // user: user1,
-  //    category: categories[0]
-  ),
-  Product(
-      title: 'Wedding Photos',
-      price: 5000,
-      description: "Hello World",
-      likes: 4,
-      mainImage: 'assets/wedding.jpeg',
-      galleryImages: galleryImages,
-      serviceType: 'Home Based',
-     // user: user1,
-      //category: categories[0]
-  ),
-  Product(
-      title: 'Marketing for business',
-      price: 5000,
-      description: "Hello World",
-      likes: 4,
-      mainImage: 'assets/marketing.jpeg',
-      galleryImages: galleryImages,
-      serviceType: 'Online',
-      //user: user1,
-      //category: categories[0]
-  ),
-];
-User user1 = User(
-  id: '0',
-  name: 'Momina Qureshi',
-  imageUrl: 'assets/momina.jpg',
-  cnicPicture: '',
-  contactNumber: '0335-2366331',
-  city: 'Karachi',
-  followers: 100,
-  following: 200,
-  rating: 2.5,
-  area: 'Defence',
-);
-User loggedInUser = User(
-  id: '0',
-  name: 'Fatima Moin',
-  imageUrl: 'assets/fatima.jpeg',
-  cnicPicture: '',
-  contactNumber: '0335-2366331',
-  city: 'Karachi',
-  followers: 100,
-  following: 200,
-  rating: 2.5,
-  area: 'Defence',
-);
 
 class User {
    String id;
@@ -156,9 +75,7 @@ class Product {
    String title;
    int price;
    String description;
-   //Category category;
    int likes;
-  // User user;
    String mainImage;
    List<String> galleryImages;
    String serviceType;
@@ -166,16 +83,13 @@ class Product {
    bool online;
    String userId;
    String categoryName;
-   bool Featured;
 
    Product.fromMap(Map map){
      this.serviceType = map['serviceType'];
      this.title = map['title'];
      this.price = map['price'];
      this.description = map['description'];
-    // this.category = map['category'];
      this.likes = map['likes'];
-    // this.user = map['user'];
      this.mainImage = map['imageurl'];
      this.homeBased = map['homebased'];
      this.online = map['online'];
@@ -202,15 +116,13 @@ this.serviceType = (this.homeBased ? "Home based" : "Online");
       this.title,
       this.price,
       this.description,
-     // this.category,
       this.likes,
-      //this.user,
       this.mainImage,
         this.galleryImages,
         this.homeBased,
         this.online,
         this.userId,
-        this.categoryName,this.Featured});
+        this.categoryName});
 
   Map<String, dynamic> toMap() {
     return {
@@ -218,14 +130,13 @@ this.serviceType = (this.homeBased ? "Home based" : "Online");
       'price': price,
       'imageurl': mainImage,
       'description': description,
-     // 'category': category,
       'likes': likes,
-      //'user': user,
       'galleryImages': galleryImages,
       'homebased': homeBased,
       'online': online,
       'userid': userId,
       'categoryName': categoryName,
+      'Featured':false,
 
     };
   }
@@ -270,10 +181,4 @@ List<Category> categories = [
   Category('Beauty'),
   Category('Education'),
   Category('Programming'),
-];
-List<String> galleryImages = [
-  'assets/quranforkidssample.jpg',
-  'assets/quranforkidssample.jpg',
-  'assets/quranforkidssample.jpg',
-  'assets/quranforkidssample.jpg',
 ];

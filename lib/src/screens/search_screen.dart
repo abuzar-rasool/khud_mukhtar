@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,14 +22,17 @@ class _SearchScreenState extends State<SearchScreen> {
         borderRadius: BorderRadius.circular(40.0),
       ),
       child: TextField(
+       // onChanged: reloadData(),
         autofocus: true,
         enabled: true,
         decoration: InputDecoration(
+
           border: InputBorder.none,
           prefixIcon: Icon(
             Icons.search,
             color: Colors.black,
           ),
+
           hintText: "What are you looking for",
           hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
         ),
@@ -322,3 +326,18 @@ class _SearchScreenState extends State<SearchScreen> {
         context: context, builder: (BuildContext context) => fancyDialog);
   }
 }
+// class SearchResults extends StatefulWidget {
+//   @override
+//   _SearchResultsState createState() => _SearchResultsState();
+// }
+//
+// class _SearchResultsState extends State<SearchResults> {
+//  Future searchForText(){
+//    QuerySnapshot mySnap = Firestore.instance.collection("Products").
+//  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
+
