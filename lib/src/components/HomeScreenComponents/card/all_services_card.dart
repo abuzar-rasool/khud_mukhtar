@@ -11,7 +11,7 @@ class AllServicesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ImageProvider displayImage =
-    myImage == null ? AssetImage(product.mainImage) : myImage.image;
+    myImage == null ? AssetImage("splash.png") : myImage.image;
     return GestureDetector(
       onTap: onPress,
       child: Card(
