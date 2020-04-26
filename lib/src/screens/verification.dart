@@ -249,6 +249,9 @@ class _Verificaton extends State<Verification> {
                                       isDense: true,
                                       value: selectedType,
                                       isExpanded: false,
+                                      decoration: InputDecoration(
+                                        errorStyle: TextStyle(color: Colors.pink),
+                                      ),
                                       hint:  Text(
                                         'Choose City',
                                         style: TextStyle(color: Colors.grey),

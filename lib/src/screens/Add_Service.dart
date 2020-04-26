@@ -7,7 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:khud_mukhtar/src/screens/profile_screen.dart';
 import '../uplod.dart';
 
 class Service {
@@ -42,6 +43,8 @@ class _AddService extends State<AddService> {
   bool online = false;
   String description;
   bool chipCheck = true;
+  String error;
+
   var selectedType;
   final databaseReference = Firestore.instance;
   final formkey = new GlobalKey<FormState>();
@@ -52,14 +55,11 @@ class _AddService extends State<AddService> {
     if (form.validate()) {
      if(homeBased == true || online == true)
        {
-         form.save();
-         return true;
-       }
-     else
-       {
-         setState(() {
-           chipCheck = false;
-         });
+         if (imageCheck == true)
+           {
+             form.save();
+             return true;
+           }
        }
     }
     if(homeBased == true || online == true)
@@ -74,6 +74,18 @@ class _AddService extends State<AddService> {
           chipCheck = false;
         });
       }
+    if(image != null)
+    {
+      setState(() {
+        imageCheck = true;
+      });
+    }
+    else
+    {
+      setState(() {
+        imageCheck = false;
+      });
+    }
     return false;
   }
 
@@ -119,456 +131,564 @@ class _AddService extends State<AddService> {
       body: SafeArea(
           child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: Form(
-                  key: formkey,
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    ),
-                  new ListTile(
-
-                    title: new Text('Service Name',
-                      style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(240, 98, 146, 1)),
-                    ),
-                    subtitle: new TextFormField(
-                      onChanged: (value) {
-                        serviceName = value;
-                      },
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.business_center,
-                          color: Color.fromRGBO(240, 98, 146, 1),
-                        ),
-                        hintText: "eg. Fatima Moin",
-                        hintStyle: TextStyle(
-                            color: Colors.grey, fontSize: 15.0),
-                        labelStyle: TextStyle(color: Colors.grey),
-                        errorStyle: TextStyle(color: Colors.pink),
-                      ),
-                      validator: (value) => value.isEmpty ? "Please enter your service name" : null,
-
-
-                    ),
-                    isThreeLine: true,
-                  ) , //service name
-                    Container(
-                      width: MediaQuery.of(context).size.width,
+              child: Stack(
+                children: <Widget>[
+                  Form(
+                      key: formkey,
                       child: Column(
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20,
-                              right: 20,
+                          SizedBox(
+                            height: 20,
+                          ),
+                          new ListTile(
+                            title: new Text('Service Name',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(240, 98, 146, 1)),
                             ),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Main Image',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(240, 98, 146, 1)),
-                              ),
-                            ),
-                          ),
-                          GridView.count(
-                            shrinkWrap: true,
-                            primary: false,
-                            padding: const EdgeInsets.all(15),
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            crossAxisCount: 2,
-                            children: <Widget>[
-                              GestureDetector(
-                                  onTap: _getImage,
-                                  child: Container(
-                                    color: Colors.black12,
-                                    child: image == null
-                                        ? Icon(FontAwesomeIcons.plus,
-                                        color:
-                                        Color.fromRGBO(240, 98, 146, 1))
-                                        : Image.file(image),
-                                  ))
-                            ],
-                          ),
-                        ],
-                      ),
-                    ), //main image
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20,
-                              right: 20,
-                            ),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Other Images',
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(240, 98, 146, 1)),
-                              ),
-                            ),
-                          ),
-                          GridView.count(
-                            shrinkWrap: true,
-                            primary: false,
-                            padding: const EdgeInsets.all(15),
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            crossAxisCount: 3,
-                            children: <Widget>[
-                              GestureDetector(
-                                  onTap: () => _getImages(0),
-                                  child: Container(
-                                    color: Colors.black12,
-                                    child: images[0] == null
-                                        ? Icon(FontAwesomeIcons.plus,
-                                        color:
-                                        Color.fromRGBO(240, 98, 146, 1))
-                                        : Image.file(images[0]),
-                                  )),
-                              GestureDetector(
-                                  onTap: () => _getImages(1),
-                                  child: Container(
-                                    color: Colors.black12,
-                                    child: images[1] == null
-                                        ? Icon(FontAwesomeIcons.plus,
-                                        color:
-                                        Color.fromRGBO(240, 98, 146, 1))
-                                        : Image.file(images[1]),
-                                  )),
-                              GestureDetector(
-                                  onTap: () => _getImages(2),
-                                  child: Container(
-                                    color: Colors.black12,
-                                    child: images[2] == null
-                                        ? Icon(FontAwesomeIcons.plus,
-                                        color:
-                                        Color.fromRGBO(240, 98, 146, 1))
-                                        : Image.file(images[2]),
-                                  )),
-                              GestureDetector(
-                                  onTap: () => _getImages(3),
-                                  child: Container(
-                                    color: Colors.black12,
-                                    child: images[3] == null
-                                        ? Icon(FontAwesomeIcons.plus,
-                                        color:
-                                        Color.fromRGBO(240, 98, 146, 1))
-                                        : Image.file(images[3]),
-                                  )),
-                              GestureDetector(
-                                  onTap: () => _getImages(4),
-                                  child: Container(
-                                    color: Colors.black12,
-                                    child: images[4] == null
-                                        ? Icon(FontAwesomeIcons.plus,
-                                        color:
-                                        Color.fromRGBO(240, 98, 146, 1))
-                                        : Image.file(images[4]),
-                                  )),
-                              GestureDetector(
-                                  onTap: () => _getImages(5),
-                                  child: Container(
-                                    color: Colors.black12,
-                                    child: images[5] == null
-                                        ? Icon(FontAwesomeIcons.plus,
-                                        color:
-                                        Color.fromRGBO(240, 98, 146, 1))
-                                        : Image.file(images[5]),
-                                  )),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ), //more images
-                    new ListTile(
-
-                      title: new Text('Price',
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(240, 98, 146, 1)),
-                      ),
-                      subtitle: new TextFormField(
-                        onChanged: (value) {
-                          servicePrice = int.parse(value);
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.attach_money,
-                            color: Color.fromRGBO(240, 98, 146, 1),
-                          ),
-                          hintText: "eg. 5000",
-                          hintStyle: TextStyle(
-                              color: Colors.grey, fontSize: 15.0),
-                          labelStyle: TextStyle(color: Colors.grey),
-                          errorStyle: TextStyle(color: Colors.pink),
-
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) => value.isEmpty ? "Please enter a price" : null,
-
-                      ),
-                      isThreeLine: true,
-                    ) , //price
-                    new ListTile(
-
-                      title: new Text('Category',
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(240, 98, 146, 1)),
-                      ),
-                      subtitle: DropdownButtonFormField(
-                          items: _category
-                              .map((value) => DropdownMenuItem(
-                            child: Text(
-                              value,
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            value: value,
-                          ))
-                              .toList(),
-                          onChanged: (selectedCategoryType) {
-                            print('$selectedCategoryType');
-
-                            setState(() {
-                              selectedType = selectedCategoryType;
-                              categorySelected = selectedType;
-                            });
-                          },
-                          isDense: true,
-                          value: selectedType,
-                          isExpanded: false,
-                          hint:  Text(
-                            'Choose Category',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          validator: (value) {
-                            if (value == null) {
-                              return "Please select your category";
-                            };
-                          }
-                      ),
-                      isThreeLine: true,
-                    ) , //category
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0, right: 20.0, bottom: 7),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Service Type',
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromRGBO(240, 98, 146, 1)),
-                                ),
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 15.0, right: 20.0, bottom: 12),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[Wrap(
-                                          spacing: 5.0,
-                                          runSpacing: 5.0,
-                                          children: <Widget>[
-                                            filterChipWidget(
-                                              chipName: 'Home-Based',
-                                              isSelected: homeBased,
-                                              onClick: (value) {
-                                                homeBased = value;
-
-                                              },
-                                            ),
-                                            filterChipWidget(
-                                              chipName: 'Online',
-                                              isSelected: online,
-                                              onClick: (value) {
-                                                online = value;
-                                              },
-                                            ),
-
-                                          ],
-                                        ),],
-                                      ),
-                                      showAlert(),
-                                    ],
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ), //service type
-                    new ListTile(
-                      title: new Text('Description',
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(240, 98, 146, 1)),
-                      ),
-                      subtitle: new TextFormField(
-                        onChanged: (value) {
-                          description = value;
-                        },
-                        maxLines: 6,
-                        decoration: InputDecoration(
-                          hintText: "eg. Teaching young kids to code in Python",
-                          hintStyle: TextStyle(
-                              color: Colors.grey, fontSize: 15.0),
-                          labelStyle: TextStyle(color: Colors.grey),
-                          errorStyle: TextStyle(color: Colors.pink),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                      )
-                        ),
-                        validator: (value) => value.isEmpty ? "Please enter a description" : null,
-                      ),
-                      isThreeLine: true,
-                    ) ,
-                   //description
-                    SizedBox(height:17),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: 20, left: 20, bottom: 12),
-                        child: SizedBox(
-                          height: 50,
-                          child: Builder(
-                            builder: (context) => RaisedButton(
-                              onPressed: () async {
-                                if (validate())
-                                  {
-                                    FirebaseUser currentUser =
-                                    await FirebaseAuth.instance.currentUser();
-                                    print(serviceName);
-                                    print(servicePrice);
-                                    print(categorySelected);
-                                    print(homeBased);
-                                    print(online);
-                                    print(description);
-                                    Product newService = Product(
-                                      title: serviceName,
-                                      price: servicePrice,
-                                      description: description,
-                                      categoryName: categorySelected,
-                                      userId: currentUser.uid,
-                                      online: online,
-                                      homeBased: homeBased,
-                                      likes: 0,
-                                    );
-
-                                    CollectionReference productCollection =
-                                    databaseReference.collection("Products");
-                                    DocumentReference productDocument =
-                                    await productCollection
-                                        .add(newService.toMap())
-                                        .catchError((e) {
-                                      print(e);
-                                    });
-                                    DocumentReference userDocument = databaseReference
-                                        .collection("Users")
-                                        .document(currentUser.uid.toString());
-
-                                    await userDocument.updateData({
-                                      'productList': FieldValue.arrayUnion(
-                                          [productDocument.documentID])
-                                    });
-
-                                    print('Text Data Uploaded Uplodaing Images....');
-                                    var productMainImage = FileUpload(
-                                        fileType: 'productimage',
-                                        file: image,
-                                        id: productDocument.documentID);
-
-                                    String imagepath =
-                                    await productMainImage.uploadFile();
-                                    print('Main Image Uploaded');
-                                    List<String> galleryImagePath = [];
-                                    for (var galleryImage in images) {
-                                      if (galleryImage != null) {
-                                        var productGalleryImage = FileUpload(
-                                            fileType: 'productgallery',
-                                            file: galleryImage,
-                                            id: productDocument.documentID);
-                                        String productGalleryImagePath =
-                                        await productGalleryImage.uploadFile();
-                                        galleryImagePath.add(productGalleryImagePath);
-                                      }
-                                    }
-                                    print('Gallery Image Uploaded');
-
-                                    await productDocument.updateData({
-                                      'imageurl': imagepath,
-                                      'galleryImages':
-                                      FieldValue.arrayUnion(galleryImagePath)
-                                    });
-
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text('Service Published'),
-                                      duration: Duration(seconds: 3),
-                                    ));
-
-                                  }
+                            subtitle: new TextFormField(
+                              onChanged: (value) {
+                                serviceName = value;
                               },
-                              autofocus: true,
-                              shape: ContinuousRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.business_center,
+                                  color: Color.fromRGBO(240, 98, 146, 1),
+                                ),
+                                hintText: "eg. Python Classes",
+                                hintStyle: TextStyle(
+                                    color: Colors.grey, fontSize: 15.0),
+                                labelStyle: TextStyle(color: Colors.grey),
+                                errorStyle: TextStyle(color: Colors.pink),
                               ),
-                              color: Color.fromRGBO(240, 98, 146, 1),
-                              child: Text(
-                                'Publish Service',
-                                style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromRGBO(255, 255, 255, 1)),
+                              validator: (value) => value.isEmpty ? "Please enter your service name" : null,
+                            ),
+                            isThreeLine: true,
+                          ) , //service name
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Main Image',
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromRGBO(240, 98, 146, 1)),
+                                    ),
+                                  ),
+                                ),
+                                GridView.count(
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  padding: const EdgeInsets.only(left: 15, right: 15, top:15, bottom: 7),
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  crossAxisCount: 2,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                        onTap: _getImage,
+                                        child: Container(
+                                          color: Colors.black12,
+                                          child: image == null
+                                              ? Icon(FontAwesomeIcons.plus,
+                                              color:
+                                              Color.fromRGBO(240, 98, 146, 1))
+                                              : Image.file(image),
+                                        ))
+                                  ],
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 20,
+                                      right: 20,
+                                    ),
+                                    child: showAlert(2, "Please upload an image."))
+                              ],
+                            ),
+                          ), //main image
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                    top: 7,
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Other Images',
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromRGBO(240, 98, 146, 1)),
+                                    ),
+                                  ),
+                                ),
+                                GridView.count(
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  padding: const EdgeInsets.all(15),
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  crossAxisCount: 3,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                        onTap: () => _getImages(0),
+                                        child: Container(
+                                          color: Colors.black12,
+                                          child: images[0] == null
+                                              ? Icon(FontAwesomeIcons.plus,
+                                              color:
+                                              Color.fromRGBO(240, 98, 146, 1))
+                                              : Image.file(images[0]),
+                                        )),
+                                    GestureDetector(
+                                        onTap: () => _getImages(1),
+                                        child: Container(
+                                          color: Colors.black12,
+                                          child: images[1] == null
+                                              ? Icon(FontAwesomeIcons.plus,
+                                              color:
+                                              Color.fromRGBO(240, 98, 146, 1))
+                                              : Image.file(images[1]),
+                                        )),
+                                    GestureDetector(
+                                        onTap: () => _getImages(2),
+                                        child: Container(
+                                          color: Colors.black12,
+                                          child: images[2] == null
+                                              ? Icon(FontAwesomeIcons.plus,
+                                              color:
+                                              Color.fromRGBO(240, 98, 146, 1))
+                                              : Image.file(images[2]),
+                                        )),
+                                    GestureDetector(
+                                        onTap: () => _getImages(3),
+                                        child: Container(
+                                          color: Colors.black12,
+                                          child: images[3] == null
+                                              ? Icon(FontAwesomeIcons.plus,
+                                              color:
+                                              Color.fromRGBO(240, 98, 146, 1))
+                                              : Image.file(images[3]),
+                                        )),
+                                    GestureDetector(
+                                        onTap: () => _getImages(4),
+                                        child: Container(
+                                          color: Colors.black12,
+                                          child: images[4] == null
+                                              ? Icon(FontAwesomeIcons.plus,
+                                              color:
+                                              Color.fromRGBO(240, 98, 146, 1))
+                                              : Image.file(images[4]),
+                                        )),
+                                    GestureDetector(
+                                        onTap: () => _getImages(5),
+                                        child: Container(
+                                          color: Colors.black12,
+                                          child: images[5] == null
+                                              ? Icon(FontAwesomeIcons.plus,
+                                              color:
+                                              Color.fromRGBO(240, 98, 146, 1))
+                                              : Image.file(images[5]),
+                                        )),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ), //more images
+                          new ListTile(
+
+                            title: new Text('Price',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(240, 98, 146, 1)),
+                            ),
+                            subtitle: new TextFormField(
+                              onChanged: (value) {
+                                servicePrice = int.parse(value);
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.attach_money,
+                                  color: Color.fromRGBO(240, 98, 146, 1),
+                                ),
+                                hintText: "eg. 5000",
+                                hintStyle: TextStyle(
+                                    color: Colors.grey, fontSize: 15.0),
+                                labelStyle: TextStyle(color: Colors.grey),
+                                errorStyle: TextStyle(color: Colors.pink),
+
+                              ),
+                              keyboardType: TextInputType.number,
+                              validator: (value) => value.isEmpty ? "Please enter a price" : null,
+
+                            ),
+                            isThreeLine: true,
+                          ) , //price
+                          new ListTile(
+                            title: new Text('Category',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(240, 98, 146, 1)),
+                            ),
+                            subtitle: DropdownButtonFormField(
+                              items: _category
+                                  .map((value) => DropdownMenuItem(
+                                child: Text(
+                                  value,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                value: value,
+                              ))
+                                  .toList(),
+                              onChanged: (selectedCategoryType) {
+                                print('$selectedCategoryType');
+
+                                setState(() {
+                                  selectedType = selectedCategoryType;
+                                  categorySelected = selectedType;
+                                });
+                              },
+                              isDense: true,
+                              value: selectedType,
+                              isExpanded: false,
+                              decoration: InputDecoration(
+
+                                errorStyle: TextStyle(color: Colors.pink),
+                              ),
+                              hint:  Text(
+                                'Choose Category',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Please select your category";
+                                };
+                              },
+                            ),
+                            isThreeLine: true,
+                          ) , //category
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20.0, right: 20.0, bottom: 7),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Service Type',
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromRGBO(240, 98, 146, 1)),
+                                      ),
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15.0, right: 20.0, bottom: 12),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Row(
+                                              children: <Widget>[Wrap(
+                                                spacing: 5.0,
+                                                runSpacing: 5.0,
+                                                children: <Widget>[
+                                                  filterChipWidget(
+                                                    chipName: 'Home-Based',
+                                                    isSelected: homeBased,
+                                                    onClick: (value) {
+                                                      homeBased = value;
+
+                                                    },
+                                                  ),
+                                                  filterChipWidget(
+                                                    chipName: 'Online',
+                                                    isSelected: online,
+                                                    onClick: (value) {
+                                                      online = value;
+                                                    },
+                                                  ),
+
+                                                ],
+                                              ),],
+                                            ),
+                                            showAlert(1, "Please select a service type"),
+                                          ],
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ), //service type
+                          new ListTile(
+                            title: new Text('Description',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(240, 98, 146, 1)),
+                            ),
+                            subtitle: new TextFormField(
+                              onChanged: (value) {
+                                description = value;
+                              },
+                              maxLines: 6,
+                              decoration: InputDecoration(
+                                  hintText: "eg. Teaching young kids to code in Python",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 15.0),
+                                  labelStyle: TextStyle(color: Colors.grey),
+                                  errorStyle: TextStyle(color: Colors.pink),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  )
+                              ),
+                              validator: (value) => value.isEmpty ? "Please enter a description" : null,
+                            ),
+                            isThreeLine: true,
+                          ) , //description
+                          SizedBox(height:17),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 20, left: 20, bottom: 12),
+                              child: SizedBox(
+                                height: 50,
+                                child: Builder(
+                                  builder: (context) => ProgressButton(
+                                    defaultWidget: const Text('Add Service',
+                                        textAlign: TextAlign.center, style:
+                                        TextStyle(fontSize: 24, color: Colors.white)),
+                                    progressWidget: const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+                                    animate: false,
+                                    color: Color.fromRGBO(240, 98, 146, 1),
+                                    borderRadius: 80,
+                                    type: ProgressButtonType.Raised,
+                                    onPressed: () async {
+                                      if (image == null)
+                                      {
+                                        setState(() {
+                                          imageCheck = false;
+                                        });
+                                      }
+                                      if (homeBased == false && online == false)
+                                        setState(() {
+                                          chipCheck = false;
+                                        });
+                                      if (validate())
+                                      {
+                                        FirebaseUser currentUser =
+                                        await FirebaseAuth.instance.currentUser();
+                                        print(serviceName);
+                                        print(servicePrice);
+                                        print(categorySelected);
+                                        print(homeBased);
+                                        print(online);
+                                        print(description);
+                                        Product newService = Product(
+                                          title: serviceName,
+                                          price: servicePrice,
+                                          description: description,
+                                          categoryName: categorySelected,
+                                          userId: currentUser.uid,
+                                          online: online,
+                                          homeBased: homeBased,
+                                          likes: 0,
+                                        );
+
+                                        CollectionReference productCollection =
+                                        databaseReference.collection("Products");
+                                        DocumentReference productDocument =
+                                        await productCollection
+                                            .add(newService.toMap())
+                                            .catchError((e) {
+                                          setState(() {
+                                            error = e.message.toString();
+                                          });
+                                        });
+                                        DocumentReference userDocument = databaseReference
+                                            .collection("Users")
+                                            .document(currentUser.uid.toString());
+
+                                        await userDocument.updateData({
+                                          'productList': FieldValue.arrayUnion(
+                                              [productDocument.documentID])
+                                        });
+                                        print('Text Data Uploaded Uplodaing Images....');
+                                        var productMainImage = FileUpload(
+                                            fileType: 'productimage',
+                                            file: image,
+                                            id: productDocument.documentID);
+                                        String imagepath =
+                                        await productMainImage.uploadFile();
+                                        print('Main Image Uploaded');
+                                        List<String> galleryImagePath = [];
+                                        for (var galleryImage in images) {
+                                          if (galleryImage != null) {
+                                            var productGalleryImage = FileUpload(
+                                                fileType: 'productgallery',
+                                                file: galleryImage,
+                                                id: productDocument.documentID);
+                                            String productGalleryImagePath =
+                                            await productGalleryImage.uploadFile();
+                                            galleryImagePath.add(productGalleryImagePath);
+                                          }
+                                        }
+                                        print('Gallery Image Uploaded');
+                                        await productDocument.updateData({
+                                          'imageurl': imagepath,
+                                          'galleryImages':
+                                          FieldValue.arrayUnion(galleryImagePath)
+                                        });
+
+                                 /*       Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text('Service Published'),
+                                          duration: Duration(seconds: 3),
+                                        )); */
+                                        showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: false, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Icon(Icons.check_circle_outline, size: 90,color: Colors.pink),
+                                              content:Container(
+                                                height: 83,
+                                                child:  Column(
+                                                  children: <Widget>[ Text('Your service has been added', style:
+                                                  TextStyle(
+                                                    color: Colors.pink,
+                                                  ),),
+                                                    SizedBox(height: 10),
+                                                    RaisedButton(
+                                                      child: Text("Awesome!", style: TextStyle(
+                                                          color: Colors.pink
+                                                      )),
+
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+                                                      },
+                                                    )],
+                                                ),
+                                              ),
+                                              elevation: 24,
+
+                                            );
+                                          },
+                                        );
+                                      }
+                                    },
+
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
+                        ],
+                      )
+                  ),
+                  showAlert(3, error)
+                ],
               ))),
       backgroundColor: Colors.white,
     );
   }
 
-  Widget showAlert() {
-    if (chipCheck == false) {
-      return Container(
-        width: double.infinity,
-        child: Text(
-                  "Please select a service type",
-                  style: TextStyle(
-                      color: Color.fromRGBO(204, 0, 0,1),
-                    fontSize: 12,
-                  ),
+  Widget showAlert(int id, String error) {
+    if (id == 1)
+      {
+        if (chipCheck == false) {
+          return Container(
+            width: double.infinity,
+            child: Text(
+              error,
+              style: TextStyle(
+                color: Colors.pink,
+                fontSize: 12,
+              ),
 
+            ),
+          );
+        }
+      }
+    else if (id == 2)
+      {
+        if (imageCheck == false) {
+          return Container(
+            width: double.infinity,
+            child: Text(
+              error,
+              style: TextStyle(
+                color: Colors.pink,
+                fontSize: 12,
+              ),
+            ),
+          );
+        }
+      }
+    else if (id == 3) {
+    if (error != null)
+      {
+        Container(
+          color: Color.fromRGBO(240, 98, 146, 1),
+          width: double.infinity,
+          height : MediaQuery.of(context).size.height/11,
+          padding: EdgeInsets.fromLTRB(8, 6, 8, 6),
+          child: Center(
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.error_outline, color: Colors.white),
                 ),
+                Expanded(
+                  child: AutoSizeText(
+                    error,
+                    style: TextStyle(
+                        color: Colors.white
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: IconButton(
+                    icon: Icon(Icons.close,
+                      color: Colors.white,),
+                    onPressed: () {
+                      setState(() {
+                        error = null;
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+
         );
+      }
     }
+
     return SizedBox(
       height: 0,
     );
