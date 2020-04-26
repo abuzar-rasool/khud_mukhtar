@@ -106,7 +106,7 @@ class _Verificaton extends State<Verification> {
       Fluttertoast.showToast(
           msg: "Unable to verify your CNIC. Please upload a clear image and try again.",
           toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.pinkAccent,
+          backgroundColor: Color.fromRGBO(240, 98, 146, 1),
           textColor: Colors.white);
     }
   }
@@ -171,8 +171,6 @@ class _Verificaton extends State<Verification> {
                             Column(
                               children: <Widget>[
                                 new ListTile(
-                                  leading: const Icon(Icons.person,  color: Color.fromRGBO(240, 98, 146, 1), size: 50
-                                  ),
                                   title: new Text('Hey, what is your full name?',
                                     style: TextStyle(
                                         fontSize: 17,
@@ -190,6 +188,8 @@ class _Verificaton extends State<Verification> {
                                           color: Colors.grey, fontSize: 15.0),
                                       labelStyle: TextStyle(color: Colors.grey),
                                       errorStyle: TextStyle(color: Colors.pink),
+                                      prefixIcon: Icon(Icons.person,  color: Color.fromRGBO(240, 98, 146, 1), size: 30
+                                      ),
                                     ),
                                     validator: (value) => value.isEmpty ? "Please enter your name" : null,
 
@@ -198,8 +198,7 @@ class _Verificaton extends State<Verification> {
                                   isThreeLine: true,
                                 ) ,//Name
                                 new ListTile(
-                                  leading: const Icon(Icons.phone_android,  color: Color.fromRGBO(240, 98, 146, 1), size: 50
-                                  ),
+
                                   title: new Text('And your mobile number?',
                                     style: TextStyle(
                                         fontSize: 17,
@@ -212,8 +211,8 @@ class _Verificaton extends State<Verification> {
                                       contactNumber = value;
                                     },
                                     decoration: InputDecoration(
-
-                                      hintText: "eg. 03333 1935084",
+                                      prefixIcon: Icon(Icons.phone_android,  color: Color.fromRGBO(240, 98, 146, 1), size: 30),
+                                        hintText: "eg. 03333 1935084",
                                       hintStyle: TextStyle(
                                           color: Colors.grey, fontSize: 15.0),
                                       labelStyle: TextStyle(color: Colors.grey),
@@ -221,8 +220,6 @@ class _Verificaton extends State<Verification> {
                                     ),
                                     validator: (value) => value.isEmpty ? "Please enter your contact number" : null,),),
                                 new ListTile(
-                                  leading: const Icon(Icons.location_on,  color: Color.fromRGBO(240, 98, 146, 1), size: 50
-                                  ),
                                   title: new Text('Which city are you located in?',
                                     style: TextStyle(
                                         fontSize: 17,
@@ -250,7 +247,8 @@ class _Verificaton extends State<Verification> {
                                       value: selectedType,
                                       isExpanded: false,
                                       decoration: InputDecoration(
-                                        errorStyle: TextStyle(color: Colors.pink),
+                                        prefixIcon: Icon(Icons.location_on,  color: Color.fromRGBO(240, 98, 146, 1), size: 30),
+                                            errorStyle: TextStyle(color: Colors.pink),
                                       ),
                                       hint:  Text(
                                         'Choose City',
@@ -264,8 +262,7 @@ class _Verificaton extends State<Verification> {
                                   ),
                                 ),
                                 new ListTile(
-                                  leading: const Icon(Icons.location_city,  color: Color.fromRGBO(240, 98, 146, 1), size: 50
-                                  ),
+
                                   title: new Text('And, area?',
                                     style: TextStyle(
                                         fontSize: 17,
@@ -277,8 +274,9 @@ class _Verificaton extends State<Verification> {
                                       contactNumber = value;
                                     },
                                     decoration: InputDecoration(
-
-                                      hintText: "eg. North Nazimabad",
+                                      prefixIcon: Icon(Icons.location_city,  color: Color.fromRGBO(240, 98, 146, 1), size: 30
+                                      ),
+                                        hintText: "eg. North Nazimabad",
                                       hintStyle: TextStyle(
                                           color: Colors.grey, fontSize: 15.0),
                                       labelStyle: TextStyle(color: Colors.grey),
@@ -537,19 +535,14 @@ class _Verificaton extends State<Verification> {
           color: Color.fromRGBO(240, 98, 146, 1),
           type: ProgressButtonType.Raised,
           onPressed: () async {
-            setState(() {
-              load = true;
-            });
+
             if (verify != true)
             {
               setState(() {
                 verifyChecked = false;
                 load = false;
               });}
-            if (load == false)
-            {
-              return;
-            }
+
             var uploadProfile = FileUpload(
                 fileType: 'profileimage',
                 file: image,

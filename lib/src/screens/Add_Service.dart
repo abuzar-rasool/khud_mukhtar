@@ -47,7 +47,7 @@ class _AddService extends State<AddService> {
 
   var selectedType;
   final databaseReference = Firestore.instance;
-  final formkey = new GlobalKey<FormState>();
+  static final formkey = new GlobalKey<FormState>();
 
   bool validate()
   {
@@ -112,13 +112,11 @@ class _AddService extends State<AddService> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey =
-    new GlobalKey<ScaffoldState>();
-
+  //  var _scaffoldKey = new GlobalKey<ScaffoldState>();
     //  AssetImage logo = AssetImage('assets/logo.png');
     // TODO: implement build
     return Scaffold(
-      key: _scaffoldKey,
+
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(240, 98, 146, 1),
         leading: IconButton(
@@ -140,32 +138,6 @@ class _AddService extends State<AddService> {
                           SizedBox(
                             height: 20,
                           ),
-                          new ListTile(
-                            title: new Text('Service Name',
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(240, 98, 146, 1)),
-                            ),
-                            subtitle: new TextFormField(
-                              onChanged: (value) {
-                                serviceName = value;
-                              },
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.business_center,
-                                  color: Color.fromRGBO(240, 98, 146, 1),
-                                ),
-                                hintText: "eg. Python Classes",
-                                hintStyle: TextStyle(
-                                    color: Colors.grey, fontSize: 15.0),
-                                labelStyle: TextStyle(color: Colors.grey),
-                                errorStyle: TextStyle(color: Colors.pink),
-                              ),
-                              validator: (value) => value.isEmpty ? "Please enter your service name" : null,
-                            ),
-                            isThreeLine: true,
-                          ) , //service name
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Column(
@@ -309,6 +281,32 @@ class _AddService extends State<AddService> {
                               ],
                             ),
                           ), //more images
+                          new ListTile(
+                            title: new Text('Service Name',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(240, 98, 146, 1)),
+                            ),
+                            subtitle: new TextFormField(
+                              onChanged: (value) {
+                                serviceName = value;
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.business_center,
+                                  color: Color.fromRGBO(240, 98, 146, 1),
+                                ),
+                                hintText: "eg. Python Classes",
+                                hintStyle: TextStyle(
+                                    color: Colors.grey, fontSize: 15.0),
+                                labelStyle: TextStyle(color: Colors.grey),
+                                errorStyle: TextStyle(color: Colors.pink),
+                              ),
+                              validator: (value) => value.isEmpty ? "Please enter your service name" : null,
+                            ),
+                            isThreeLine: true,
+                          ) , //service name
                           new ListTile(
 
                             title: new Text('Price',
@@ -561,42 +559,9 @@ class _AddService extends State<AddService> {
                                           FieldValue.arrayUnion(galleryImagePath)
                                         });
 
-                                 /*       Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text('Service Published'),
-                                          duration: Duration(seconds: 3),
-                                        )); */
-                                        showDialog<void>(
-                                          context: context,
-                                          barrierDismissible: false, // user must tap button!
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Icon(Icons.check_circle_outline, size: 90,color: Colors.pink),
-                                              content:Container(
-                                                height: 83,
-                                                child:  Column(
-                                                  children: <Widget>[ Text('Your service has been added', style:
-                                                  TextStyle(
-                                                    color: Colors.pink,
-                                                  ),),
-                                                    SizedBox(height: 10),
-                                                    RaisedButton(
-                                                      child: Text("Awesome!", style: TextStyle(
-                                                          color: Colors.pink
-                                                      )),
 
-                                                      onPressed: () {
-                                                        Navigator.of(context).pop();
-                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-                                                      },
-                                                    )],
-                                                ),
-                                              ),
-                                              elevation: 24,
-
-                                            );
-                                          },
-                                        );
-                                      }
+                                        Navigator.pop( context, "Your Service has been created.");
+                                      };
                                     },
 
                                   ),

@@ -8,6 +8,7 @@ import 'package:khud_mukhtar/src/screens/service_single.dart';
 import 'package:khud_mukhtar/src/widgets/loading.dart';
 
 class Profile extends StatefulWidget {
+
   var currentUserId;
   var userID;
 
@@ -22,9 +23,12 @@ class _Profile extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     var userID = widget.userID;
-    var currentUserId = widget.currentUserId;
+    var currentUserId = widget.currentUserId
+    ;
+    final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
     // TODO: implement build
     return Scaffold(
+      key: _scaffoldkey,
       appBar: MyCustomAppBar(userID: userID, currentUserId: currentUserId,),
       floatingActionButton: userID == currentUserId ? FloatingActionButton(
         child: Icon(
@@ -32,9 +36,37 @@ class _Profile extends State<Profile> {
           color: Colors.white,
         ),
         backgroundColor: Color.fromRGBO(240, 98, 146, 1),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddService()));
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            // Create the SelectionScreen in the next step.
+            MaterialPageRoute(builder: (context) => AddService()),
+          );
+          print("$result");
+          showDialog<void>( context: context,
+          barrierDismissible: false, // user must tap button!
+          builder: (BuildContext context) {
+          return AlertDialog(
+            title: Icon(Icons.check_circle_outline, size: 90,color: Colors.pink),
+            content:Container(
+                height: 90,
+                child:  Column(
+                children: <Widget>[ Text('Your service has been added', style:
+                TextStyle(
+                color: Colors.pink,
+                ),),
+                SizedBox(height: 10),
+                RaisedButton(
+                child: Text("Awesome!", style: TextStyle(
+                color: Colors.pink
+                )),
+
+              onPressed: () {
+              Navigator.of(context).pop(); } ), ]), ) );
+
+          },
+          );
+
         },
       ) : null,
       body: SafeArea(
@@ -67,6 +99,8 @@ class _Profile extends State<Profile> {
           )),
     );
   }
+
+
 }
 
 
