@@ -236,9 +236,6 @@ class _Login extends State<Login> {
               ],
             ),),
           );
-
-
-
   }
   Widget showAlert() {
     if (error != null) {

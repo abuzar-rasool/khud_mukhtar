@@ -18,6 +18,9 @@ class CategoryBrowse extends StatelessWidget {
         .where('categoryName',isEqualTo: categoryName)
         .getDocuments();
     _documentSnapshot = categoryProducts.documents;
+    if (_documentSnapshot.length == 0) {
+      return false;
+    }
     return true;
   }
   @override
@@ -35,7 +38,7 @@ class CategoryBrowse extends StatelessWidget {
                 GridView.count(
                     crossAxisCount: 2,
                     children:List.generate(_documentSnapshot.length, (index){
-                      DocumentSnapshot doc = snapshot.data[index];
+                      DocumentSnapshot doc = _documentSnapshot[index];
                       var product = Product.fromMap(doc.data);
                       //Map product = doc.data;
                       Image thumnail = Image.network(product.mainImage);
@@ -56,7 +59,7 @@ class CategoryBrowse extends StatelessWidget {
                     })
                 );
             }else{
-              return Text('No products found');
+              return Center(child: Text('No products found'));
             }
           }
           return LoadingView();
