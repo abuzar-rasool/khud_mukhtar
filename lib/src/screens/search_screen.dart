@@ -351,7 +351,7 @@ void textEntered(String text){
 
 
  class SearchResults extends StatefulWidget {
-   var originalDocuments = List();
+   var originalDocuments = List<Product>();
 
 
 
@@ -364,7 +364,9 @@ void textEntered(String text){
 
  class SearchResultsState extends State<SearchResults> {
 
-   var filteredDocuments = List();
+   var filteredDocuments = List<Product>();
+   var filteredIDS = List<String>();
+
 
    Future getItems() async{
      if (widget.originalDocuments.length > 0){
@@ -372,9 +374,11 @@ void textEntered(String text){
      }
     // var userID = widget.userID ?? await getID();
 
-     widget.originalDocuments = List();
+     widget.originalDocuments = List<Product>();
 
-     filteredDocuments = List();
+     filteredDocuments = List<Product>();
+     filteredIDS = List<String>();
+
      var firestore = Firestore.instance;
      QuerySnapshot userDoc =  await firestore.collection("Products").getDocuments();
      //print(userDoc.data);
@@ -385,7 +389,7 @@ void textEntered(String text){
        if (!widget.originalDocuments.contains(product)){
        widget.originalDocuments.add(product);}
      }
-     print(widget.originalDocuments.length);
+    // print(widget.originalDocuments.length);
 //     filteredDocuments = widget.originalDocuments;
 //
 //     if (this.mounted){
@@ -425,12 +429,18 @@ return true;
 }
 
    void searchDocuments(String text){
-     filteredDocuments = List();
+     filteredDocuments = List<Product>();
+     filteredIDS = List<String>();
+
      if (widget.originalDocuments.length == 0){return;}
 
      for (Product product in widget.originalDocuments){
+      var productID = product.title ?? "" + product.userId ?? "";
 
-      if (doesContain(product,text) && !filteredDocuments.contains(product)){
+      if (doesContain(product,text) && !filteredIDS.contains(productID)){
+       // print("YOLO ${product.title}");
+        filteredIDS.add(productID);
+
         filteredDocuments.add(product);
       }
      }
@@ -440,13 +450,14 @@ return true;
    Widget build(BuildContext context) {
 
 
-     print("yoooo" );
+     //print("yoooo" );
     widget.myController.addListener((){
 
-      print(widget.myController.text);
+     // print(widget.myController.text);
+      filteredDocuments = List<Product>();
      searchDocuments(widget.myController.text.toLowerCase());
-      print(widget.originalDocuments);
-      print(filteredDocuments);
+    //  print(widget.originalDocuments);
+      //print(filteredDocuments);
 //      setState(() {
 //
 //      });
@@ -470,7 +481,7 @@ return true;
            children:List.generate(filteredDocuments.length, (index){
             // DocumentSnapshot doc = snapshot.data[index];
              var product = filteredDocuments[index];
-
+  //print("Length ${filteredDocuments.length}");
              //Map product = doc.data;
              Image thumnail = Image.network(product.mainImage);
              print("Rs "+ product.price.toString());
