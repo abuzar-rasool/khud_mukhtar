@@ -71,7 +71,7 @@ class User {
   }
 }
 
-class Product {
+class Product implements Comparable<Product> {
    String title;
    int price;
    String description;
@@ -140,6 +140,15 @@ this.serviceType = (this.homeBased ? "Home based" : "Online");
 
     };
   }
+
+  @override
+  int compareTo(Product other) {
+    // TODO: implement compareTo
+
+    return other.title == this.title ? 1 : 0;
+  }
+
+
 }
 
 class Category {

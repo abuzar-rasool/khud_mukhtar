@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:khud_mukhtar/src/components/HomeScreenComponents/card/all_services_card.dart';
+import 'package:khud_mukhtar/src/models/user_model.dart';
+import 'package:khud_mukhtar/src/screens/service_single.dart';
 
 class SearchScreen extends StatefulWidget {
   bool searchEnabled;
@@ -12,6 +15,9 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   double preferredSize = 64;
   static int none = 2;
+  static final TextEditingController myController = TextEditingController();
+  //var mySearchWidget = SearchResults();
+
   List<Widget> bottomSearchBar = <Widget>[
     SizedBox(
       height: 9,
@@ -22,7 +28,10 @@ class _SearchScreenState extends State<SearchScreen> {
         borderRadius: BorderRadius.circular(40.0),
       ),
       child: TextField(
-       // onChanged: reloadData(),
+        onChanged: (text){
+        //  print("Text: $text");
+        },
+       controller: myController,
         autofocus: true,
         enabled: true,
         decoration: InputDecoration(
@@ -78,6 +87,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+
                           Text(
                             'Categories',
                             style: TextStyle(
@@ -180,7 +190,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
+
                   Navigator.pop(context);
+
                 },
               )
             : Icon(
@@ -208,6 +220,10 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
+      body:
+      Padding(padding: EdgeInsets.all(8),child:SearchResults(myController: myController,) ,)
+
+        ,
     );
   }
 
@@ -326,18 +342,167 @@ class _SearchScreenState extends State<SearchScreen> {
         context: context, builder: (BuildContext context) => fancyDialog);
   }
 }
-// class SearchResults extends StatefulWidget {
-//   @override
-//   _SearchResultsState createState() => _SearchResultsState();
-// }
+
+void textEntered(String text){
+  print(text);
+}
+
+
+
+
+ class SearchResults extends StatefulWidget {
+   var originalDocuments = List<Product>();
+
+
+
+   TextEditingController myController;
+   SearchResults({this.myController});
+   @override
+   SearchResultsState createState() => SearchResultsState();
+
+ }
+
+ class SearchResultsState extends State<SearchResults> {
+
+   var filteredDocuments = List<Product>();
+   var filteredIDS = List<String>();
+
+
+   Future getItems() async{
+     if (widget.originalDocuments.length > 0){
+       return widget.originalDocuments;
+     }
+    // var userID = widget.userID ?? await getID();
+
+     widget.originalDocuments = List<Product>();
+
+     filteredDocuments = List<Product>();
+     filteredIDS = List<String>();
+
+     var firestore = Firestore.instance;
+     QuerySnapshot userDoc =  await firestore.collection("Products").getDocuments();
+     //print(userDoc.data);
+     //print(widget.userID);
+     //userDoc.documents.
+     for (DocumentSnapshot d in userDoc.documents){
+       var product = Product.fromMap(d.data);
+       if (!widget.originalDocuments.contains(product)){
+       widget.originalDocuments.add(product);}
+     }
+    // print(widget.originalDocuments.length);
+//     filteredDocuments = widget.originalDocuments;
 //
-// class _SearchResultsState extends State<SearchResults> {
-//  Future searchForText(){
-//    QuerySnapshot mySnap = Firestore.instance.collection("Products").
-//  }
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
+//     if (this.mounted){
+//       setState((){
+//         //Your state change code goes here
+//       });
+//     }
+
+     return widget.originalDocuments;
+     //originalDocuments.addAll(userDoc.documents);
+//     if(userDoc.data.containsKey("productList")){
+//
+//       var myProductIDs = (userDoc.data["productList"]);
+//
+//       var myProducts = [];
+//       for(String id in myProductIDs){
+//         print(id);
+//
+//         DocumentSnapshot product = await firestore.collection("Products").document(id).get();
+//         myProducts.add(product);
+//       }
+//       return myProducts;
+//     }
+   }
+
+bool doesContain(Product product, String text){
+  if (product.title != null){
+  if (product.title.toLowerCase().contains(text)){
+return true;
+  }}
+  if (product.description != null){
+  if (product.description.toLowerCase().contains(text)){
+    return true;
+  }}
+
+  return false;
+}
+
+   void searchDocuments(String text){
+     filteredDocuments = List<Product>();
+     filteredIDS = List<String>();
+
+     if (widget.originalDocuments.length == 0){return;}
+
+     for (Product product in widget.originalDocuments){
+      var productID = product.title ?? "" + product.userId ?? "";
+
+      if (doesContain(product,text) && !filteredIDS.contains(productID)){
+       // print("YOLO ${product.title}");
+        filteredIDS.add(productID);
+
+        filteredDocuments.add(product);
+      }
+     }
+   }
+
+   @override
+   Widget build(BuildContext context) {
+
+
+     //print("yoooo" );
+    widget.myController.addListener((){
+
+     // print(widget.myController.text);
+      filteredDocuments = List<Product>();
+     searchDocuments(widget.myController.text.toLowerCase());
+    //  print(widget.originalDocuments);
+      //print(filteredDocuments);
+//      setState(() {
+//
+//      });
+
+      if (this.mounted){
+        setState((){
+          //Your state change code goes here
+        });
+      }
+    });
+    getItems();
+//    FutureBuilder(future: getItems(),
+//      builder: (_, snapshot){
+//        //return Text("YAYYY");
+//
+//      },);
+     return
+
+       GridView.count(
+           crossAxisCount: 2,
+           children:List.generate(filteredDocuments.length, (index){
+            // DocumentSnapshot doc = snapshot.data[index];
+             var product = filteredDocuments[index];
+  //print("Length ${filteredDocuments.length}");
+             //Map product = doc.data;
+             Image thumnail = Image.network(product.mainImage);
+             print("Rs "+ product.price.toString());
+
+             return AllServicesCard(
+               product: product,
+               myImage: thumnail,
+               onPress: () {
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(
+                       builder: (context) => ServiceSinglePage(
+                         product: product,
+                       )),
+                 );
+               },
+             );
+
+           })
+       );
+
+   }
+ }
 

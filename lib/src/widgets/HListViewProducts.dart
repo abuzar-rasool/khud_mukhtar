@@ -59,12 +59,15 @@ class _HListViewProductsState extends State<HListViewProducts> {
                     var product = Product.fromMap(doc.data);
 
                     //Map product = doc.data;
-                    Image thumnail = Image.network(product.mainImage);
+                    Image thumnail = null;
+                    if (product.mainImage != null){
+                      thumnail  = Image.network(product.mainImage);
+                    }
                     print("Rs "+ product.price.toString());
 
                     return AllServicesCard(
                       product: product,
-                      myImage: thumnail,
+                      myImage: thumnail ,
                       onPress: () {
                         Navigator.push(
                           context,
