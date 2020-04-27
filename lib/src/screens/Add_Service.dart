@@ -18,7 +18,7 @@ class Service {
 }
 
 List<String> _category = <String>[
-  'Teaching',
+  'Education',
   'Baking',
   'Cooking',
   'Marketing',
