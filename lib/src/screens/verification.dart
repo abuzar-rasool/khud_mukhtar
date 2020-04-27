@@ -62,8 +62,8 @@ class _Verificaton extends State<Verification> {
   String contactNumber;
   String city;
   String email;
-  int followers = 0;
-  int following = 0;
+  List<dynamic> followers = [];
+  List<dynamic> following = [];
   String area;
   final formkey = new GlobalKey<FormState>();
 
