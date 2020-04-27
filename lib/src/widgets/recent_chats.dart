@@ -38,6 +38,9 @@ class RecentChats extends StatelessWidget {
                   ),
                 );
               } else {
+                if (snapshot.data.documents.length == 0) {
+                  return Center(child: Text('No messages found'));
+                }
                 return ListView.builder(
                   padding: EdgeInsets.all(10.0),
                   itemCount: snapshot.data.documents.length,
