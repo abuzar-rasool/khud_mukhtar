@@ -385,7 +385,7 @@ class _CustomListViewState extends State<CustomListView> {
             future: getItems()
             , builder: (_, snapshot) {
           if (snapshot.data == null) {
-            return LoadingView();
+            return Center(child: Text('No products found'));
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
