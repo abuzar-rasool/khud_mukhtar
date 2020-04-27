@@ -11,8 +11,8 @@ class User {
    String contactNumber;
    String city;
    String email;
-   int followers;
-   int following;
+   List<dynamic> followers = [];
+   List<dynamic> following = [];
   List<Product> productList = [];
    double rating;
    String area;
