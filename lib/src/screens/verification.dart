@@ -11,6 +11,7 @@ import 'package:khud_mukhtar/src/screens/login_screen.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../uplod.dart';
+import 'MainPage.dart';
 
 var selectedType;
 List<String> _category = <String>[
@@ -579,7 +580,7 @@ class _Verificaton extends State<Verification> {
             });
 
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => Login()));
+                context, MaterialPageRoute(builder: (context) => MainPage()));
           },
         ),
       ),
