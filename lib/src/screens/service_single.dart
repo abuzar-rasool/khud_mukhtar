@@ -368,13 +368,15 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
                   Container(
                     height: 380,
                     alignment: Alignment.topCenter,
-                    decoration: BoxDecoration(boxShadow: [
+                    decoration: BoxDecoration(
+                        boxShadow: [
                       BoxShadow(color: Colors.black38, blurRadius: 30.0)
                     ]),
                     child: SizedBox(
                       height: 350,
+                      width: double.infinity,
                       child: Image.network(widget.product.mainImage,
-                          fit: BoxFit.cover),
+                          fit: BoxFit.fill),
                       //Image.asset((widget.product.mainImage), fit: BoxFit.cover),
                     ),
                   ),
