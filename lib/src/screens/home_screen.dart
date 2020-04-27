@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/browse_categories.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/drawer/oval-right-clipper.dart';
 import 'package:khud_mukhtar/src/screens/profile_screen.dart';
@@ -16,17 +17,47 @@ final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 class HomeScreen extends StatefulWidget {
   bool searchEnabled = false;
 
+
   @override
   _HomeScreen createState() => _HomeScreen();
 }
 
 class _HomeScreen extends State<HomeScreen> {
+  Future _future;
   double preferredSize = 64;
   static int none = 2;
+  FirebaseUser currentUser;
+  String city;
+  bool absorb = true;
+
+  Future<bool> getCurrentUser() async {
+    currentUser = await FirebaseAuth.instance.currentUser();
+    DocumentSnapshot userDocument = await Firestore.instance.collection('Users')
+        .document(currentUser.uid)
+        .get();
+    city = userDocument.data['city'] + ', Pakistan';
+    setState(() {
+      absorb = false;
+    });
+    if (city == null) {
+      Fluttertoast.showToast(msg: 'Make sure you are connected to internet',
+          backgroundColor: Colors.pink,
+          textColor: Colors.white);
+    }
+
+    return city != null;
+  }
 
   Future navigateToSubPage(context) async {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => SearchScreen()));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _future = getCurrentUser();
   }
 
   @override
@@ -35,125 +66,140 @@ class _HomeScreen extends State<HomeScreen> {
         sampleimage = AssetImage('assets/quranforkidssample.jpg');
 
     // TODO: implement build
-    return Scaffold(
-      key: _key,
-      drawer: _buildDrawer(context),
-      appBar: AppBar(
-        backgroundColor: Colors.pink[300],
-        leading: widget.searchEnabled
-            ? Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        )
-            : IconButton(
-          onPressed: () {
-            _key.currentState.openDrawer();
-          },
-          icon: Icon(
-            Icons.menu,
+    return AbsorbPointer(
+      absorbing: absorb,
+      child: Scaffold(
+        key: _key,
+        drawer: _buildDrawer(context),
+        appBar: AppBar(
+          backgroundColor: Colors.pink[300],
+          leading: widget.searchEnabled
+              ? Icon(
+            Icons.arrow_back,
             color: Colors.white,
-          ),
-        ),
-        actions: <Widget>[
-          Row(
-            children: <Widget>[
-              Text(
-                "Karachi, Pakistan",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              Icon(
-                Icons.location_on,
-                color: Colors.white,
-              )
-            ],
           )
-        ],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(40),
+              : IconButton(
+            onPressed: () {
+              _key.currentState.openDrawer();
+            },
+            icon: Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
           ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(preferredSize),
-          child: Padding(
-            padding:
-            const EdgeInsets.only(top: 0, bottom: 25, right: 16, left: 16),
-            child: Container(
-              alignment: Alignment.center,
-              height: preferredSize,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 9,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(40.0),
-                    ),
-                    child: TextField(
-                      onTap: () {
-                        navigateToSubPage(context);
-                      },
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Colors.black,
+          actions: <Widget>[
+            Row(
+              children: <Widget>[
+                FutureBuilder(
+                  future: _future,
+                  builder: (_, snapshot) {
+                    if (snapshot.hasData &&
+                        snapshot.connectionState == ConnectionState.done) {
+                      return Text(
+                        "$city",
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
-                        hintText: "What are you looking for",
-                        hintStyle:
-                        TextStyle(color: Colors.grey, fontSize: 12.0),
+                      );
+                    }
+                    return Text('');
+                  },
+                ),
+
+                Icon(
+                  Icons.location_on,
+                  color: Colors.white,
+                )
+              ],
+            )
+          ],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(40),
+            ),
+          ),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(preferredSize),
+            child: Padding(
+              padding:
+              const EdgeInsets.only(top: 0, bottom: 25, right: 16, left: 16),
+              child: Container(
+                alignment: Alignment.center,
+                height: preferredSize,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 9,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(40.0),
+                      ),
+                      child: TextField(
+                        onTap: () {
+                          navigateToSubPage(context);
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
+                          hintText: "What are you looking for",
+                          hintStyle:
+                          TextStyle(color: Colors.grey, fontSize: 12.0),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: BrowseCategoriesCard(),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: FeaturedHList(),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'All Services',
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: 200,
-                        child:  HListViewProducts(),
-                      )
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverList(
+              delegate: SliverChildListDelegate([
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: BrowseCategoriesCard(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: FeaturedHList(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              'All Services',
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 200,
+                          child: HListViewProducts(),
+                        )
 
-                    ],
+                      ],
 
+                    ),
                   ),
                 ),
-              ),
-            ]),
-          ),
+              ]),
+            ),
 
 //          SliverGrid.count(
 //            crossAxisCount: 2,
@@ -174,7 +220,8 @@ class _HomeScreen extends State<HomeScreen> {
 //              );
 //            }),
 //          )
-        ],
+          ],
+        ),
       ),
     );
   }
