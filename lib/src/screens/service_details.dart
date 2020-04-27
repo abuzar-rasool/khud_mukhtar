@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khud_mukhtar/constants/colors.dart';
+import 'package:khud_mukhtar/src/components/chatscreencomponents/full_screen.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/widgets/loading.dart';
 
@@ -253,11 +254,19 @@ class _ServiceStateState extends State<ServiceState> {
   Widget _buildBottomImage(String image) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5),
-      child: Container(
-        width: 80,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            image: DecorationImage(image: NetworkImage(image), fit: BoxFit.cover)),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) =>
+                  FullPhoto(url: image)));
+        },
+        child: Container(
+          width: 80,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              image: DecorationImage(
+                  image: NetworkImage(image), fit: BoxFit.cover)),
+        ),
       ),
     );
   }
