@@ -285,6 +285,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                       )),
                                 ],
                               ),
+                              SizedBox(height: 5,),
                               widget.userID == widget.currentUserId
                                   ?
                               OutlineButton(
@@ -464,6 +465,7 @@ class _FollowButtonState extends State<FollowButton> {
             .size
             .width / 3.5,
         borderRadius: 20,
+        color: Colors.white,
         defaultWidget: Text(buttonText,
             textAlign: TextAlign.center, style:
             TextStyle(fontSize: 14, color: Theme
