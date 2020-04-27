@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:khud_mukhtar/src/components/HomeScreenComponents/card/all_services_card.dart';
 import 'package:khud_mukhtar/src/models/user_model.dart';
 import 'package:khud_mukhtar/src/screens/Add_Service.dart';
@@ -228,7 +229,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                         fontWeight: FontWeight.bold),
                                   ),
 //                                      Text('${widget.user.followers}',
-                                  Text(user.followers.toString(),
+                                  Text(user.followers.length.toString(),
 
                                       style: TextStyle(
                                           fontSize: 20,
@@ -246,7 +247,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                         fontWeight: FontWeight.bold),
                                   ),
 //                                      Text('${widget.user.following}',
-                                  Text(user.following.toString(),
+                                  Text(user.following.length.toString(),
 
                                       style: TextStyle(
                                           fontSize: 20,
@@ -300,20 +301,12 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                   shape: new RoundedRectangleBorder(
                                       borderRadius:
                                       new BorderRadius.circular(30.0)))
-                                  : OutlineButton(
-                                  borderSide:
-                                  BorderSide(color: Colors.white),
-                                  child: Text(
-                                    'FOLLOW',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  onPressed: () {},
-                                  color: Colors.white,
-                                  shape: new RoundedRectangleBorder(
-                                      borderRadius:
-                                      new BorderRadius.circular(30.0))),
+                                  : FollowButton(
+                                currentLoggedInUser: widget.currentUserId,
+                                currentlyViewedUser: user.id,
+                                currentlyViewedUsersFollowers: user
+                                    .followers,
+                              ),
                             ],
                           ),
                         ),
@@ -432,4 +425,109 @@ class _CustomListViewState extends State<CustomListView> {
   }
 }
 
+class FollowButton extends StatefulWidget {
+  FollowButton(
+      {this.currentLoggedInUser, this.currentlyViewedUser, this.currentlyViewedUsersFollowers});
+
+  String currentLoggedInUser;
+  String currentlyViewedUser;
+  List<dynamic> currentlyViewedUsersFollowers;
+
+  @override
+  _FollowButtonState createState() => _FollowButtonState();
+}
+
+class _FollowButtonState extends State<FollowButton> {
+  String buttonText;
+
+  @override
+  Widget build(BuildContext context) {
+    print('current logged in user ${widget.currentLoggedInUser}');
+    print('currently viewes user ${widget.currentlyViewedUser}');
+    print('currently viewed user followers ${widget
+        .currentlyViewedUsersFollowers}');
+
+    if (widget.currentlyViewedUsersFollowers == null) {
+      widget.currentlyViewedUsersFollowers = [];
+    }
+    if (widget.currentlyViewedUsersFollowers.contains(
+        widget.currentLoggedInUser)) {
+      //Already followed
+      buttonText = 'UNFOLLOW';
+    } else {
+      //not followed
+      buttonText = 'FOLLOW';
+    }
+    return ProgressButton(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width / 3.5,
+        borderRadius: 20,
+        defaultWidget: Text(buttonText,
+            textAlign: TextAlign.center, style:
+            TextStyle(fontSize: 14, color: Theme
+                .of(context)
+                .accentColor)),
+        progressWidget: const CircularProgressIndicator(),
+        onPressed: () async {
+          CollectionReference userCollection = Firestore.instance.collection(
+              'Users');
+          if (buttonText == 'FOLLOW') {
+            await userCollection.document(widget.currentlyViewedUser)
+                .updateData({
+              'followers': FieldValue.arrayUnion([widget.currentLoggedInUser])
+            });
+            await userCollection.document(widget.currentLoggedInUser)
+                .updateData({
+              'following': FieldValue.arrayUnion([widget.currentlyViewedUser])
+            });
+            widget.currentlyViewedUsersFollowers.add(
+                widget.currentLoggedInUser);
+            setState(() {
+              buttonText = 'UNFOLLOW';
+            });
+          } else {
+            await userCollection.document(widget.currentlyViewedUser)
+                .updateData({
+              'followers': FieldValue.arrayRemove([widget.currentLoggedInUser])
+            });
+            await userCollection.document(widget.currentLoggedInUser)
+                .updateData({
+              'following': FieldValue.arrayRemove([widget.currentlyViewedUser])
+            });
+            widget.currentlyViewedUsersFollowers.remove(
+                widget.currentLoggedInUser);
+            setState(() {
+              buttonText = 'FOLLOW';
+            });
+          }
+        }
+
+
+    );
+
+//    return OutlineButton(
+//        borderSide:
+//        BorderSide(color: Colors.white),
+//        child: Text(
+//          buttonText,
+//          style: TextStyle(
+//            color: Colors.white,
+//          ),
+//        ),
+//        onPressed: () async {
+//          if(buttonText=='FOLLOW'){
+//            buttonText='UNFOLLOW';
+//          }else{
+//            buttonText='FOLLOW';
+//          }
+//
+//        },
+//        color: Colors.white,
+//        shape: new RoundedRectangleBorder(
+//            borderRadius:
+//            new BorderRadius.circular(30.0)));
+  }
+}
 
