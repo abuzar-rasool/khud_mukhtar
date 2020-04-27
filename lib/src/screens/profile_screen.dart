@@ -268,7 +268,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                             new BorderRadius.circular(
                                                 30.0)))
                                         : FollowButton(
-                                      currentLoggedInUser: currentUser.id,
+                                      currentLoggedInUser: widget.currentUserId,
                                       currentlyViewedUser: user.id,
                                       currentlyViewedUsersFollowers: user
                                           .followers,
@@ -395,9 +395,13 @@ class FollowButton extends StatefulWidget {
 
 class _FollowButtonState extends State<FollowButton> {
   String buttonText;
-
   @override
   Widget build(BuildContext context) {
+    print('current logged in user ${widget.currentLoggedInUser}');
+    print('currently viewes user ${widget.currentlyViewedUser}');
+    print('currently viewed user followers ${widget
+        .currentlyViewedUsersFollowers}');
+
     if (widget.currentlyViewedUsersFollowers == null) {
       widget.currentlyViewedUsersFollowers = [];
     }
@@ -433,7 +437,11 @@ class _FollowButtonState extends State<FollowButton> {
                 .updateData({
               'following': FieldValue.arrayUnion([widget.currentlyViewedUser])
             });
-            buttonText = 'UNFOLLOW';
+            widget.currentlyViewedUsersFollowers.add(
+                widget.currentLoggedInUser);
+            setState(() {
+              buttonText = 'UNFOLLOW';
+            });
           } else {
             await userCollection.document(widget.currentlyViewedUser)
                 .updateData({
@@ -443,11 +451,12 @@ class _FollowButtonState extends State<FollowButton> {
                 .updateData({
               'following': FieldValue.arrayRemove([widget.currentlyViewedUser])
             });
-            buttonText = 'FOLLOW';
+            widget.currentlyViewedUsersFollowers.remove(
+                widget.currentLoggedInUser);
+            setState(() {
+              buttonText = 'FOLLOW';
+            });
           }
-          setState(() {
-
-          });
         }
 
 
