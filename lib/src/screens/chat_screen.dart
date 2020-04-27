@@ -116,11 +116,10 @@ class ChatScreenState extends State<ChatScreen> {
       groupChatId = '$peerId-$id';
     }
 
-    Firestore.instance.collection('Users').document(id).updateData(
+    await Firestore.instance.collection('Users').document(id).updateData(
         {'chattingWith': FieldValue.arrayUnion([peerId])});
-    Firestore.instance.collection('Users').document(peerId).updateData(
+    await Firestore.instance.collection('Users').document(peerId).updateData(
         {'chattingWith': FieldValue.arrayUnion([id])});
-
 
     setState(() {});
   }
@@ -212,7 +211,7 @@ class ChatScreenState extends State<ChatScreen> {
               ? Container(
             child: Text(
               document['content'],
-              style: TextStyle(color: primaryColor),
+              style: TextStyle(color: Colors.black87),
             ),
             padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
             width: 200.0,
@@ -634,7 +633,7 @@ class ChatScreenState extends State<ChatScreen> {
           Flexible(
             child: Container(
               child: TextField(
-                style: TextStyle(color: primaryColor, fontSize: 15.0),
+                style: TextStyle(color: Colors.black, fontSize: 15.0),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
                   hintText: 'Type your message...',

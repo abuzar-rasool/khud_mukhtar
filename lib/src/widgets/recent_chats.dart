@@ -118,9 +118,11 @@ class RecentChats extends StatelessWidget {
                                         .start,
                                     children: <Widget>[
                                       Text(
+
                                         document['name'] == null
                                             ? 'noname'
                                             : document['name'],
+                                        maxLines: 1,
                                         style: TextStyle(
                                           color: Colors.grey,
                                           fontSize: 15.0,
@@ -210,6 +212,7 @@ class GetLastMessage extends StatelessWidget {
         if(snapshot.hasData){
           return Text(
               '${snapshot.data}',
+            maxLines: 1,
               style: TextStyle(
               color: Colors.blueGrey,
               fontSize: 15.0,
