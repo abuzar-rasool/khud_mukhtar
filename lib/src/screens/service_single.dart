@@ -223,18 +223,6 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
                                 end: Alignment.bottomCenter)),
                       )),
                   Positioned(
-                      top: 150,
-                      left: 0,
-                      right: 150,
-                      bottom: 80,
-                      child: Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                            color: color1,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(50.0))),
-                      )),
-                  Positioned(
                     top: 350,
                     left: 0,
                     right: 0,
@@ -256,9 +244,10 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20.0),
+                          SizedBox(height: 10.0),
                           Text(
                             "${widget.product.title}".toUpperCase(),
+                            maxLines: 1,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -273,14 +262,14 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
                             itemCount: 5,
                             itemSize: 20,
                             itemPadding:
-                            EdgeInsets.symmetric(horizontal: 2.0),
+                            EdgeInsets.symmetric(horizontal: 1.0),
                             itemBuilder: (context, _) =>
                                 Icon(
                                   Icons.star,
                                   color: Colors.amber,
                                 ),
                           ),
-                          SizedBox(height: 30.0),
+                          SizedBox(height: 10.0),
                           Text(
                             'Rs. ${widget.product.price}',
                             style: TextStyle(
@@ -289,12 +278,16 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 80.0),
-                          Wrap(
+                          SizedBox(height: 30.0),
+                          Row(
                             children: <Widget>[
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  Icon(FontAwesomeIcons.servicestack, size: 30,
+                                    color: Colors.white,),
+                                  SizedBox(height: 5,),
+
                                   Text(
                                     'Service Type',
                                     style: TextStyle(
@@ -308,19 +301,23 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
                                 ],
                               ),
                               SizedBox(
-                                width: 15.0,
+                                width: 30.0,
                               ),
                               Container(
-                                height: 30,
+                                height: 60,
                                 width: 0.5,
                                 color: Colors.white,
                               ),
                               SizedBox(
-                                width: 16.0,
+                                width: 30.0,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  Icon(
+                                    FontAwesomeIcons.list, color: Colors.white,
+                                    size: 30,),
+                                  SizedBox(height: 5,),
                                   Text(
                                     'Category',
                                     style: TextStyle(
@@ -334,19 +331,22 @@ class _ServiceSinglePageState extends State<ServiceSinglePage> {
                                 ],
                               ),
                               SizedBox(
-                                width: 15.0,
+                                width: 30.0,
                               ),
                               Container(
-                                height: 30,
+                                height: 60,
                                 width: 0.5,
                                 color: Colors.white,
                               ),
                               SizedBox(
-                                width: 16.0,
+                                width: 30.0,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  Icon(FontAwesomeIcons.city, size: 30,
+                                    color: Colors.white,),
+                                  SizedBox(height: 5,),
                                   Text(
                                     'Area',
                                     style: TextStyle(
