@@ -118,6 +118,7 @@ class ChatScreenState extends State<ChatScreen> {
 
     await Firestore.instance.collection('Users').document(id).updateData(
         {'chattingWith': FieldValue.arrayUnion([peerId])});
+
     await Firestore.instance.collection('Users').document(peerId).updateData(
         {'chattingWith': FieldValue.arrayUnion([id])});
 
@@ -441,8 +442,6 @@ class ChatScreenState extends State<ChatScreen> {
         isShowSticker = false;
       });
     } else {
-      Firestore.instance.collection('Users').document(id).updateData(
-          {'chattingWith': null});
       Navigator.pop(context);
     }
 
