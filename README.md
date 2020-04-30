@@ -5,7 +5,8 @@
 - This application is based on Flutter a framework by Google to make cross platform application.
 - This application was made for Developer Student Club Solution Challenge 2020.
 
-\*The demo login credintials can be found under [this](https://github.com/abuzar-rasool/khud_mukhtar#demo-login-credentials) section*
+\
+**The demo login credintials can be found under [this](https://github.com/abuzar-rasool/khud_mukhtar#demo-login-credentials) section**
 
 
 ## Getting Started
