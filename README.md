@@ -25,5 +25,6 @@ If you wish to check out the signup process and don't have a Pakistani Female ID
 
 ## Demo Sign Up ID card
 For testing purposes following ID card image can be used.
-![Demo National ID Card Image](https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/cnic.jpg?alt=media&token=0ceeb1fa-3777-4fe2-8687-7616bebb5468)
+<img src="https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/cnic.jpg?alt=media&token=0ceeb1fa-3777-4fe2-8687-7616bebb5468" width="300">
+
 
