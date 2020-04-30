@@ -1,4 +1,4 @@
-<img src="assets/launchericon/icon.png" width="100">
+<img src="assets/launchericon/icon.png" width="100">\
 # Khud Mukhtar
 
 - This application is currently under beta mod and is being tested.
