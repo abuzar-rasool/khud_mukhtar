@@ -285,7 +285,7 @@ class _MyCustomAppBarState extends State<MyCustomAppBar> {
                                       )),
                                 ],
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(height: 4,),
                               widget.userID == widget.currentUserId
                                   ?
                               OutlineButton(
