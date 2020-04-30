@@ -28,6 +28,8 @@ For testing purposes following ID card image can be used.\
 <img src="https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/cnic.jpg?alt=media&token=0ceeb1fa-3777-4fe2-8687-7616bebb5468" width="300">
 
 ## Preview
+![onboarding](https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/gifs%2Fonboarding.gif?alt=media&token=1bfbedc8-5f77-4de8-ad29-fa5efe2e67f2 "Onboarding") ![home](https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/gifs%2Fhome.gif?alt=media&token=863b06bc-3c40-45e5-bd39-4b89c6b0df79 "Home") ![chats-notifications](https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/gifs%2Fchats%20and%20notifications.gif?alt=media&token=b7cf00a1-20cc-4cc3-a43a-a28baf97d256 "Chats & Notifications")
+
 <img src="https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/gifs%2Fonboarding.gif?alt=media&token=1bfbedc8-5f77-4de8-ad29-fa5efe2e67f2" width="200">
 <img src="https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/gifs%2Fhome.gif?alt=media&token=863b06bc-3c40-45e5-bd39-4b89c6b0df79" width="200">
 <img src="https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/gifs%2Fchats%20and%20notifications.gif?alt=media&token=b7cf00a1-20cc-4cc3-a43a-a28baf97d256" width="200">
