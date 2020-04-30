@@ -1,4 +1,4 @@
-![Logo](/assets/launchericon/icon.png =100x100)
+<img src="assets/launchericon/icon.png" width="200">
 
 # Khud Mukhtar
 
