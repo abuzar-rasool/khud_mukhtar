@@ -3,7 +3,6 @@
 
 - This application is currently under beta mod and is being tested.
 - This application is based on Flutter a framework by Google.
-- This application was is for Developer Student Club Solution Challenge 2020.
 
 \
 **The demo login credintials can be found under [this](https://github.com/abuzar-rasool/khud_mukhtar#demo-login-credentials) section**
