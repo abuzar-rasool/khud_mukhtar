@@ -1,4 +1,4 @@
-<img src="assets/launchericon/icon.png" width="200">
+<img src="assets/launchericon/icon.png" width="100">
 
 # Khud Mukhtar
 
@@ -25,5 +25,5 @@ If you wish to check out the signup process and don't have a Pakistani Female ID
 
 ## Demo Sign Up ID card
 For testing purposes following ID card image can be used.
-![Demo National ID Card Image](https://console.firebase.google.com/u/0/project/khud-mukhtar/storage/khud-mukhtar.appspot.com/files)
+![Demo National ID Card Image](https://firebasestorage.googleapis.com/v0/b/khud-mukhtar.appspot.com/o/cnic.jpg?alt=media&token=0ceeb1fa-3777-4fe2-8687-7616bebb5468)
 
