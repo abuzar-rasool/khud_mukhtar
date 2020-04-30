@@ -1,11 +1,11 @@
 <img src="assets/launchericon/icon.png" width="100"> <br/>
 # Khud Mukhtar
 
-An online marketplace that connects women customers and women sellers to facilitate financial mobility by providing a safer, more streamlined experience with verified sellers, forums, and connectivity
+An online marketplace that connects women customers and women sellers to facilitate financial mobility by providing a safer, more streamlined experience with verified sellers, forums, and connectivity.
 
 - This application is currently under beta mode and is being tested.
 - This application is based on Flutter a framework by Google
-- The application idea was validated by a survey (https://forms.gle/yMVXrWiMvdgQdA2C8) to help understand our users better. Further feedback was incorporated during prototyping and post-prototyping phases too through a concentrated group of users. 
+- The application idea was validated by a survey (https://forms.gle/yMVXrWiMvdgQdA2C8) to help understand our users better. Further feedback was also incorporated during prototyping and post-prototyping phases through a concentrated group of users. 
 
 \
 **The demo login credintials can be found under [this](https://github.com/abuzar-rasool/khud_mukhtar#demo-login-credentials) section**
