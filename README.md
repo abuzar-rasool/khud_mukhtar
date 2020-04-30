@@ -1,4 +1,4 @@
-<img src="assets/launchericon/icon.png" width="100"> \
+<img src="assets/launchericon/icon.png" width="100"> <br/>
 # Khud Mukhtar
 
 - This application is currently under beta mod and is being tested.
@@ -23,7 +23,7 @@ The most important feature of our application is security, therefore we have inc
 
 For testing purposes, the following credintials can be used\
   *Email: test@test.com* \
-  *Password: 12345678* \
+  *Password: 12345678*
 ## Demo Sign Up ID card
 
 If you wish to have a look at the signup process and don't have a Pakistani Female ID card we would recommend using the one provided below.
