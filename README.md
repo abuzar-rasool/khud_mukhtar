@@ -4,6 +4,7 @@
 An online marketplace that connects women customers and women sellers to facilitate financial mobility by providing a safer, more streamlined experience with verified sellers, forums, and connectivity.
 
 - This application is currently under beta mode and is being tested.
+- We have never tested the iOS version of this application due to unavailblity of the macOs during the pandemic. All the test are done in the android version of the application.
 - This application is based on Flutter a framework by Google
 - The application idea was validated by a survey (https://forms.gle/yMVXrWiMvdgQdA2C8) to help understand our users better. Further feedback was also incorporated during prototyping and post-prototyping phases through a concentrated group of users. 
 
